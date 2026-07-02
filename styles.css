@@ -400,7 +400,9 @@ h3 {
 .model-grid,
 .project-grid,
 .worldview-grid,
-.monthly-grid {
+.monthly-grid,
+.starter-grid,
+.showcase-grid {
   display: grid;
   gap: 16px;
 }
@@ -427,6 +429,10 @@ h3 {
 .worldview-card,
 .monthly-hero,
 .monthly-card,
+.starter-card,
+.showcase-card,
+.feedback-form,
+.feedback-panel,
 .register-form,
 .contact-card,
 .week-item,
@@ -470,6 +476,38 @@ h3 {
 
 .worldview-section {
   padding-top: 56px;
+}
+
+.starter-section {
+  padding-top: 44px;
+}
+
+.starter-grid {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 18px;
+}
+
+.starter-card {
+  display: grid;
+  gap: 12px;
+  min-height: 240px;
+  padding: 20px;
+}
+
+.starter-card > span {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  color: var(--surface);
+  background: var(--jujube-dark);
+  border-radius: 8px;
+  font-weight: 900;
+}
+
+.starter-card p {
+  color: #63554c;
+  line-height: 1.75;
 }
 
 .worldview-lead {
@@ -815,6 +853,39 @@ h3 {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.showcase-section {
+  padding-top: 48px;
+}
+
+.showcase-grid {
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 18px;
+}
+
+.showcase-card {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-height: 260px;
+  padding: 20px;
+}
+
+.showcase-card h3 {
+  font-size: 20px;
+}
+
+.showcase-card p {
+  color: #63554c;
+  line-height: 1.72;
+}
+
+.showcase-card footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: auto;
+}
+
 .badge {
   color: var(--plant);
   background: rgba(95, 127, 82, 0.14);
@@ -1098,6 +1169,71 @@ h3 {
   padding-top: 56px;
 }
 
+.feedback-section {
+  padding-top: 56px;
+}
+
+.feedback-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.feedback-form {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+}
+
+.feedback-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.feedback-form label span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.feedback-form select,
+.feedback-form textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  outline: 0;
+}
+
+.feedback-form select:focus,
+.feedback-form textarea:focus {
+  border-color: rgba(143, 47, 42, 0.52);
+  box-shadow: 0 0 0 3px rgba(143, 47, 42, 0.1);
+}
+
+.feedback-form textarea {
+  resize: vertical;
+}
+
+.feedback-panel {
+  padding: 22px;
+}
+
+.feedback-panel h3 {
+  margin-top: 14px;
+}
+
+.feedback-panel ul {
+  margin: 16px 0 0;
+  padding-left: 20px;
+  color: #5c4f47;
+  line-height: 1.8;
+}
+
 .register-grid {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -1268,6 +1404,7 @@ h3 {
   .track-detail,
   .split,
   .toolkit,
+  .feedback-grid,
   .register-grid,
   .sponsor-modal {
     grid-template-columns: 1fr;
@@ -1282,6 +1419,8 @@ h3 {
   }
 
   .dashboard,
+  .starter-grid,
+  .showcase-grid,
   .model-grid,
   .project-grid,
   .worldview-grid,
@@ -1309,6 +1448,8 @@ h3 {
   }
 
   .dashboard,
+  .starter-grid,
+  .showcase-grid,
   .model-grid,
   .project-grid,
   .worldview-grid,

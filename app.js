@@ -60,6 +60,54 @@ const weeks = [
   ["第 12 周", "作品集发布", "整理 3 个作品并写项目说明"]
 ];
 
+const starterSteps = [
+  {
+    title: "选一条路线",
+    text: "从零基础、内容创作或应用开发里选一个入口，先确定本月主线。",
+    action: "查看路线",
+    href: "#map"
+  },
+  {
+    title: "完成今日挑战",
+    text: "用 10 分钟做一次模型侦察、Prompt 打磨或事实核查，先拿到手感。",
+    action: "进入任务板",
+    href: "#game"
+  },
+  {
+    title: "点亮一个作品",
+    text: "从样例里挑一个方向，把学习结果变成能展示、能复盘的产出。",
+    action: "看作品样例",
+    href: "#showcase"
+  }
+];
+
+const showcaseItems = [
+  {
+    title: "AI 学习助教报告",
+    type: "学习型作品",
+    text: "把一份课程资料整理成知识地图、自测题和 7 天复习计划。",
+    outputs: ["知识地图", "自测题", "复习计划"]
+  },
+  {
+    title: "短视频脚本工厂",
+    type: "内容型作品",
+    text: "围绕一个垂直主题，输出选题库、标题、口播稿、分镜和复盘指标。",
+    outputs: ["30 个选题", "5 条脚本", "分镜表"]
+  },
+  {
+    title: "个人知识库问答",
+    type: "应用型作品",
+    text: "让 AI 基于自己的笔记或资料回答问题，并保留引用来源和边界说明。",
+    outputs: ["资料清洗", "问答流程", "引用来源"]
+  },
+  {
+    title: "中国 AI 产品观察",
+    type: "商业型作品",
+    text: "拆解一个国内 AI 产品的目标用户、核心场景、收费方式和增长路径。",
+    outputs: ["竞品表", "用户画像", "机会判断"]
+  }
+];
+
 function safeParseJson(raw, fallback) {
   try {
     const parsed = JSON.parse(raw);
@@ -612,6 +660,7 @@ const state = {
   template: "prompt",
   month: getStoredString("ai-learning-month", "2026-07"),
   leads: getStoredArray("ai-learning-leads", []),
+  feedback: getStoredArray("ai-learning-feedback", []),
   doneWeeks: new Set(getStoredArray("ai-learning-weeks", [])),
   doneProjects: new Set(getStoredArray("ai-learning-projects", [])),
   weekProofs: getStoredObject("ai-learning-week-proofs", {}),
@@ -634,6 +683,36 @@ function ensureMonthExists() {
       showStorageUnavailableNotice();
     }
   }
+}
+
+function renderStarter() {
+  document.querySelector("#starterGrid").innerHTML = starterSteps
+    .map(
+      (step, index) => `
+        <article class="starter-card">
+          <span>${safeText(String(index + 1).padStart(2, "0"))}</span>
+          <h3>${safeText(step.title)}</h3>
+          <p>${safeText(step.text)}</p>
+          <a class="ghost-btn small" href="${safeText(step.href)}">${safeText(step.action)}</a>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function renderShowcase() {
+  document.querySelector("#showcaseGrid").innerHTML = showcaseItems
+    .map(
+      (item) => `
+        <article class="showcase-card">
+          <span class="badge">${safeText(item.type)}</span>
+          <h3>${safeText(item.title)}</h3>
+          <p>${safeText(item.text)}</p>
+          <footer>${item.outputs.map((tag) => `<span class="tag">${safeText(tag)}</span>`).join("")}</footer>
+        </article>
+      `
+    )
+    .join("");
 }
 
 function renderTrack() {
@@ -998,6 +1077,38 @@ function saveLead(lead) {
   renderContact();
 }
 
+function renderFeedbackCount() {
+  document.querySelector("#feedbackCount").textContent = String(state.feedback.length);
+}
+
+function saveFeedback(entry) {
+  state.feedback.unshift(entry);
+  if (!setStoredValue("ai-learning-feedback", state.feedback)) {
+    showStorageUnavailableNotice();
+  }
+  renderFeedbackCount();
+}
+
+function downloadFeedbackCsv() {
+  if (!state.feedback.length) {
+    showToast("还没有反馈可以导出。");
+    return;
+  }
+  const headers = ["提交时间", "主题", "建议"];
+  const rows = state.feedback.map((item) => [item.createdAt, item.topic, item.message]);
+  const csv = [headers, ...rows].map((row) => row.map(escapeCsvCell).join(",")).join("\n");
+  const blob = new Blob(["\ufeff", csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `ai-learning-feedback-${getTodayKey()}.csv`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+  showToast("反馈 CSV 已导出。");
+}
+
 function downloadLeadsCsv() {
   if (!state.leads.length) {
     showToast("还没有报名记录可以导出。");
@@ -1254,6 +1365,27 @@ document.querySelector("#dailyButton").addEventListener("click", () => {
 
 document.querySelector("#exportReport").addEventListener("click", downloadProgressReport);
 
+document.querySelector("#feedbackForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const data = new FormData(form);
+  const topic = toTrimmed(data.get("topic"));
+  const message = toTrimmed(data.get("message"));
+  if (!topic || !message || message.length < 2) {
+    showToast("请补充反馈主题和建议。");
+    return;
+  }
+  saveFeedback({
+    createdAt: new Date().toLocaleString("zh-CN", { hour12: false }),
+    topic,
+    message
+  });
+  form.reset();
+  showToast("反馈已记录，会进入下一轮月更参考。");
+});
+
+document.querySelector("#exportFeedback").addEventListener("click", downloadFeedbackCsv);
+
 document.querySelector("#registerForm").addEventListener("submit", (event) => {
   event.preventDefault();
   const form = event.currentTarget;
@@ -1341,6 +1473,7 @@ async function bootstrap() {
     state.month = "2026-07";
   }
   ensureMonthExists();
+  renderStarter();
   renderTrack();
   renderWorldview();
   renderMonthOptions();
@@ -1348,8 +1481,10 @@ async function bootstrap() {
   renderWeeks();
   renderModels();
   renderProjects();
+  renderShowcase();
   renderTemplate();
   renderContact();
+  renderFeedbackCount();
   refreshGame();
 }
 

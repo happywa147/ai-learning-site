@@ -14,13 +14,16 @@
         <span>原生自学站</span>
       </a>
       <nav class="nav" aria-label="主导航">
+        <a href="#starter">新手</a>
         <a href="#game">规则</a>
         <a href="#worldview">世界观</a>
         <a href="#monthly">月更</a>
+        <a href="#showcase">样例</a>
         <a href="#map">路线</a>
         <a href="#models">模型</a>
         <a href="#projects">项目</a>
         <a href="#toolkit">工具</a>
+        <a href="#feedback">反馈</a>
         <a href="#register">注册</a>
         <button id="sponsorNav" class="nav-button" type="button">赞助</button>
       </nav>
@@ -36,6 +39,7 @@
           </p>
           <div class="hero-actions">
             <a class="primary-btn" href="#game">进入任务板</a>
+            <a class="ghost-btn" href="#starter">60 秒上手</a>
             <a class="ghost-btn" href="#projects">看作品任务</a>
             <a class="ghost-btn" href="#register">注册学习</a>
           </div>
@@ -78,6 +82,18 @@ tools: search, code, video</pre>
           <strong id="streakValue">0 天</strong>
           <span>连续学习</span>
         </article>
+      </section>
+
+      <section id="starter" class="section starter-section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Quick Start</p>
+            <h2>60 秒新手上手</h2>
+          </div>
+          <span class="badge">先进入循环，再慢慢深入</span>
+        </div>
+        <p class="muted">第一次来不用先读完整网站。完成下面三步，就能进入“任务、反馈、作品”的学习循环。</p>
+        <div id="starterGrid" class="starter-grid"></div>
       </section>
 
       <section id="game" class="section game-section">
@@ -161,6 +177,18 @@ tools: search, code, video</pre>
         <div id="monthlyGrid" class="monthly-grid"></div>
       </section>
 
+      <section id="showcase" class="section showcase-section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Portfolio Showcase</p>
+            <h2>作品样例库</h2>
+          </div>
+          <span class="badge">看得见的学习成果</span>
+        </div>
+        <p class="muted">这些不是额外作业，而是把学习路线变成作品的参照物。每个样例都能反向带动 Prompt、Agent、编程和内容能力。</p>
+        <div id="showcaseGrid" class="showcase-grid"></div>
+      </section>
+
       <section id="map" class="section">
         <div class="section-head">
           <div>
@@ -237,6 +265,50 @@ tools: search, code, video</pre>
           </div>
           <pre id="templateText"></pre>
           <button id="copyTemplate" class="primary-btn small">复制模板</button>
+        </div>
+      </section>
+
+      <section id="feedback" class="section feedback-section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Feedback Loop</p>
+            <h2>把反馈变成下一次更新</h2>
+          </div>
+          <div class="section-actions">
+            <button id="exportFeedback" class="ghost-btn" type="button">导出反馈 CSV</button>
+            <span class="badge"><strong id="feedbackCount">0</strong>&nbsp;条反馈</span>
+          </div>
+        </div>
+        <div class="feedback-grid">
+          <form id="feedbackForm" class="feedback-form">
+            <label>
+              <span>你最需要哪类内容</span>
+              <select name="topic" required>
+                <option value="">请选择</option>
+                <option>新手入门</option>
+                <option>模型对比</option>
+                <option>Prompt / Agent / Skill</option>
+                <option>短视频与内容生产</option>
+                <option>AI 编程与项目</option>
+                <option>中国应用市场</option>
+              </select>
+            </label>
+            <label>
+              <span>你的建议</span>
+              <textarea name="message" rows="4" maxlength="360" placeholder="一句话也可以：哪里卡住了，想看到什么案例。" required></textarea>
+            </label>
+            <button class="primary-btn" type="submit">提交反馈</button>
+            <p class="form-note">反馈只保存在本机浏览器，适合站长收集测试意见；正式运营时可接入 Issue、表单服务或后端。</p>
+          </form>
+          <aside class="feedback-panel">
+            <span class="badge">下月优先级</span>
+            <h3>我们优先补这三类内容</h3>
+            <ul>
+              <li>更短的上手路径，让新人马上进入任务。</li>
+              <li>更真实的作品样例，让学习结果可展示。</li>
+              <li>更稳定的月更机制，让内容持续跟上市场。</li>
+            </ul>
+          </aside>
         </div>
       </section>
 

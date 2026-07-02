@@ -336,6 +336,17 @@ const agentRoles = [
     practice: "为一个 AI 工具页补加载、失败、成功三个状态。"
   },
   {
+    name: "后端可靠性工程师",
+    category: "engineering",
+    source: "engineering-backend-reliability-engineer",
+    level: "系统意识",
+    useFor: "关注队列、重试、日志、成本和服务稳定性。",
+    input: "请求量、失败模式、依赖服务、日志样例。",
+    output: "可靠性清单、重试规则、监控指标、降级方案。",
+    check: "高峰、失败和超时都有预案。",
+    practice: "为一个图片生成服务写出失败重试与排队规则。"
+  },
+  {
     name: "数据清洗工程师",
     category: "engineering",
     source: "engineering-data-cleaning-specialist",
@@ -347,6 +358,17 @@ const agentRoles = [
     practice: "把 30 条工具信息整理成统一字段的 CSV。"
   },
   {
+    name: "自动化脚本教练",
+    category: "engineering",
+    source: "engineering-automation-scripter",
+    level: "效率工具",
+    useFor: "用 Python、Shell 或前端脚本把重复任务自动化。",
+    input: "重复步骤、输入文件、输出目标、运行环境。",
+    output: "脚本草案、运行命令、边界情况、测试样例。",
+    check: "脚本能重复运行，失败时不会破坏原数据。",
+    practice: "写一个批量重命名学习资料的脚本设计说明。"
+  },
+  {
     name: "测试用例设计师",
     category: "engineering",
     source: "testing-test-case-designer",
@@ -356,6 +378,17 @@ const agentRoles = [
     output: "测试矩阵、手工步骤、自动化建议、验收标准。",
     check: "至少覆盖一条失败路径和一条边界路径。",
     practice: "为报名表单设计 8 条测试用例。"
+  },
+  {
+    name: "调试侦探",
+    category: "engineering",
+    source: "engineering-debugging-detective",
+    level: "问题定位",
+    useFor: "从现象、日志和复现步骤定位 bug 根因。",
+    input: "错误截图、日志、操作步骤、最近改动。",
+    output: "假设列表、排查顺序、最小复现、修复建议。",
+    check: "先复现再修复，避免凭感觉改代码。",
+    practice: "把一个“按钮没反应”的问题拆成 5 个排查假设。"
   },
   {
     name: "论文精读助教",
@@ -413,6 +446,17 @@ const agentRoles = [
     practice: "用 20 条用户反馈总结 3 个改版机会。"
   },
   {
+    name: "政策与合规观察员",
+    category: "research",
+    source: "policy-compliance-monitor",
+    level: "风险视野",
+    useFor: "跟踪 AI 监管、版权、数据和平台规则变化。",
+    input: "政策文本、平台规则、应用场景、发布日期。",
+    output: "规则摘要、影响范围、风险等级、行动建议。",
+    check: "只做学习与运营提示，不冒充法律意见。",
+    practice: "整理一个平台关于 AI 生成内容标识的规则要点。"
+  },
+  {
     name: "案例拆解师",
     category: "research",
     source: "business-case-analyst",
@@ -457,6 +501,17 @@ const agentRoles = [
     practice: "为一个 AI 工具教程设计 8 镜头分镜。"
   },
   {
+    name: "直播流程设计师",
+    category: "content",
+    source: "content-live-workflow-designer",
+    level: "内容运营",
+    useFor: "设计直播主题、节奏、互动问题和复盘指标。",
+    input: "直播目标、产品/课程、观众画像、时长。",
+    output: "直播大纲、话术卡、互动节点、复盘表。",
+    check: "每 10 分钟都有一个互动或转场点。",
+    practice: "设计一场 45 分钟 AI 入门答疑直播流程。"
+  },
+  {
     name: "剪辑复盘官",
     category: "content",
     source: "content-editing-analyst",
@@ -477,6 +532,17 @@ const agentRoles = [
     output: "课程地图、每周任务、测验、作品标准。",
     check: "每节课都有可交付成果。",
     practice: "把“AI 编程入门”拆成 4 周课程计划。"
+  },
+  {
+    name: "社群主持人",
+    category: "content",
+    source: "community-moderator",
+    level: "陪伴学习",
+    useFor: "设计群内讨论、打卡、答疑和优秀作品展示。",
+    input: "社群目标、成员水平、周期、激励方式。",
+    output: "讨论题、打卡模板、答疑规则、精选机制。",
+    check: "规则让新人敢发言，老手愿意贡献。",
+    practice: "设计一个 7 天 AI 学习打卡社群规则。"
   },
   {
     name: "产品经理",
@@ -531,7 +597,7 @@ const agentRoles = [
     input: "学习任务、用户动机、周期、奖励限制。",
     output: "任务系统、奖励规则、反作弊提醒、复盘机制。",
     check: "奖励推动真实学习，而不是只刷按钮。",
-    practice: "为 60 个 Agent 设计 5 个解锁徽章。"
+    practice: "为 67 个 Agent 设计 5 个解锁徽章。"
   },
   {
     name: "反馈闭环经理",
@@ -598,6 +664,17 @@ const agentRoles = [
     output: "CTA 文案、路径优化、实验假设、指标。",
     check: "转化动作自然，不打断学习体验。",
     practice: "为 Agent 学院设计 3 个不突兀的 CTA。"
+  },
+  {
+    name: "合作伙伴拓展官",
+    category: "growth",
+    source: "business-partnership-builder",
+    level: "外部资源",
+    useFor: "寻找课程、社群、工具厂商和开源作者的合作机会。",
+    input: "项目定位、合作对象、资源清单、边界。",
+    output: "合作名单、邮件草稿、权益交换、风险提醒。",
+    check: "合作能增加学习价值，而不只是贴 Logo。",
+    practice: "写一封邀请 AI 工具作者共建月更区的邮件。"
   },
   {
     name: "视觉系统设计师",

@@ -60,14 +60,186 @@ const weeks = [
   ["第 12 周", "作品集发布", "整理 3 个作品并写项目说明"]
 ];
 
-const monthlyUpdates = [
+function safeParseJson(raw, fallback) {
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed === null ? fallback : parsed;
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function getStoredString(key, fallback = "") {
+  try {
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : value;
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function setStoredValue(key, value) {
+  try {
+    localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value));
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+function removeStoredValue(key) {
+  try {
+    localStorage.removeItem(key);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+let storageNoticeShown = false;
+
+function showStorageUnavailableNotice() {
+  if (storageNoticeShown) return;
+  storageNoticeShown = true;
+  showToast("当前环境不支持本地存储，部分进度可能无法持久化。");
+}
+
+function getStoredNumber(key, fallback = 0) {
+  const raw = getStoredString(key);
+  const num = Number(raw);
+  return Number.isFinite(num) ? num : fallback;
+}
+
+function getStoredArray(key, fallback = []) {
+  const raw = getStoredString(key);
+  const parsed = safeParseJson(raw || "[]", fallback);
+  if (!Array.isArray(parsed)) {
+    removeStoredValue(key);
+    return fallback;
+  }
+  return parsed;
+}
+
+function getStoredObject(key, fallback = {}) {
+  const raw = getStoredString(key);
+  const parsed = safeParseJson(raw || "{}", fallback);
+  if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+    removeStoredValue(key);
+    return fallback;
+  }
+  return parsed;
+}
+
+function getLocalDateKey(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function yesterdayLocalKey() {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  return getLocalDateKey(yesterday);
+}
+
+function escapeCsvCell(value) {
+  const text = String(value ?? "").replaceAll('"', '""');
+  const escaped = /^(=|\+|-|@|\t|\r|\n|,)/.test(text) ? `'${text}` : text;
+  return `"${escaped}"`;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;")
+    .replaceAll("`", "&#96;");
+}
+
+function safeText(value) {
+  return escapeHtml(value);
+}
+
+function safeList(items) {
+  if (!Array.isArray(items)) return "";
+  return items
+    .map((item) => `<li>${safeText(item)}</li>`)
+    .join("");
+}
+
+function isValidContact(contact) {
+  const value = toTrimmed(contact);
+  if (!value || value.length < 2 || value.includes(" ")) return false;
+  const isPhone = /^\d{6,20}$/.test(value);
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+  const isWechat = /^[a-zA-Z0-9_-]{6,24}$/.test(value);
+  return isPhone || isEmail || isWechat;
+}
+
+async function copyText(text) {
+  const plainText = String(text ?? "");
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(plainText);
+      return true;
+    }
+  } catch (error) {
+    // clipboard API may fail in insecure contexts; fallback below
+  }
+
+  let area = null;
+  try {
+    area = document.createElement("textarea");
+    area.value = plainText;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.left = "-9999px";
+    area.style.top = "0";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.focus();
+    area.select();
+    area.setSelectionRange(0, plainText.length);
+    return Boolean(document.execCommand && document.execCommand("copy"));
+  } catch (error) {
+    return false;
+  } finally {
+    if (area && area.parentNode) area.remove();
+  }
+}
+
+function toTrimmed(value) {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function formatReportDate(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+function escapeMarkdownLine(value) {
+  return String(value ?? "")
+    .replaceAll("\\", "\\\\")
+    .replaceAll("|", "\\|")
+    .replaceAll("\n", " ")
+    .replaceAll("\r", " ");
+}
+
+const monthlyFallbackUpdates = [
   {
     id: "2026-07",
     label: "2026 年 7 月",
+    updatedAt: "2026-07-01",
     title: "从会用工具，升级到会搭工作流",
     summary: "本月重点不是追每一个新模型，而是建立自己的模型选择法、Agent 任务拆解法和内容生产闭环。所有结论都要按月复查，避免把旧规则当成新常识。",
     cards: [
       {
+        id: "2026-07-1",
         title: "模型观察",
         items: [
           "国际模型看推理、代码、多模态和 Agent 协作能力。",
@@ -76,6 +248,7 @@ const monthlyUpdates = [
         ]
       },
       {
+        id: "2026-07-2",
         title: "中国应用市场",
         items: [
           "重点观察 AI 搜索、AI 办公、AI 编程、AI 视频和企业知识库。",
@@ -84,6 +257,7 @@ const monthlyUpdates = [
         ]
       },
       {
+        id: "2026-07-3",
         title: "本月训练",
         items: [
           "做一张自己的模型对比表：写作、编程、长文档、视频、Agent。",
@@ -92,6 +266,7 @@ const monthlyUpdates = [
         ]
       },
       {
+        id: "2026-07-4",
         title: "避坑提醒",
         items: [
           "不要只看榜单，必须拿自己的任务实测。",
@@ -104,28 +279,91 @@ const monthlyUpdates = [
   {
     id: "2026-08",
     label: "2026 年 8 月",
+    updatedAt: "2026-08-01",
     title: "预留更新：作品集与真实场景",
     summary: "下月建议围绕作品集、真实用户反馈、工具成本和自动化流程继续更新。这里保留为可扩展模板。",
     cards: [
       {
+        id: "2026-08-1",
         title: "模型观察",
-        items: ["补充当月模型变化。", "更新国内外模型实测。", "记录适合自己的默认模型组合。"]
+        items: [
+          "补充当月模型变化。",
+          "更新国内外模型实测。",
+          "记录适合自己的默认模型组合。"
+        ]
       },
       {
+        id: "2026-08-2",
         title: "市场观察",
-        items: ["补充当月中国应用热点。", "观察短视频、电商、办公、教育场景。", "记录 1 个值得拆解的 AI 产品。"]
+        items: [
+          "补充当月中国应用热点。",
+          "观察短视频、电商、办公、教育场景。",
+          "记录 1 个值得拆解的 AI 产品。"
+        ]
       },
       {
+        id: "2026-08-3",
         title: "本月训练",
-        items: ["完成 1 个可展示作品。", "做 1 次真实用户反馈。", "整理 1 份项目复盘。"]
+        items: [
+          "完成 1 个可展示作品。",
+          "做 1 次真实用户反馈。",
+          "整理 1 份项目复盘。"
+        ]
       },
       {
+        id: "2026-08-4",
         title: "避坑提醒",
         items: ["复查上月结论。", "删除低频工具。", "把常用流程沉淀成模板。"]
       }
     ]
   }
 ];
+let monthlyUpdates = [];
+
+function normalizeMonthlyPayload(list) {
+  if (!Array.isArray(list)) return [];
+  return list
+    .map((item, index) => {
+      const safeCards = Array.isArray(item?.cards)
+        ? item.cards
+            .filter((card) => card && Array.isArray(card.items))
+            .map((card, cardIndex) => ({
+              title: card.title || `项目 ${cardIndex + 1}`,
+              items: card.items
+            }))
+        : [];
+      return {
+        id: item?.id || `2026-${String(index + 1).padStart(2, "0")}`,
+        label: item?.label || item?.month || `2026-${String(index + 1).padStart(2, "0")}`,
+        title: item?.title || "",
+        summary: item?.summary || "",
+        cards: safeCards,
+        updatedAt: item?.updatedAt || item?.date || ""
+      };
+    })
+    .filter((item) => item.cards.length || item.title || item.summary);
+}
+
+async function loadMonthlyUpdates() {
+  if (monthlyFallbackUpdates.length) {
+    try {
+      const response = await fetch("./assets/monthly-updates.json");
+      if (response.ok) {
+        const parsed = await response.json();
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          monthlyUpdates = normalizeMonthlyPayload(parsed);
+          return;
+        }
+      }
+    } catch (error) {
+      monthlyUpdates = monthlyFallbackUpdates;
+      return;
+    }
+  }
+  if (!monthlyUpdates.length) {
+    monthlyUpdates = monthlyFallbackUpdates;
+  }
+}
 
 const worldviewItems = [
   {
@@ -167,9 +405,9 @@ function renderWorldview() {
     .map(
       (item, index) => `
         <article class="worldview-card">
-          <span>${String(index + 1).padStart(2, "0")}</span>
-          <h3>${item.title}</h3>
-          <p>${item.text}</p>
+          <span>${safeText(String(index + 1).padStart(2, "0"))}</span>
+          <h3>${safeText(item.title)}</h3>
+          <p>${safeText(item.text)}</p>
         </article>
       `
     )
@@ -190,47 +428,83 @@ const models = [
   {
     name: "ChatGPT / OpenAI",
     desc: "适合通用推理、编程协作、多模态任务和产品原型。适合拿来当国际基准模型观察。",
-    tags: ["国际", "编程", "多模态", "Agent"]
+    tags: ["国际", "编程", "多模态", "Agent"],
+    scenario: "英文和复杂任务优先，适合做国际基准与代码协作。",
+    pricing: "按 token 计费，试错成本相对可控，API 接口生态成熟。",
+    strengths: ["稳定的推理与长链路规划", "生态集成完善", "插件/工具联动成熟"],
+    limits: ["对中文细节有时偏保守", "任务链越长成本越高"]
   },
   {
     name: "Claude",
     desc: "长文档阅读、写作润色、代码解释和复杂任务分解表现突出，适合深度学习与文本工作。",
-    tags: ["国际", "长文本", "写作", "代码"]
+    tags: ["国际", "长文本", "写作", "代码"],
+    scenario: "中文长文阅读、论文拆解、复杂文档写作反馈。",
+    pricing: "API + 平台体验并行，超长上下文能力更强。",
+    strengths: ["长文理解与结构化输出", "任务分解清晰", "写作质量稳定"],
+    limits: ["对代码执行链路仍需人工校验", "偏研究/写作流程，不适合每个场景高频工具调用"]
   },
   {
     name: "Gemini",
     desc: "与搜索、文档、视频理解和 Google 生态结合紧密，适合做多模态学习参考。",
-    tags: ["国际", "多模态", "搜索", "视频"]
+    tags: ["国际", "多模态", "搜索", "视频"],
+    scenario: "多模态学习、资料检索和短内容学习链路补全。",
+    pricing: "分版本与渠道差异较大，注意调用限额与模型版本切换。",
+    strengths: ["搜索与多模态联动", "学习场景融合能力", "适合做内容分析"],
+    limits: ["跨版本行为不一致", "某些场景结构化落地仍需后处理"]
   },
   {
     name: "DeepSeek",
     desc: "在中文、推理、代码和开源生态中影响力强，适合学习推理模型与低成本应用开发。",
-    tags: ["国内", "推理", "编程", "开源"]
+    tags: ["国内", "推理", "编程", "开源"],
+    scenario: "中文推理、编程小工具和低成本应用实验。",
+    pricing: "开源与托管路线并存，低门槛试验与私有化思路可行。",
+    strengths: ["中文任务友好", "性价比高", "适合模型对比与实验"],
+    limits: ["部分版本更新节奏快", "接口和实例差异需要验参"]
   },
   {
     name: "通义千问 / Qwen",
     desc: "阿里生态覆盖广，开源模型、云服务、多模态和企业应用都值得关注。",
-    tags: ["国内", "开源", "云服务", "多模态"]
+    tags: ["国内", "开源", "云服务", "多模态"],
+    scenario: "企业场景与本地化服务对接，适合做“落地第一层”。",
+    pricing: "云服务与开源权重并存，按调用与部署模式定。",
+    strengths: ["生态链完整", "国内业务兼容性好", "多模态起步快"],
+    limits: ["模型规模与配置影响体验", "同类竞品更新密集需持续复测"]
   },
   {
     name: "Kimi",
     desc: "长文本、资料阅读和中文信息处理是学习场景常用方向，适合做论文与资料助手。",
-    tags: ["国内", "长文本", "学习", "资料整理"]
+    tags: ["国内", "长文本", "学习", "资料整理"],
+    scenario: "学习资料总结、课程复盘、长文本问答。",
+    pricing: "多以套餐或 token 计费形式出现，需留意上下文长度溢出策略。",
+    strengths: ["长文本信息抓取", "中文语境表现稳定", "适合做知识提炼"],
+    limits: ["任务复杂度升高时，输出结构仍需二次校验", "与外部工具联动仍需模板约束"]
   },
   {
     name: "豆包 / 火山引擎",
     desc: "贴近内容生态和国内消费级应用，适合观察短视频、图像、语音和创作工具链。",
-    tags: ["国内", "短视频", "创作", "语音"]
+    tags: ["国内", "短视频", "创作", "语音"],
+    scenario: "选题、脚本、配音与素材生成的内容生产链。",
+    pricing: "偏内容生产平台化服务，按调用和素材资源分层。",
+    strengths: ["短视频生态融合度高", "对内容素材链条友好", "快速产出闭环"],
+    limits: ["深度业务决策支持较弱", "商业化报表与流程化复用能力有限"]
   },
   {
     name: "文心 / 腾讯混元 / 智谱 GLM",
     desc: "适合观察国内企业级、办公、搜索、政务和行业应用落地，对理解中国市场很有帮助。",
-    tags: ["国内", "企业应用", "办公", "行业"]
+    tags: ["国内", "企业应用", "办公", "行业"],
+    scenario: "企业办公协作、政府/行业场景知识问答、流程化资料处理。",
+    pricing: "多供应商定价差异明显，项目化选型更常见。",
+    strengths: ["行业适配能力", "中文知识工作流支持", "企业接入路径清晰"],
+    limits: ["体验一致性受版本影响", "通用任务上不一定领先"]
   },
   {
     name: "可灵 / 即梦 / 通义万相",
     desc: "偏视频与图像生成工具，适合短视频、广告、电商素材和创意表达训练。",
-    tags: ["国内", "视频", "图像", "内容生产"]
+    tags: ["国内", "视频", "图像", "内容生产"],
+    scenario: "内容创作环节的素材生产与创意实验。",
+    pricing: "多按图像/视频产出与算力计费，素材预算需前置定义。",
+    strengths: ["创作速度快", "视觉表现多样", "适合内容矩阵规模化试验"],
+    limits: ["版权与发布合规要求高", "结果稳定性波动"]
   }
 ];
 
@@ -275,6 +549,8 @@ const ranks = [
   { name: "AI 作品制作人", min: 940 },
   { name: "AI 原生创造者", min: 1320 }
 ];
+
+const PROJECT_UNLOCK_XP = 160;
 
 const achievements = [
   { id: "firstWeek", title: "点火", desc: "完成任意一周学习任务", test: () => state.doneWeeks.size >= 1 },
@@ -334,30 +610,47 @@ const templates = {
 const state = {
   track: "freshman",
   template: "prompt",
-  month: localStorage.getItem("ai-learning-month") || monthlyUpdates[0].id,
-  leads: JSON.parse(localStorage.getItem("ai-learning-leads") || "[]"),
-  doneWeeks: new Set(JSON.parse(localStorage.getItem("ai-learning-weeks") || "[]")),
-  doneProjects: new Set(JSON.parse(localStorage.getItem("ai-learning-projects") || "[]")),
-  bonusXp: Number(localStorage.getItem("ai-learning-bonus-xp") || "0"),
-  streak: Number(localStorage.getItem("ai-learning-streak") || "0"),
-  lastCheckIn: localStorage.getItem("ai-learning-last-checkin") || "",
-  dailyDone: localStorage.getItem("ai-learning-daily-done") || ""
+  month: getStoredString("ai-learning-month", "2026-07"),
+  leads: getStoredArray("ai-learning-leads", []),
+  doneWeeks: new Set(getStoredArray("ai-learning-weeks", [])),
+  doneProjects: new Set(getStoredArray("ai-learning-projects", [])),
+  weekProofs: getStoredObject("ai-learning-week-proofs", {}),
+  projectProofs: getStoredObject("ai-learning-project-proofs", {}),
+  bonusXp: getStoredNumber("ai-learning-bonus-xp", 0),
+  streak: getStoredNumber("ai-learning-streak", 0),
+  lastCheckIn: getStoredString("ai-learning-last-checkin", ""),
+  dailyDone: getStoredString("ai-learning-daily-done", "")
 };
 
-const todayKey = new Date().toISOString().slice(0, 10);
+function getTodayKey() {
+  return getLocalDateKey(new Date());
+}
+
+function ensureMonthExists() {
+  if (!monthlyUpdates.length) return;
+  if (!monthlyUpdates.find((entry) => entry.id === state.month)) {
+    state.month = monthlyUpdates[0].id;
+    if (!setStoredValue("ai-learning-month", state.month)) {
+      showStorageUnavailableNotice();
+    }
+  }
+}
 
 function renderTrack() {
   const track = tracks[state.track];
   const detail = document.querySelector("#trackDetail");
   detail.innerHTML = `
     <article class="track-card">
-      <h3>${track.title}</h3>
-      <p class="muted">${track.summary}</p>
-      <ul>${track.outcomes.map((item) => `<li>${item}</li>`).join("")}</ul>
+      <h3>${safeText(track.title)}</h3>
+      <p class="muted">${safeText(track.summary)}</p>
+      <ul>${safeList(track.outcomes)}</ul>
     </article>
     <div class="track-modules">
       ${track.modules
-        .map(([name, text]) => `<article class="module"><span>${name}</span><h3>${name}模块</h3><p class="muted">${text}</p></article>`)
+        .map(
+          ([name, text]) =>
+            `<article class="module"><span>${safeText(name)}</span><h3>${safeText(name)}模块</h3><p class="muted">${safeText(text)}</p></article>`
+        )
         .join("")}
     </div>
   `;
@@ -371,7 +664,7 @@ function renderWeeks() {
       return `
         <label class="week-item ${checked ? "done" : ""}">
           <input type="checkbox" data-week="${index}" ${checked ? "checked" : ""} />
-          <span><strong>${week} · ${title}</strong><small class="muted">${goal}</small></span>
+          <span><strong>${safeText(week)} · ${safeText(title)}</strong><small class="muted">${safeText(goal)}</small></span>
           <span class="tag">${checked ? "已完成" : "待学习"}</span>
         </label>
       `;
@@ -382,25 +675,27 @@ function renderWeeks() {
 
 function renderMonthOptions() {
   const select = document.querySelector("#monthSelect");
-  select.innerHTML = monthlyUpdates.map((month) => `<option value="${month.id}">${month.label}</option>`).join("");
+  select.innerHTML = (monthlyUpdates.length
+    ? monthlyUpdates
+    : [{ id: "2026-07", label: "2026 年 7 月" }]
+  )
+    .map((month) => `<option value="${safeText(month.id)}">${safeText(month.label || month.id)}</option>`)
+    .join("");
   select.value = state.month;
 }
 
 function renderMonthlyUpdate() {
   const update = monthlyUpdates.find((month) => month.id === state.month) || monthlyUpdates[0];
-  document.querySelector("#monthBadge").textContent = update.label;
-  document.querySelector("#monthTitle").textContent = update.title;
-  document.querySelector("#monthSummary").textContent = update.summary;
-  document.querySelector("#monthFocusCount").textContent = update.cards.length;
+  if (!update) {
+    return;
+  }
+  document.querySelector("#monthBadge").textContent = safeText(update.label || "");
+  document.querySelector("#monthTitle").textContent = safeText(update.title || "");
+  document.querySelector("#monthSummary").textContent = safeText(update.summary || "");
+  document.querySelector("#monthFocusCount").textContent = String(update.cards?.length || 0);
+  document.querySelector("#monthUpdated").textContent = update.updatedAt ? `更新日期：${safeText(update.updatedAt)}` : "";
   document.querySelector("#monthlyGrid").innerHTML = update.cards
-    .map(
-      (card) => `
-        <article class="monthly-card">
-          <h3>${card.title}</h3>
-          <ul>${card.items.map((item) => `<li>${item}</li>`).join("")}</ul>
-        </article>
-      `
-    )
+    .map((card) => `<article class="monthly-card"><h3>${safeText(card.title)}</h3><ul>${safeList(card.items)}</ul></article>`)
     .join("");
 }
 
@@ -408,16 +703,27 @@ function renderModels(keyword = "") {
   const grid = document.querySelector("#modelGrid");
   const query = keyword.trim().toLowerCase();
   const filtered = models.filter((model) => {
-    const text = `${model.name} ${model.desc} ${model.tags.join(" ")}`.toLowerCase();
+    const text = `${model.name} ${model.desc} ${(model.tags || []).join(" ")} ${(model.scenario || "")} ${(model.pricing || "")}`.toLowerCase();
     return text.includes(query);
   });
+  if (!filtered.length) {
+    grid.innerHTML =
+      '<div class="empty-state">未找到匹配模型，建议尝试关键词：编程、短视频、长文本、国内、国际。</div>';
+    return;
+  }
   grid.innerHTML = filtered
     .map(
       (model) => `
       <article class="model-card">
-        <h3>${model.name}</h3>
-        <p>${model.desc}</p>
-        <footer>${model.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}</footer>
+        <h3>${safeText(model.name)}</h3>
+        <p>${safeText(model.desc)}</p>
+        <p class="muted">${safeText(model.scenario || "")}</p>
+        <p class="muted"><strong>定价：</strong>${safeText(model.pricing || "")}</p>
+        <p><strong>优势：</strong>${safeText(Array.isArray(model.strengths) ? model.strengths.join("；") : "")}</p>
+        <p><strong>适用边界：</strong>${safeText(Array.isArray(model.limits) ? model.limits.join("；") : "")}</p>
+        <footer>${(model.tags || [])
+          .map((tag) => `<span class=\"tag\">${safeText(tag)}</span>`)
+          .join("")}</footer>
       </article>
     `
     )
@@ -428,13 +734,13 @@ function renderProjects() {
   document.querySelector("#projectGrid").innerHTML = projects
     .map((project, index) => {
       const done = state.doneProjects.has(index);
-      const locked = getXp() < 160 && index > 1;
+      const locked = getXp() < PROJECT_UNLOCK_XP && index > 1;
       return `
       <article class="project-card ${locked ? "locked" : ""}">
-        <h3>${project.title}</h3>
-        <p>${project.desc}</p>
-        <ul>${project.tasks.map((task) => `<li>${task}</li>`).join("")}</ul>
-        <button class="${done ? "primary-btn" : "ghost-btn"} small project-toggle" data-project="${index}">
+        <h3>${safeText(project.title)}</h3>
+        <p>${safeText(project.desc)}</p>
+        <ul>${safeList(project.tasks)}</ul>
+        <button class="${done ? "primary-btn" : "ghost-btn"} small project-toggle" ${locked ? "disabled" : ""} data-project="${index}">
           ${done ? "已点亮 +80 XP" : "点亮作品 +80 XP"}
         </button>
       </article>
@@ -453,11 +759,11 @@ function renderContact() {
     .map(([label, value]) => {
       const content =
         label === "邮箱"
-          ? `<button id="copyEmail" class="ghost-btn small" type="button">${value}</button>`
-          : `<strong>${value}</strong>`;
+          ? `<button id="copyEmail" class="ghost-btn small" type="button">${safeText(value)}</button>`
+          : `<strong>${safeText(value)}</strong>`;
       return `
         <div class="contact-item">
-          <span>${label}</span>
+          <span>${safeText(label)}</span>
           ${content}
         </div>
       `;
@@ -465,30 +771,230 @@ function renderContact() {
     .join("");
   document.querySelector("#contactList").insertAdjacentHTML(
     "afterbegin",
-    `<div class="qr-card"><img src="${ownerContact.qrImage}" alt="微信二维码" /><span>微信二维码</span></div>`
+    `<div class="qr-card"><img src="${safeText(ownerContact.qrImage)}" alt="微信二维码" loading="lazy" decoding="async" /><span>微信二维码</span></div>`
   );
   document.querySelector("#leadCount").textContent = state.leads.length;
+}
+
+function generateProgressReport() {
+  const currentMonth = monthlyUpdates.find((month) => month.id === state.month) || monthlyUpdates[0] || {};
+  const doneWeekList = weeks
+    .map((entry, index) => {
+      const [weekName] = entry;
+      if (!state.doneWeeks.has(index)) return "";
+      const proof = state.weekProofs[String(index)] || "未填写证据";
+      return `- ${weekName}：${escapeMarkdownLine(proof)}`;
+    })
+    .filter(Boolean);
+  const doneProjectsList = projects
+    .map((project, index) => {
+      if (!state.doneProjects.has(index)) return "";
+      const proof = state.projectProofs[index] || "未填写证据";
+      return `- ${project.title}（${escapeMarkdownLine(proof)}）`;
+    })
+    .filter(Boolean);
+  const rankName = getRank().name;
+  const today = formatReportDate(new Date());
+  const lines = [
+    "# AI 原生能力自学站 · 学习周报",
+    "",
+    `导出时间：${today}`,
+    `当前版本：${currentMonth.title ? escapeMarkdownLine(currentMonth.title) : "默认月度"}`,
+    `当前等级：${rankName}`,
+    `当前 XP：${getXp()}`,
+    `连续签到：${state.streak} 天`,
+    `已完成周任务：${state.doneWeeks.size} / ${weeks.length}`,
+    `已点亮作品：${state.doneProjects.size} / ${projects.length}`,
+    ""
+  ];
+  if (doneWeekList.length) {
+    lines.push("## 周任务进度", ...doneWeekList);
+  } else {
+    lines.push("## 周任务进度", "- 暂无完成任务");
+  }
+  lines.push("");
+  if (doneProjectsList.length) {
+    lines.push("## 作品里程碑", ...doneProjectsList);
+  } else {
+    lines.push("## 作品里程碑", "- 暂无点亮作品");
+  }
+  lines.push("");
+  lines.push("## 本周建议");
+  const nextWeekCandidates = weeks.filter((_, index) => !state.doneWeeks.has(index));
+  if (nextWeekCandidates.length) {
+    lines.push(`- 下一个推荐任务：${nextWeekCandidates[0][1]}（${nextWeekCandidates[0][2]}）`);
+  } else {
+    lines.push("- 本阶段任务完成，可切换到下月更新继续跟进。");
+  }
+  return lines.join("\n");
+}
+
+function downloadProgressReport() {
+  const report = generateProgressReport();
+  const blob = new Blob([`\ufeff${report}`], { type: "text/markdown;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const today = formatReportDate(new Date());
+  link.href = url;
+  link.download = `ai-learning-report-${today}.md`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+  showToast("学习周报已导出。");
 }
 
 function getOwnerEmail() {
   return `${ownerContact.emailParts[0]}@${ownerContact.emailParts[1]}.${ownerContact.emailParts[2]}`;
 }
 
-function openSponsorModal() {
-  const modal = document.querySelector("#sponsorModal");
+let previousActiveElement = null;
+let modalCloseResolver = null;
+let activeProofCleanup = null;
+
+function getModalFocusables(modal) {
+  if (!modal) return [];
+  return Array.from(
+    modal.querySelectorAll("button, [href], input, select, textarea")
+  ).filter((el) => !el.disabled && el.tabIndex !== -1);
+}
+
+function trapModalFocus(event) {
+  if (event.key !== "Tab") return;
+  const focusables = getModalFocusables(activeModal);
+  if (!focusables.length) {
+    event.preventDefault();
+    return;
+  }
+  const currentIndex = focusables.indexOf(document.activeElement);
+  if (event.shiftKey) {
+    const prev = focusables[(currentIndex - 1 + focusables.length) % focusables.length];
+    prev.focus();
+  } else {
+    const next = focusables[(currentIndex + 1) % focusables.length];
+    next.focus();
+  }
+  event.preventDefault();
+}
+
+let activeModal = null;
+
+function openModal(modal) {
+  previousActiveElement = document.activeElement;
+  activeModal = modal;
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  document.addEventListener("keydown", trapModalFocus);
+  requestAnimationFrame(() => {
+    const focusables = getModalFocusables(activeModal);
+    const first = focusables[0];
+    if (first) first.focus();
+  });
+}
+
+function closeModal() {
+  const modal = activeModal;
+  if (!modal) return;
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+  document.removeEventListener("keydown", trapModalFocus);
+  if (activeProofCleanup && modal.id === "proofModal") {
+    activeProofCleanup();
+    activeProofCleanup = null;
+  }
+  activeModal = null;
+  if (previousActiveElement && previousActiveElement.focus) {
+    previousActiveElement.focus();
+  }
+}
+
+function closeModalWithResult(result = null) {
+  if (!activeModal) return null;
+  const resolver = modalCloseResolver;
+  closeModal();
+  if (resolver) {
+    modalCloseResolver = null;
+    resolver(result);
+  }
+  return result;
+}
+
+function openSponsorModal() {
+  openModal(document.querySelector("#sponsorModal"));
 }
 
 function closeSponsorModal() {
-  const modal = document.querySelector("#sponsorModal");
-  modal.classList.remove("open");
-  modal.setAttribute("aria-hidden", "true");
+  closeModal();
+}
+
+function requestProof({ title = "补充实践证据", description = "" }) {
+  return new Promise((resolve) => {
+    const modal = document.querySelector("#proofModal");
+    const titleNode = modal.querySelector("#proofTitle");
+    const descNode = modal.querySelector("#proofDesc");
+    const input = modal.querySelector("#proofInput");
+    const submit = modal.querySelector("#proofSubmit");
+    const cancel = modal.querySelector("#proofCancel");
+    const close = modal.querySelector("#proofClose");
+
+    titleNode.textContent = title;
+    descNode.textContent = description;
+    input.value = "";
+    modalCloseResolver = resolve;
+
+    openModal(modal);
+
+    let done = false;
+    const finish = (value) => {
+      if (done) return;
+      done = true;
+      activeProofCleanup = null;
+      cleanup();
+      closeModalWithResult(value);
+    };
+
+    const handleSubmit = () => {
+      const proof = toTrimmed(input.value);
+      finish(proof || null);
+    };
+    const handleCancel = () => {
+      finish(null);
+    };
+    const handleKeydown = (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+        event.preventDefault();
+        handleSubmit();
+      }
+    };
+    const cleanup = () => {
+      submit.removeEventListener("click", handleSubmit);
+      cancel.removeEventListener("click", handleCancel);
+      close.removeEventListener("click", handleCancel);
+      input.removeEventListener("keydown", handleKeydown);
+      modal.removeEventListener("click", handleBackdropClose);
+    };
+    activeProofCleanup = cleanup;
+    const handleBackdropClose = (event) => {
+      if (event.target === modal) {
+        handleCancel();
+      }
+    };
+
+    submit.addEventListener("click", handleSubmit);
+    cancel.addEventListener("click", handleCancel);
+    close.addEventListener("click", handleCancel);
+    input.addEventListener("keydown", handleKeydown);
+    modal.addEventListener("click", handleBackdropClose);
+  });
 }
 
 function saveLead(lead) {
   state.leads.unshift(lead);
-  localStorage.setItem("ai-learning-leads", JSON.stringify(state.leads));
+  if (!setStoredValue("ai-learning-leads", state.leads)) {
+    showStorageUnavailableNotice();
+  }
   renderContact();
 }
 
@@ -506,13 +1012,12 @@ function downloadLeadsCsv() {
     lead.interest,
     lead.message
   ]);
-  const escapeCell = (value) => `"${String(value || "").replaceAll('"', '""')}"`;
-  const csv = [headers, ...rows].map((row) => row.map(escapeCell).join(",")).join("\n");
+  const csv = [headers, ...rows].map((row) => row.map(escapeCsvCell).join(",")).join("\n");
   const blob = new Blob(["\ufeff", csv], { type: "text/csv;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `ai-learning-leads-${todayKey}.csv`;
+  link.download = `ai-learning-leads-${getTodayKey()}.csv`;
   document.body.append(link);
   link.click();
   link.remove();
@@ -557,6 +1062,7 @@ function updateGameHud() {
 }
 
 function renderDailyChallenge() {
+  const todayKey = getTodayKey();
   const index = new Date().getDay();
   const [title, desc] = dailyChallenges[index];
   const done = state.dailyDone === todayKey;
@@ -574,8 +1080,8 @@ function renderBadges() {
       const unlocked = badge.test();
       return `
         <article class="achievement ${unlocked ? "unlocked" : ""}">
-          <strong>${unlocked ? badge.title : "未解锁"}</strong>
-          <span>${badge.desc}</span>
+          <strong>${safeText(unlocked ? badge.title : "未解锁")}</strong>
+          <span>${safeText(badge.desc)}</span>
         </article>
       `;
     })
@@ -583,25 +1089,35 @@ function renderBadges() {
 }
 
 function persistGameState() {
-  localStorage.setItem("ai-learning-projects", JSON.stringify([...state.doneProjects]));
-  localStorage.setItem("ai-learning-bonus-xp", String(state.bonusXp));
-  localStorage.setItem("ai-learning-streak", String(state.streak));
-  localStorage.setItem("ai-learning-last-checkin", state.lastCheckIn);
-  localStorage.setItem("ai-learning-daily-done", state.dailyDone);
+  const isStorageOk =
+    setStoredValue("ai-learning-projects", [...state.doneProjects]) &&
+    setStoredValue("ai-learning-week-proofs", state.weekProofs) &&
+    setStoredValue("ai-learning-project-proofs", state.projectProofs) &&
+    setStoredValue("ai-learning-bonus-xp", state.bonusXp) &&
+    setStoredValue("ai-learning-streak", state.streak) &&
+    setStoredValue("ai-learning-last-checkin", state.lastCheckIn) &&
+    setStoredValue("ai-learning-daily-done", state.dailyDone);
+  if (!isStorageOk) {
+    showStorageUnavailableNotice();
+  }
 }
 
-function showToast(message) {
+function showToast(message, duration = 1800) {
   const oldToast = document.querySelector(".toast");
   if (oldToast) oldToast.remove();
+  const region = document.querySelector("#statusRegion");
+  if (region) region.textContent = message;
   const toast = document.createElement("div");
   toast.className = "toast";
+  toast.setAttribute("role", "status");
+  toast.setAttribute("aria-live", "polite");
   toast.textContent = message;
   document.body.append(toast);
   requestAnimationFrame(() => toast.classList.add("show"));
   setTimeout(() => {
     toast.classList.remove("show");
     setTimeout(() => toast.remove(), 220);
-  }, 1800);
+  }, duration);
 }
 
 function refreshGame() {
@@ -619,25 +1135,64 @@ document.querySelectorAll("[data-track]").forEach((button) => {
   });
 });
 
-document.querySelector("#weekList").addEventListener("change", (event) => {
+document.querySelector("#weekList").addEventListener("change", async (event) => {
   const input = event.target.closest("[data-week]");
   if (!input) return;
   const index = Number(input.dataset.week);
-  if (input.checked) state.doneWeeks.add(index);
-  else state.doneWeeks.delete(index);
-  localStorage.setItem("ai-learning-weeks", JSON.stringify([...state.doneWeeks]));
+  const proofKey = String(index);
+  if (input.checked && !state.weekProofs[proofKey]) {
+    const proof = await requestProof({
+      title: "补充周度实践证据",
+      description: "请写一句本周完成证据（学习内容、复盘、链接或产出）。"
+    });
+    if (!proof || !proof.trim()) {
+      input.checked = false;
+      showToast("请先填写一条实践证据，再完成任务。", 1600);
+      return;
+    }
+    state.weekProofs[proofKey] = proof.trim();
+  }
+  if (!input.checked) {
+    delete state.weekProofs[proofKey];
+    state.doneWeeks.delete(index);
+  } else {
+    state.doneWeeks.add(index);
+  }
+  if (!setStoredValue("ai-learning-weeks", [...state.doneWeeks]) || !setStoredValue("ai-learning-week-proofs", state.weekProofs)) {
+    showStorageUnavailableNotice();
+  }
   renderWeeks();
   renderProjects();
   renderBadges();
   showToast(input.checked ? "任务完成，获得 60 XP。" : "任务已取消，XP 已重新计算。");
 });
 
-document.querySelector("#projectGrid").addEventListener("click", (event) => {
+document.querySelector("#projectGrid").addEventListener("click", async (event) => {
   const button = event.target.closest("[data-project]");
   if (!button) return;
   const index = Number(button.dataset.project);
-  if (state.doneProjects.has(index)) state.doneProjects.delete(index);
-  else state.doneProjects.add(index);
+  const locked = getXp() < PROJECT_UNLOCK_XP && index > 1;
+  if (button.disabled || locked) {
+    showToast("这个作品还没解锁，请先累积 160 XP。", 1600);
+    return;
+  }
+  if (!state.doneProjects.has(index) && !state.projectProofs[index]) {
+    const proof = await requestProof({
+      title: "补充作品完成证据",
+      description: "请写一句该作品的完成依据（链接、文件名、提交口径）。"
+    });
+    if (!proof || !proof.trim()) {
+      showToast("请先填写一条作品完成证据。", 1600);
+      return;
+    }
+    state.projectProofs[index] = proof.trim();
+  }
+  if (state.doneProjects.has(index)) {
+    state.doneProjects.delete(index);
+    delete state.projectProofs[index];
+  } else {
+    state.doneProjects.add(index);
+  }
   persistGameState();
   renderProjects();
   refreshGame();
@@ -650,7 +1205,9 @@ document.querySelector("#modelSearch").addEventListener("input", (event) => {
 
 document.querySelector("#monthSelect").addEventListener("change", (event) => {
   state.month = event.target.value;
-  localStorage.setItem("ai-learning-month", state.month);
+  if (!setStoredValue("ai-learning-month", state.month)) {
+    showStorageUnavailableNotice();
+  }
   renderMonthlyUpdate();
 });
 
@@ -664,17 +1221,19 @@ document.querySelectorAll("[data-template]").forEach((button) => {
 });
 
 document.querySelector("#copyTemplate").addEventListener("click", async () => {
-  await navigator.clipboard.writeText(templates[state.template]);
+  const ok = await copyText(templates[state.template]);
   const button = document.querySelector("#copyTemplate");
-  button.textContent = "已复制";
+  button.textContent = ok ? "已复制" : "复制失败";
+  if (!ok) showToast("复制失败，请长按选择文本手动复制。");
   setTimeout(() => {
     button.textContent = "复制模板";
   }, 1200);
 });
 
 document.querySelector("#checkInButton").addEventListener("click", () => {
+  const todayKey = getTodayKey();
   if (state.lastCheckIn === todayKey) return;
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const yesterday = yesterdayLocalKey();
   state.streak = state.lastCheckIn === yesterday ? state.streak + 1 : 1;
   state.lastCheckIn = todayKey;
   state.bonusXp += 20;
@@ -684,6 +1243,7 @@ document.querySelector("#checkInButton").addEventListener("click", () => {
 });
 
 document.querySelector("#dailyButton").addEventListener("click", () => {
+  const todayKey = getTodayKey();
   if (state.dailyDone === todayKey) return;
   state.dailyDone = todayKey;
   state.bonusXp += 35;
@@ -692,20 +1252,56 @@ document.querySelector("#dailyButton").addEventListener("click", () => {
   showToast("今日挑战完成，获得 35 XP。");
 });
 
+document.querySelector("#exportReport").addEventListener("click", downloadProgressReport);
+
 document.querySelector("#registerForm").addEventListener("submit", (event) => {
   event.preventDefault();
   const form = event.currentTarget;
   const data = new FormData(form);
+  const name = toTrimmed(data.get("name"));
+  const contact = toTrimmed(data.get("contact"));
+  const profile = data.get("profile");
+  const interest = data.get("interest");
+  const message = toTrimmed(data.get("message"));
+  if (!name || name.length < 2 || !contact || contact.length < 2 || !profile || !interest) {
+    showToast("请完整填写必填项并按要求填写。");
+    return;
+  }
+  if (!isValidContact(contact)) {
+    showToast("联系方式格式不对：请输入微信号（6-24位）、手机号或完整邮箱。");
+    return;
+  }
   saveLead({
     createdAt: new Date().toLocaleString("zh-CN", { hour12: false }),
-    name: data.get("name"),
-    contact: data.get("contact"),
-    profile: data.get("profile"),
-    interest: data.get("interest"),
-    message: data.get("message")
+    name,
+    contact,
+    profile,
+    interest,
+    message
   });
   form.reset();
   showToast("注册成功，信息已保存在本机。");
+  setTimeout(() => document.querySelector("#game").scrollIntoView({ behavior: "smooth", block: "start" }), 300);
+});
+
+document.querySelector("#clearLeads").addEventListener("click", () => {
+  if (!state.leads.length) {
+    showToast("当前没有报名数据。", 1400);
+    return;
+  }
+  const needBackup = window.confirm("清空前建议先导出 CSV，是否先导出备份？");
+  if (needBackup) {
+    downloadLeadsCsv();
+  }
+  if (!window.confirm("确认清空所有本机报名数据？清除后可从页面手动恢复不了。")) {
+    return;
+  }
+  state.leads = [];
+  if (!removeStoredValue("ai-learning-leads")) {
+    showStorageUnavailableNotice();
+  }
+  renderContact();
+  showToast("报名数据已清空。", 1600);
 });
 
 document.querySelector("#exportLeads").addEventListener("click", downloadLeadsCsv);
@@ -713,9 +1309,9 @@ document.querySelector("#exportLeads").addEventListener("click", downloadLeadsCs
 document.querySelector("#contactList").addEventListener("click", async (event) => {
   const button = event.target.closest("#copyEmail");
   if (!button) return;
-  await navigator.clipboard.writeText(getOwnerEmail());
-  button.textContent = "已复制";
-  showToast("邮箱已复制。");
+  const ok = await copyText(getOwnerEmail());
+  button.textContent = ok ? "已复制" : "复制失败";
+  showToast(ok ? "邮箱已复制。" : "复制失败，请长按邮箱文本手动复制。");
   setTimeout(() => {
     button.textContent = "点击复制";
   }, 1200);
@@ -725,23 +1321,36 @@ document.querySelector("#sponsorNav").addEventListener("click", openSponsorModal
 document.querySelector("#sponsorFloat").addEventListener("click", openSponsorModal);
 document.querySelector("#sponsorClose").addEventListener("click", closeSponsorModal);
 document.querySelector("#sponsorModal").addEventListener("click", (event) => {
-  if (event.target.id === "sponsorModal") closeSponsorModal();
+  if (event.target.id === "sponsorModal") closeModal();
 });
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") closeSponsorModal();
+  if (event.key === "Escape") closeModalWithResult(null);
 });
 document.querySelector("#sponsorCopyEmail").addEventListener("click", async () => {
-  await navigator.clipboard.writeText(getOwnerEmail());
+  const ok = await copyText(getOwnerEmail());
+  if (!ok) {
+    showToast("复制失败，请手动识别弹窗中的邮箱。请在下一步联系。", 2200);
+    return;
+  }
   showToast("邮箱已复制，可联系赞助合作。");
 });
 
-renderTrack();
-renderWorldview();
-renderMonthOptions();
-renderMonthlyUpdate();
-renderWeeks();
-renderModels();
-renderProjects();
-renderTemplate();
-renderContact();
-refreshGame();
+async function bootstrap() {
+  await loadMonthlyUpdates();
+  if (!state.month || !monthlyUpdates.length) {
+    state.month = "2026-07";
+  }
+  ensureMonthExists();
+  renderTrack();
+  renderWorldview();
+  renderMonthOptions();
+  renderMonthlyUpdate();
+  renderWeeks();
+  renderModels();
+  renderProjects();
+  renderTemplate();
+  renderContact();
+  refreshGame();
+}
+
+bootstrap();

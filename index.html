@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <p id="statusRegion" class="sr-only" role="status" aria-live="polite"></p>
     <header class="topbar">
       <a class="brand" href="#home" aria-label="回到首页">
         <span class="brand-mark">AI</span>
@@ -85,7 +86,10 @@ tools: search, code, video</pre>
             <p class="eyebrow">Game Rules</p>
             <h2>像打游戏一样学 AI</h2>
           </div>
-          <button id="checkInButton" class="primary-btn">今日签到 +20 XP</button>
+          <div class="section-actions">
+            <button id="exportReport" class="ghost-btn">导出学习周报</button>
+            <button id="checkInButton" class="primary-btn">今日签到 +20 XP</button>
+          </div>
         </div>
         <div class="game-grid">
           <article class="level-card">
@@ -147,6 +151,7 @@ tools: search, code, video</pre>
             <span id="monthBadge" class="badge"></span>
             <h3 id="monthTitle"></h3>
             <p id="monthSummary" class="muted"></p>
+            <p id="monthUpdated" class="month-updated"></p>
           </div>
           <div class="monthly-score">
             <strong id="monthFocusCount">0</strong>
@@ -205,6 +210,19 @@ tools: search, code, video</pre>
         <div id="projectGrid" class="project-grid"></div>
       </section>
 
+      <div id="proofModal" class="modal-backdrop" aria-hidden="true">
+        <section class="proof-modal" role="dialog" aria-modal="true" aria-labelledby="proofTitle">
+          <button id="proofClose" class="modal-close" type="button" aria-label="关闭证据弹窗">×</button>
+          <h3 id="proofTitle">补充实践证据</h3>
+          <p id="proofDesc" class="muted">请填一行本次任务完成依据：链接、文件名、输出结果或复盘要点。</p>
+          <textarea id="proofInput" class="proof-input" rows="5" maxlength="280" placeholder="例如：上传了 xxx 文件 / 完成了 xxx 产出"></textarea>
+          <div class="proof-actions">
+            <button id="proofCancel" class="ghost-btn small" type="button">取消</button>
+            <button id="proofSubmit" class="primary-btn small" type="button">提交证据</button>
+          </div>
+        </section>
+      </div>
+
       <section id="toolkit" class="section toolkit">
         <div>
           <p class="eyebrow">Toolkit</p>
@@ -228,17 +246,21 @@ tools: search, code, video</pre>
             <p class="eyebrow">Join & Contact</p>
             <h2>注册学习，与我联系</h2>
           </div>
-          <button id="exportLeads" class="ghost-btn">导出报名 CSV</button>
+          <div class="register-actions">
+            <button id="exportLeads" class="ghost-btn">导出报名 CSV</button>
+            <button id="clearLeads" class="ghost-btn" type="button">清空报名数据</button>
+          </div>
         </div>
         <div class="register-grid">
           <form id="registerForm" class="register-form">
             <label>
               <span>姓名</span>
-              <input name="name" type="text" placeholder="怎么称呼你" required />
+              <input name="name" type="text" placeholder="怎么称呼你" minlength="2" maxlength="20" required />
             </label>
             <label>
               <span>联系方式</span>
-              <input name="contact" type="text" placeholder="微信 / 手机 / 邮箱" required />
+              <input name="contact" type="text" placeholder="微信 / 手机 / 邮箱" minlength="2" maxlength="40" required aria-describedby="contactHint" />
+              <p class="form-note" id="contactHint">支持微信号、手机号（仅数字）或邮箱，不要写空格。</p>
             </label>
             <label>
               <span>身份或阶段</span>
@@ -264,10 +286,11 @@ tools: search, code, video</pre>
             </label>
             <label class="full-field">
               <span>留言</span>
-              <textarea name="message" rows="4" placeholder="你的目标、基础、想解决的问题"></textarea>
+              <textarea name="message" rows="4" maxlength="500" placeholder="你的目标、基础、想解决的问题"></textarea>
             </label>
             <button class="primary-btn" type="submit">提交注册</button>
             <p class="form-note">当前静态版会把报名信息保存在本机浏览器，适合本地演示和导出跟进；正式上线可接入后端、表单服务或 CRM。</p>
+            <p class="form-note">隐私说明：报名信息存于浏览器 `localStorage`，清理浏览器缓存会清空本机数据，清空按钮可手动重置。</p>
           </form>
           <aside class="contact-card">
             <span class="badge">联系我</span>
@@ -306,7 +329,7 @@ tools: search, code, video</pre>
           </div>
         </div>
         <div class="sponsor-action">
-          <img src="./assets/sponsor-wechat-pay.jpg" alt="微信支付赞助码" />
+          <img src="./assets/sponsor-wechat-pay.jpg" alt="微信支付赞助码" loading="lazy" decoding="async" />
           <p>微信扫码赞助，支持这个 AI 学习站持续更新。</p>
           <button id="sponsorCopyEmail" class="ghost-btn small" type="button">复制邮箱联系</button>
         </div>

@@ -41,9 +41,9 @@ http://localhost:8765
 
 ## 维护方式
 
-每月更新内容位于 `app.js` 的 `monthlyUpdates` 数组中。
+每月更新内容位于 `assets/monthly-updates.json`。
 
-新增一个月份时，复制已有结构并更新：
+新增一个月份时，追加一条数据并更新：
 
 - `label`
 - `title`
@@ -52,15 +52,57 @@ http://localhost:8765
 
 模型对比、路线、项目和模板也都集中在 `app.js` 中，方便后续迭代。
 
+## 参与贡献
+
+这个项目以可持续更新为核心，欢迎通过 Issue 与 PR 一起共建。
+
+### 如何提交月更
+
+1. 在 `assets/monthly-updates.json` 新增或更新当月条目。
+2. 建议同步更新 `README.md` 中“本月重点/观察主题”说明（可选）。
+3. 在 PR 说明里写明：
+   - 更新月份 ID（如 `2026-09`）
+   - 核心场景与观察结论
+   - 是否含模型、应用场景、作业建议与避坑三部分
+   - 是否已本地验证
+4. 通过页面中“每月更新区”手动验证：月份切换、卡片展示、更新日期是否正常。
+
+### 内容质量标准（建议执行）
+
+- 更新内容必须可复核，优先给出对照任务而非空口号。
+- 模型对比避免绝对化结论，明确适用场景和边界。
+- 每月至少保留 1 条中国应用场景观察与 1 条作品实践建议。
+- 涉及证据链时使用来源链条，不要出现无来源的结论断言。
+
+### 开发与提交流程
+
+1. `Fork` 仓库。
+2. 新建分支。
+3. 运行：
+
+```bash
+python3 -m http.server 8765
+node --check app.js
+```
+
+4. 打开 `http://localhost:8765` 验证页面交互。
+5. 提交 PR 并附带变更截图（可选，但鼓励）。
+
+### 联系与披露
+
+- 邮箱不在页面上直接明文展示，通过复制按钮提供。
+- 赞助与合作二维码图片与联系信息独立放在 `assets/` 目录，避免直接泄露联系方式。
+
+更多流程和模板见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+
 ## 部署建议
 
-可以直接使用 GitHub Pages 部署：
+仓库已接入 GitHub Actions 发布：
 
-1. 进入仓库 Settings
-2. 打开 Pages
-3. Source 选择 `Deploy from a branch`
-4. Branch 选择 `main`，目录选择 `/root`
-5. 保存后等待 GitHub Pages 生成访问地址
+1. 确认 `Settings` → `Pages` 的 Source 为 `GitHub Actions`。
+2. 合并到 `main` 后 GitHub Actions 会自动构建并部署静态文件。
+3. 推送成功后在 Actions 页面可查看部署运行状态。
+4. 访问地址可在 Pages 的 `Visit site` 中获取。
 
 ## 项目定位
 

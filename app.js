@@ -112,6 +112,129 @@ const showcaseItems = [
   }
 ];
 
+const agentRoles = [
+  {
+    name: "Prompt 工程师",
+    source: "engineering-prompt-engineer",
+    level: "入门必修",
+    useFor: "把模糊需求变成稳定、可复用的任务提示。",
+    input: "目标、对象、限制、示例、输出格式。",
+    output: "结构化 Prompt、测试用例、失败修正建议。",
+    check: "同一任务换 2 个模型仍能得到可用结果。",
+    practice: "把“帮我写一篇文章”改成一条可复用内容生产 Prompt。"
+  },
+  {
+    name: "Agent 工作流架构师",
+    source: "engineering-multi-agent-systems-architect",
+    level: "进阶核心",
+    useFor: "判断什么时候用单 Agent，什么时候拆成多角色协作。",
+    input: "任务目标、可用工具、风险、人工审核点。",
+    output: "角色分工、输入输出契约、失败恢复路径。",
+    check: "每个角色都说得清“负责什么”和“不负责什么”。",
+    practice: "设计一个“资料收集 → 核验 → 写作 → 审稿”的四步工作流。"
+  },
+  {
+    name: "事实核验员",
+    source: "product-trend-researcher / research workflow",
+    level: "可信度底座",
+    useFor: "检查模型、工具、市场判断是否有来源和边界。",
+    input: "待核查结论、来源链接、复核日期。",
+    output: "证据等级、疑点清单、可引用/不可引用判断。",
+    check: "重要结论至少有一个可靠来源或一条实测记录。",
+    practice: "为本月模型观察补 3 条官方来源和 1 条实测任务。"
+  },
+  {
+    name: "最小改动工程师",
+    source: "engineering-minimal-change-engineer",
+    level: "工程习惯",
+    useFor: "修 bug 或补小功能时控制范围，避免越改越乱。",
+    input: "问题描述、相关文件、验收标准。",
+    output: "最小 diff、风险说明、验证记录。",
+    check: "只改和问题直接相关的文件，且能说明为什么。",
+    practice: "修一个按钮文案或表单校验问题，并写出验证步骤。"
+  },
+  {
+    name: "代码审查员",
+    source: "engineering-code-reviewer",
+    level: "质量关卡",
+    useFor: "发现 bug、回归风险、安全隐患和缺测试。",
+    input: "diff、运行方式、核心用户路径。",
+    output: "按严重级别排列的问题清单。",
+    check: "每条问题都能指向具体文件、场景和后果。",
+    practice: "审查一次页面表单改动，找出隐私和交互风险。"
+  },
+  {
+    name: "技术手册作者",
+    source: "engineering-technical-writer",
+    level: "开源必备",
+    useFor: "让项目易读、易运行、易贡献、易复现。",
+    input: "功能说明、命令、数据格式、常见问题。",
+    output: "README、贡献指南、Schema 文档、验证清单。",
+    check: "新人照着文档能在 10 分钟内跑起来。",
+    practice: "给一个 JSON 数据文件补字段说明和提交前检查。"
+  },
+  {
+    name: "GEO / AI 搜索优化官",
+    source: "marketing-agentic-search-optimizer",
+    level: "增长进阶",
+    useFor: "让 AI 搜索、问答引擎和浏览器 agent 更容易理解网站。",
+    input: "页面结构、FAQ、llms.txt、结构化数据。",
+    output: "可引用答案块、Schema 建议、任务可完成性检查。",
+    check: "用户问问题时，AI 能引用清楚段落，而不是猜测。",
+    practice: "为一个 FAQ 补 2 句可直接引用的短答案。"
+  },
+  {
+    name: "增长黑客",
+    source: "marketing-growth-hacker",
+    level: "传播实验",
+    useFor: "设计 Star、分享、复访和贡献转化路径。",
+    input: "访问入口、CTA、用户行为、传播素材。",
+    output: "增长实验、指标、预期影响、复盘方式。",
+    check: "每个动作都有可观察指标，如 Star、Issue、复访。",
+    practice: "设计一个“完成周报后分享到 GitHub Issue”的流程。"
+  },
+  {
+    name: "中文总编辑",
+    source: "marketing-book-co-author / content creator",
+    level: "表达校准",
+    useFor: "把空泛口号改成具体、克制、有证据的中文表达。",
+    input: "页面文案、目标读者、证据材料。",
+    output: "结构调整、标题建议、删改清单。",
+    check: "读者能知道今天该做什么，而不是只被鼓舞。",
+    practice: "把一段 AI 学习口号改成 3 个可执行步骤。"
+  },
+  {
+    name: "短视频工作流教练",
+    source: "marketing-short-video-editing-coach / douyin-strategist",
+    level: "内容生产",
+    useFor: "把选题、脚本、分镜、剪辑和复盘串成流程。",
+    input: "目标人群、平台、主题、素材、指标。",
+    output: "选题表、脚本、分镜、发布与复盘清单。",
+    check: "输出能直接进入拍摄或剪辑，而不是停在想法。",
+    practice: "用 AI 做 10 个选题，挑 1 个写成 60 秒口播稿。"
+  },
+  {
+    name: "行为激励设计师",
+    source: "product-behavioral-nudge-engine",
+    level: "留存设计",
+    useFor: "降低学习焦虑，把大任务拆成能完成的小胜利。",
+    input: "学习目标、用户状态、卡点、时间预算。",
+    output: "最低完成版、标准版、挑战版和复盘提示。",
+    check: "学习者就算只有 5 分钟，也知道下一步能做什么。",
+    practice: "把一个 2 小时项目拆成 5 分钟、30 分钟、2 小时三档。"
+  },
+  {
+    name: "品牌守护者",
+    source: "design-brand-guardian",
+    level: "长期 IP",
+    useFor: "统一定位、命名、视觉气质和对外表达。",
+    input: "目标人群、价值主张、页面文案、视觉元素。",
+    output: "品牌口径、命名建议、该说/不该说清单。",
+    check: "用户能用一句话向别人介绍这个项目。",
+    practice: "为本站写一句不超过 24 字的传播口号。"
+  }
+];
+
 function safeParseJson(raw, fallback) {
   try {
     const parsed = JSON.parse(raw);
@@ -875,6 +998,31 @@ function renderProjects() {
     .join("");
 }
 
+function renderAgentRoles() {
+  document.querySelector("#agentRoleGrid").innerHTML = agentRoles
+    .map(
+      (role) => `
+      <article class="agent-role-card">
+        <div class="agent-role-top">
+          <span class="badge">${safeText(role.level)}</span>
+          <small>${safeText(role.source)}</small>
+        </div>
+        <h3>${safeText(role.name)}</h3>
+        <p>${safeText(role.useFor)}</p>
+        <dl>
+          <div><dt>输入</dt><dd>${safeText(role.input)}</dd></div>
+          <div><dt>产出</dt><dd>${safeText(role.output)}</dd></div>
+          <div><dt>验收</dt><dd>${safeText(role.check)}</dd></div>
+        </dl>
+        <footer>
+          <strong>练习：</strong>${safeText(role.practice)}
+        </footer>
+      </article>
+    `
+    )
+    .join("");
+}
+
 function renderTemplate() {
   document.querySelector("#templateText").textContent = templates[state.template];
 }
@@ -1635,6 +1783,7 @@ async function bootstrap() {
   renderModels();
   renderProjects();
   renderShowcase();
+  renderAgentRoles();
   renderTemplate();
   renderContact();
   renderFeedbackCount();

@@ -938,8 +938,102 @@ h3 {
 }
 
 .open-source-section,
-.faq-section {
+.faq-section,
+.agent-academy-section {
   padding-top: 56px;
+}
+
+.agent-academy-note {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 18px 0;
+  padding: 14px 16px;
+  color: #4f443d;
+  background: rgba(95, 127, 82, 0.1);
+  border: 1px solid rgba(95, 127, 82, 0.22);
+  border-radius: 8px;
+  line-height: 1.7;
+}
+
+.agent-academy-note strong {
+  flex: 0 0 auto;
+  color: var(--leaf-dark);
+}
+
+.agent-academy-note a {
+  color: var(--jujube-dark);
+  font-weight: 800;
+}
+
+.agent-role-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.agent-role-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  background: rgba(255, 252, 246, 0.86);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.agent-role-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.agent-role-top small {
+  max-width: 52%;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.agent-role-card h3 {
+  margin: 0;
+}
+
+.agent-role-card p,
+.agent-role-card dd,
+.agent-role-card footer {
+  color: #5c4f47;
+  line-height: 1.7;
+}
+
+.agent-role-card dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.agent-role-card dl div {
+  display: grid;
+  gap: 4px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(119, 88, 62, 0.14);
+}
+
+.agent-role-card dt {
+  color: var(--jujube-dark);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.agent-role-card dd {
+  margin: 0;
+}
+
+.agent-role-card footer {
+  padding-top: 10px;
+  border-top: 1px solid rgba(119, 88, 62, 0.14);
 }
 
 .open-source-grid {
@@ -1530,6 +1624,7 @@ h3 {
   .faq-grid,
   .model-grid,
   .project-grid,
+  .agent-role-grid,
   .worldview-grid,
   .monthly-grid,
   .game-grid {
@@ -1561,6 +1656,7 @@ h3 {
   .faq-grid,
   .model-grid,
   .project-grid,
+  .agent-role-grid,
   .worldview-grid,
   .monthly-grid,
   .game-grid,
@@ -1580,6 +1676,10 @@ h3 {
 
   .register-form {
     grid-template-columns: 1fr;
+  }
+
+  .agent-academy-note {
+    flex-direction: column;
   }
 
   .segmented {

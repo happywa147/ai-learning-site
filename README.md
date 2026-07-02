@@ -47,6 +47,7 @@
 - 作品样例库：展示学习成果应该长什么样
 - 作品集项目：学习助教、短视频脚本工厂、知识库问答、Agent 小工具等
 - Prompt、Agent、Skill 模板库
+- Agent 角色学院：把专业 agent 指令库改造成适合学习者练习的中文角色卡
 - 反馈循环：本地记录反馈，可导出 CSV 供月更参考
 - 学习周报：导出 Markdown 学习报告
 - 注册与联系：本地保存报名草稿，可复制联系内容或生成邮件草稿
@@ -179,6 +180,7 @@ node scripts/validate-content.js
 
 - 邮箱不在页面上直接明文展示，通过复制按钮提供。
 - 赞助与合作二维码图片与联系信息独立放在 `assets/` 目录，避免直接泄露联系方式。
+- Agent 角色学院的设计灵感参考 [msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)；该项目使用 MIT License。本站没有原样搬运其长篇 agent prompt，而是面向中文 AI 学习场景重新组织为学习角色卡。
 
 更多流程和模板见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 

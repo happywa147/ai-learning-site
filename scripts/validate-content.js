@@ -110,9 +110,41 @@ function validateKeyFiles() {
   }
 }
 
+function validateResourceRadar() {
+  const app = readText("app.js");
+  const match = app.match(/const resourceRadarItems = \[([\s\S]*?)\n\];\n\nconst agentRoleCategories/);
+  if (!match) {
+    fail("app.js 缺少 resourceRadarItems 数据");
+    return;
+  }
+
+  const body = match[1];
+  const itemBlocks = body.split(/\n  \{/).slice(1);
+  if (itemBlocks.length < 10) fail("resourceRadarItems 至少应包含 10 个资源");
+  itemBlocks.forEach((block, index) => {
+    const prefix = `resourceRadarItems[${index}]`;
+    ["name", "url", "type", "license", "licenseSpdx", "lastVerified", "source", "action", "useFor", "adapt"].forEach((field) => {
+      if (!new RegExp(`${field}:\\s*\"[^\"]+\"`).test(block)) fail(`${prefix}.${field} 缺失`);
+    });
+    const url = block.match(/url:\s*"([^"]+)"/)?.[1];
+    if (!isValidUrl(url)) fail(`${prefix}.url 必须是 http/https URL`);
+    const verified = block.match(/lastVerified:\s*"([^"]+)"/)?.[1];
+    if (!isValidDate(verified)) fail(`${prefix}.lastVerified 必须是 YYYY-MM-DD`);
+  });
+}
+
+function validateCopywritingBoundaries() {
+  ["index.html", "app.js", "README.md", "llms.txt"].forEach((file) => {
+    const text = readText(file);
+    if (text.includes("可搬运改写")) fail(`${file} 不应使用“可搬运改写”，请改为“可按许可证复用”一类的边界表达`);
+  });
+}
+
 run("node", ["--check", "app.js"]);
 validateMonthlyUpdates();
 validateKeyFiles();
+validateResourceRadar();
+validateCopywritingBoundaries();
 
 if (errors.length) {
   console.error("内容校验失败：");

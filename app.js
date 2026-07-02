@@ -118,6 +118,9 @@ const resourceRadarItems = [
     url: "https://github.com/microsoft/generative-ai-for-beginners",
     type: "课程路线",
     license: "MIT",
+    licenseSpdx: "MIT",
+    lastVerified: "2026-07-02",
+    source: "GitHub API",
     action: "值得借鉴",
     useFor: "章节化课程、每课目标、练习与学习路径设计。",
     adapt: "把 12 周路线升级成“概念、任务、作品、自测”的课程单元。"
@@ -127,6 +130,9 @@ const resourceRadarItems = [
     url: "https://github.com/dair-ai/Prompt-Engineering-Guide",
     type: "Prompt / RAG / Agent",
     license: "MIT",
+    licenseSpdx: "MIT",
+    lastVerified: "2026-07-02",
+    source: "GitHub API",
     action: "值得借鉴",
     useFor: "Prompt 技法、上下文工程、RAG 与 Agent 知识结构。",
     adapt: "沉淀为中文 Prompt 训练卡和任务型自测题。"
@@ -135,7 +141,10 @@ const resourceRadarItems = [
     name: "f/prompts.chat",
     url: "https://github.com/f/prompts.chat",
     type: "Prompt 社区库",
-    license: "Other",
+    license: "NOASSERTION",
+    licenseSpdx: "NOASSERTION",
+    lastVerified: "2026-07-02",
+    source: "GitHub API",
     action: "谨慎改造",
     useFor: "Prompt 分类、发现、收藏和社区贡献机制。",
     adapt: "只借鉴交互与分类，不搬运 Prompt 全文。"
@@ -145,6 +154,9 @@ const resourceRadarItems = [
     url: "https://github.com/msitarzewski/agency-agents",
     type: "Agent 角色库",
     license: "MIT",
+    licenseSpdx: "MIT",
+    lastVerified: "2026-07-02",
+    source: "GitHub API",
     action: "可改造吸收",
     useFor: "专业 agent 的角色分工、人格、流程与交付物设计。",
     adapt: "已改造成 67 个中文学习角色卡，保留来源说明。"
@@ -154,6 +166,9 @@ const resourceRadarItems = [
     url: "https://github.com/wshobson/agents",
     type: "多工具 Agent 市场",
     license: "MIT",
+    licenseSpdx: "MIT",
+    lastVerified: "2026-07-02",
+    source: "GitHub API",
     action: "可改造吸收",
     useFor: "跨 Claude Code、Codex、Cursor 等工具的 agent/skill 分发思路。",
     adapt: "未来可做“复制到不同工具”的角色卡格式。"
@@ -163,7 +178,10 @@ const resourceRadarItems = [
     url: "https://github.com/Shubhamsaboo/awesome-llm-apps",
     type: "LLM 应用案例",
     license: "Apache-2.0",
-    action: "可搬运改写",
+    licenseSpdx: "Apache-2.0",
+    lastVerified: "2026-07-02",
+    source: "GitHub API",
+    action: "可按许可证复用",
     useFor: "RAG、Agent 和可运行 LLM 应用的项目选题。",
     adapt: "转成本站 AI 项目挑战库：难度、交付物、验收标准。"
   },
@@ -171,7 +189,10 @@ const resourceRadarItems = [
     name: "datawhalechina/hello-agents",
     url: "https://github.com/datawhalechina/hello-agents",
     type: "中文 Agent 教程",
-    license: "Other",
+    license: "NOASSERTION",
+    licenseSpdx: "NOASSERTION",
+    lastVerified: "2026-07-02",
+    source: "GitHub API",
     action: "谨慎改造",
     useFor: "中文学习者更容易理解的 Agent 入门路径。",
     adapt: "借鉴教学顺序，内容重新表达并补来源。"
@@ -180,7 +201,10 @@ const resourceRadarItems = [
     name: "langgenius/dify",
     url: "https://github.com/langgenius/dify",
     type: "Agent 工作流平台",
-    license: "Other",
+    license: "NOASSERTION",
+    licenseSpdx: "NOASSERTION",
+    lastVerified: "2026-07-02",
+    source: "GitHub API",
     action: "只借鉴机制",
     useFor: "低代码工作流、节点编排、知识库与人工审核思路。",
     adapt: "抽象成“输入、模型、工具、知识库、输出、验收”的挑战模板。"
@@ -190,6 +214,9 @@ const resourceRadarItems = [
     url: "https://github.com/langflow-ai/langflow",
     type: "可视化工作流",
     license: "MIT",
+    licenseSpdx: "MIT",
+    lastVerified: "2026-07-02",
+    source: "GitHub API",
     action: "值得借鉴",
     useFor: "节点式 AI 应用搭建体验和流程可视化。",
     adapt: "为学习者提供工作流草图，而不是直接做复杂编辑器。"
@@ -198,7 +225,10 @@ const resourceRadarItems = [
     name: "open-webui/open-webui",
     url: "https://github.com/open-webui/open-webui",
     type: "本地 AI 界面",
-    license: "Other",
+    license: "NOASSERTION",
+    licenseSpdx: "NOASSERTION",
+    lastVerified: "2026-07-02",
+    source: "GitHub API",
     action: "只借鉴机制",
     useFor: "本地模型、知识库、插件和私有化使用习惯。",
     adapt: "做“本地优先、隐私优先”的学习档案说明。"
@@ -208,6 +238,9 @@ const resourceRadarItems = [
     url: "https://github.com/Mintplex-Labs/anything-llm",
     type: "个人知识库",
     license: "MIT",
+    licenseSpdx: "MIT",
+    lastVerified: "2026-07-02",
+    source: "GitHub API",
     action: "值得借鉴",
     useFor: "本地知识库、工作区、文档问答和 Agent 体验。",
     adapt: "把个人知识库问答项目拆成更可执行的挑战。"
@@ -217,6 +250,9 @@ const resourceRadarItems = [
     url: "https://github.com/amitness/learning",
     type: "学习日志",
     license: "MIT",
+    licenseSpdx: "MIT",
+    lastVerified: "2026-07-02",
+    source: "GitHub API",
     action: "值得借鉴",
     useFor: "长期公开学习日志和知识沉淀方式。",
     adapt: "加入学习周报、作品记录和月更复盘的贡献模板。"
@@ -1572,7 +1608,7 @@ const projects = [
     desc: "选择一个热门 AI 开源项目，拆解定位、许可证、贡献方式和可借鉴机制。",
     tasks: ["读 README", "查许可证", "总结可借鉴点"],
     deliverables: ["项目卡片", "许可证判断", "改造建议"],
-    check: "明确区分可搬运、可改写、只参考三类内容。"
+    check: "明确区分可按许可证复用、可改写、只参考三类内容。"
   }
 ];
 
@@ -1585,7 +1621,15 @@ const ranks = [
   { name: "AI 原生创造者", min: 1320 }
 ];
 
-const PROJECT_UNLOCK_XP = 160;
+const PROJECT_UNLOCK_XP = {
+  入门: 0,
+  进阶: 160,
+  高阶: 360
+};
+
+function getProjectUnlockXp(project) {
+  return PROJECT_UNLOCK_XP[project.level] ?? 0;
+}
 
 const achievements = [
   { id: "firstWeek", title: "点火", desc: "完成任意一周学习任务", test: () => state.doneWeeks.size >= 1 },
@@ -1717,6 +1761,7 @@ function renderResourceRadar() {
           <p>${safeText(item.useFor)}</p>
           <dl>
             <div><dt>类型</dt><dd>${safeText(item.type)}</dd></div>
+            <div><dt>许可证</dt><dd>${safeText(item.licenseSpdx)} · ${safeText(item.source)} 复核于 ${safeText(item.lastVerified)}</dd></div>
             <div><dt>本站处理</dt><dd>${safeText(item.adapt)}</dd></div>
           </dl>
           ${href ? `<a class="ghost-btn small" href="${href}" target="_blank" rel="noopener noreferrer">查看仓库</a>` : ""}
@@ -1838,9 +1883,10 @@ function renderProjects() {
   document.querySelector("#projectGrid").innerHTML = projects
     .map((project, index) => {
       const done = state.doneProjects.has(index);
-      const locked = getXp() < PROJECT_UNLOCK_XP && index > 1;
+      const requiredXp = getProjectUnlockXp(project);
+      const locked = getXp() < requiredXp;
       return `
-      <article class="project-card ${locked ? "locked" : ""}">
+      <article class="project-card ${locked ? "locked" : ""}" data-unlock-label="${locked ? `需要 ${requiredXp} XP 后解锁` : ""}">
         <div class="project-meta">
           <span class="badge">${safeText(project.level || "挑战")}</span>
           <span>${safeText(project.time || "")}</span>
@@ -2518,9 +2564,10 @@ document.querySelector("#projectGrid").addEventListener("click", async (event) =
   const button = event.target.closest("[data-project]");
   if (!button) return;
   const index = Number(button.dataset.project);
-  const locked = getXp() < PROJECT_UNLOCK_XP && index > 1;
+  const requiredXp = getProjectUnlockXp(projects[index]);
+  const locked = getXp() < requiredXp;
   if (button.disabled || locked) {
-    showToast("这个作品还没解锁，请先累积 160 XP。", 1600);
+    showToast(`这个挑战还没解锁，请先累积 ${requiredXp} XP。`, 1600);
     return;
   }
   if (!state.doneProjects.has(index) && !state.projectProofs[index]) {

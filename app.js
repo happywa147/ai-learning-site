@@ -112,9 +112,23 @@ const showcaseItems = [
   }
 ];
 
+const agentRoleCategories = [
+  ["all", "全部"],
+  ["core", "核心素养"],
+  ["engineering", "工程开发"],
+  ["research", "研究核验"],
+  ["content", "内容短视频"],
+  ["product", "产品体验"],
+  ["growth", "增长商业"],
+  ["design", "设计品牌"],
+  ["safety", "安全治理"],
+  ["learning", "学习教练"]
+];
+
 const agentRoles = [
   {
     name: "Prompt 工程师",
+    category: "core",
     source: "engineering-prompt-engineer",
     level: "入门必修",
     useFor: "把模糊需求变成稳定、可复用的任务提示。",
@@ -125,6 +139,7 @@ const agentRoles = [
   },
   {
     name: "Agent 工作流架构师",
+    category: "core",
     source: "engineering-multi-agent-systems-architect",
     level: "进阶核心",
     useFor: "判断什么时候用单 Agent，什么时候拆成多角色协作。",
@@ -135,6 +150,7 @@ const agentRoles = [
   },
   {
     name: "事实核验员",
+    category: "research",
     source: "product-trend-researcher / research workflow",
     level: "可信度底座",
     useFor: "检查模型、工具、市场判断是否有来源和边界。",
@@ -145,6 +161,7 @@ const agentRoles = [
   },
   {
     name: "最小改动工程师",
+    category: "engineering",
     source: "engineering-minimal-change-engineer",
     level: "工程习惯",
     useFor: "修 bug 或补小功能时控制范围，避免越改越乱。",
@@ -155,6 +172,7 @@ const agentRoles = [
   },
   {
     name: "代码审查员",
+    category: "engineering",
     source: "engineering-code-reviewer",
     level: "质量关卡",
     useFor: "发现 bug、回归风险、安全隐患和缺测试。",
@@ -165,6 +183,7 @@ const agentRoles = [
   },
   {
     name: "技术手册作者",
+    category: "engineering",
     source: "engineering-technical-writer",
     level: "开源必备",
     useFor: "让项目易读、易运行、易贡献、易复现。",
@@ -175,6 +194,7 @@ const agentRoles = [
   },
   {
     name: "GEO / AI 搜索优化官",
+    category: "growth",
     source: "marketing-agentic-search-optimizer",
     level: "增长进阶",
     useFor: "让 AI 搜索、问答引擎和浏览器 agent 更容易理解网站。",
@@ -185,6 +205,7 @@ const agentRoles = [
   },
   {
     name: "增长黑客",
+    category: "growth",
     source: "marketing-growth-hacker",
     level: "传播实验",
     useFor: "设计 Star、分享、复访和贡献转化路径。",
@@ -195,6 +216,7 @@ const agentRoles = [
   },
   {
     name: "中文总编辑",
+    category: "content",
     source: "marketing-book-co-author / content creator",
     level: "表达校准",
     useFor: "把空泛口号改成具体、克制、有证据的中文表达。",
@@ -205,6 +227,7 @@ const agentRoles = [
   },
   {
     name: "短视频工作流教练",
+    category: "content",
     source: "marketing-short-video-editing-coach / douyin-strategist",
     level: "内容生产",
     useFor: "把选题、脚本、分镜、剪辑和复盘串成流程。",
@@ -215,6 +238,7 @@ const agentRoles = [
   },
   {
     name: "行为激励设计师",
+    category: "learning",
     source: "product-behavioral-nudge-engine",
     level: "留存设计",
     useFor: "降低学习焦虑，把大任务拆成能完成的小胜利。",
@@ -225,6 +249,7 @@ const agentRoles = [
   },
   {
     name: "品牌守护者",
+    category: "design",
     source: "design-brand-guardian",
     level: "长期 IP",
     useFor: "统一定位、命名、视觉气质和对外表达。",
@@ -232,6 +257,534 @@ const agentRoles = [
     output: "品牌口径、命名建议、该说/不该说清单。",
     check: "用户能用一句话向别人介绍这个项目。",
     practice: "为本站写一句不超过 24 字的传播口号。"
+  },
+  {
+    name: "上下文工程师",
+    category: "core",
+    source: "engineering-context-engineer",
+    level: "模型协作",
+    useFor: "把资料、约束、示例和历史决策组织成模型能稳定使用的上下文。",
+    input: "任务目标、参考资料、禁止事项、历史输出。",
+    output: "上下文包、引用清单、压缩摘要、边界说明。",
+    check: "模型回答能引用关键资料，且不把缺失信息编出来。",
+    practice: "把 3 篇资料压缩成一个 800 字以内的上下文包。"
+  },
+  {
+    name: "工具调用设计师",
+    category: "core",
+    source: "engineering-tool-use-designer",
+    level: "Agent 基础",
+    useFor: "判断 Agent 什么时候该调用搜索、代码、浏览器、表格或文件工具。",
+    input: "任务步骤、工具能力、权限边界、失败样例。",
+    output: "工具清单、调用条件、人工确认点、回退策略。",
+    check: "每次工具调用都有明确目的，不把简单任务复杂化。",
+    practice: "为“写月度 AI 趋势报告”设计 5 个工具调用节点。"
+  },
+  {
+    name: "Skill 设计师",
+    category: "core",
+    source: "engineering-skill-designer",
+    level: "能力固化",
+    useFor: "把一次成功做法沉淀成可复用的 Skill、模板或流程。",
+    input: "成功案例、触发条件、步骤、反例。",
+    output: "Skill 说明、检查清单、示例输入输出。",
+    check: "别人看到 Skill 后能复现同类任务。",
+    practice: "把一次优秀的资料整理流程写成 6 步 Skill。"
+  },
+  {
+    name: "模型选型顾问",
+    category: "core",
+    source: "product-model-selection-advisor",
+    level: "应用判断",
+    useFor: "根据任务、成本、速度、隐私和生态选择合适模型。",
+    input: "任务类型、预算、时延要求、数据敏感度。",
+    output: "模型候选、取舍理由、测试题、切换预案。",
+    check: "选型理由能经得起任务实测，而不是只看榜单。",
+    practice: "为写作、编程、图片理解各设计 1 个模型对比题。"
+  },
+  {
+    name: "RAG 知识库架构师",
+    category: "engineering",
+    source: "engineering-rag-architect",
+    level: "应用开发",
+    useFor: "设计文档切分、检索、引用和答案生成的知识库流程。",
+    input: "资料类型、更新频率、用户问题、引用要求。",
+    output: "切分方案、元数据字段、召回策略、验收问题集。",
+    check: "回答能给出来源，并能承认资料中没有答案。",
+    practice: "为 20 篇课程笔记设计一个最小 RAG 方案。"
+  },
+  {
+    name: "API 集成工程师",
+    category: "engineering",
+    source: "engineering-api-integration-specialist",
+    level: "开发实战",
+    useFor: "把模型 API、第三方服务和前端页面可靠地连起来。",
+    input: "接口文档、认证方式、请求样例、错误码。",
+    output: "调用流程、错误处理、限流策略、测试脚本。",
+    check: "网络失败、额度不足、参数错误时都有清楚提示。",
+    practice: "给一个模型调用流程补 4 种错误处理文案。"
+  },
+  {
+    name: "前端体验工程师",
+    category: "engineering",
+    source: "engineering-frontend-ux-engineer",
+    level: "作品打磨",
+    useFor: "把 AI 功能做成用户能理解、能反复使用的网页体验。",
+    input: "用户路径、页面结构、交互状态、异常情况。",
+    output: "组件方案、状态设计、响应式检查、空状态文案。",
+    check: "手机和桌面都能顺畅完成核心任务。",
+    practice: "为一个 AI 工具页补加载、失败、成功三个状态。"
+  },
+  {
+    name: "数据清洗工程师",
+    category: "engineering",
+    source: "engineering-data-cleaning-specialist",
+    level: "数据底座",
+    useFor: "把杂乱表格、网页文本和笔记整理成可分析数据。",
+    input: "原始文件、字段含义、缺失规则、输出格式。",
+    output: "清洗步骤、字段表、异常值报告、可复用脚本。",
+    check: "清洗前后数量、字段和异常都有记录。",
+    practice: "把 30 条工具信息整理成统一字段的 CSV。"
+  },
+  {
+    name: "测试用例设计师",
+    category: "engineering",
+    source: "testing-test-case-designer",
+    level: "质量训练",
+    useFor: "把功能需求变成正常、边界、异常和回归测试。",
+    input: "功能描述、用户路径、风险点、历史 bug。",
+    output: "测试矩阵、手工步骤、自动化建议、验收标准。",
+    check: "至少覆盖一条失败路径和一条边界路径。",
+    practice: "为报名表单设计 8 条测试用例。"
+  },
+  {
+    name: "论文精读助教",
+    category: "research",
+    source: "research-paper-reading-assistant",
+    level: "研究入门",
+    useFor: "拆解 AI 论文的问题、方法、实验和局限。",
+    input: "论文链接、摘要、图表、阅读目标。",
+    output: "三层摘要、术语解释、贡献与局限、复述题。",
+    check: "能用自己的话说清论文解决了什么问题。",
+    practice: "选一篇模型论文，整理 5 个关键术语。"
+  },
+  {
+    name: "竞品研究员",
+    category: "research",
+    source: "product-competitive-researcher",
+    level: "市场观察",
+    useFor: "比较国内外 AI 产品定位、功能、价格和增长路径。",
+    input: "竞品名单、用户群、官网信息、使用体验。",
+    output: "竞品表、差异点、机会判断、风险提醒。",
+    check: "每个判断都有来源或亲自体验依据。",
+    practice: "对比 3 个 AI PPT 工具的免费额度和适用场景。"
+  },
+  {
+    name: "趋势雷达员",
+    category: "research",
+    source: "marketing-trend-radar",
+    level: "月更观察",
+    useFor: "从模型发布、产品更新和平台变化中识别值得学习的趋势。",
+    input: "新闻、官方博客、产品更新、社区反馈。",
+    output: "趋势摘要、影响对象、学习建议、观察期限。",
+    check: "区分事实、推测和个人判断。",
+    practice: "为本月 AI 更新写 3 条“值得学/暂观察”的判断。"
+  },
+  {
+    name: "引用来源管理员",
+    category: "research",
+    source: "research-citation-manager",
+    level: "可信表达",
+    useFor: "管理链接、发布日期、引用句和证据等级。",
+    input: "文章草稿、来源链接、引用位置。",
+    output: "来源表、引用建议、过期风险、替换链接。",
+    check: "读者能从每个关键判断追到来源。",
+    practice: "给一篇 AI 工具测评补 6 条来源记录。"
+  },
+  {
+    name: "数据分析解释员",
+    category: "research",
+    source: "data-analysis-interpreter",
+    level: "分析素养",
+    useFor: "把指标、图表和问卷结果翻译成可行动结论。",
+    input: "数据表、指标定义、样本范围、业务问题。",
+    output: "发现、异常、可能原因、下一步实验。",
+    check: "不把相关性直接说成因果。",
+    practice: "用 20 条用户反馈总结 3 个改版机会。"
+  },
+  {
+    name: "案例拆解师",
+    category: "research",
+    source: "business-case-analyst",
+    level: "格局训练",
+    useFor: "拆解优秀 AI 应用、开源项目或商业案例背后的机制。",
+    input: "案例链接、用户反馈、产品流程、商业数据。",
+    output: "结构化拆解、可借鉴点、不可复制点、复盘问题。",
+    check: "不只夸结果，要说明为什么它能成立。",
+    practice: "拆解一个热门开源 AI 项目的增长路径。"
+  },
+  {
+    name: "选题策划师",
+    category: "content",
+    source: "content-topic-strategist",
+    level: "内容起点",
+    useFor: "把目标用户的疑问变成可持续更新的选题库。",
+    input: "目标人群、平台、关键词、近期热点。",
+    output: "选题池、优先级、标题方向、验证方式。",
+    check: "选题能对应明确读者和具体问题。",
+    practice: "为 AI 学习新手生成 20 个小红书选题。"
+  },
+  {
+    name: "脚本编剧",
+    category: "content",
+    source: "content-scriptwriter",
+    level: "短视频实战",
+    useFor: "把知识点写成有开头钩子、节奏和行动号召的脚本。",
+    input: "主题、受众、时长、平台风格、案例。",
+    output: "口播稿、镜头提示、字幕重点、结尾 CTA。",
+    check: "前 5 秒能让目标用户知道为什么要看。",
+    practice: "把“什么是 Agent”写成 60 秒口播稿。"
+  },
+  {
+    name: "分镜导演",
+    category: "content",
+    source: "content-storyboard-director",
+    level: "视频执行",
+    useFor: "把脚本拆成画面、字幕、素材和剪辑节奏。",
+    input: "脚本、素材库、平台比例、视觉参考。",
+    output: "分镜表、素材清单、剪辑节奏、替代方案。",
+    check: "每句重要信息都有对应画面支撑。",
+    practice: "为一个 AI 工具教程设计 8 镜头分镜。"
+  },
+  {
+    name: "剪辑复盘官",
+    category: "content",
+    source: "content-editing-analyst",
+    level: "持续改进",
+    useFor: "根据完播率、互动率和评论判断视频哪里该改。",
+    input: "发布数据、评论、视频结构、对照样本。",
+    output: "问题定位、二剪建议、下一条优化点。",
+    check: "复盘能指向具体秒点或具体表达。",
+    practice: "为一条 90 秒视频写出 5 个二剪建议。"
+  },
+  {
+    name: "课程设计师",
+    category: "content",
+    source: "education-curriculum-designer",
+    level: "教学产品",
+    useFor: "把知识体系拆成学习路径、任务和作品验收。",
+    input: "学习目标、对象基础、周期、作品要求。",
+    output: "课程地图、每周任务、测验、作品标准。",
+    check: "每节课都有可交付成果。",
+    practice: "把“AI 编程入门”拆成 4 周课程计划。"
+  },
+  {
+    name: "产品经理",
+    category: "product",
+    source: "product-manager",
+    level: "需求判断",
+    useFor: "把用户问题转成优先级清楚的功能需求。",
+    input: "用户反馈、目标人群、限制条件、业务目标。",
+    output: "需求说明、优先级、验收标准、风险。",
+    check: "需求能回答为谁解决什么问题。",
+    practice: "为本站 Agent 学院写 5 条用户故事。"
+  },
+  {
+    name: "用户研究员",
+    category: "product",
+    source: "product-user-researcher",
+    level: "需求洞察",
+    useFor: "通过访谈和问卷理解学习者真实卡点。",
+    input: "研究问题、用户样本、访谈记录、问卷结果。",
+    output: "洞察、证据、用户分层、机会点。",
+    check: "结论来自用户原话或行为证据。",
+    practice: "写 8 个问题采访一个 AI 初学者。"
+  },
+  {
+    name: "信息架构师",
+    category: "product",
+    source: "product-information-architect",
+    level: "结构设计",
+    useFor: "整理导航、模块层级和用户找内容的路径。",
+    input: "页面列表、用户任务、内容类型、访问数据。",
+    output: "导航结构、命名建议、入口优先级、查找路径。",
+    check: "用户 3 次点击内能找到核心内容。",
+    practice: "重新排序本站导航，并说明理由。"
+  },
+  {
+    name: "无障碍体验检查员",
+    category: "product",
+    source: "product-accessibility-reviewer",
+    level: "体验底线",
+    useFor: "检查颜色对比、键盘可用、表单标签和移动端可读性。",
+    input: "页面截图、DOM 结构、交互流程。",
+    output: "可访问性问题、修复建议、验证方法。",
+    check: "不依赖鼠标也能完成主要操作。",
+    practice: "检查一个表单的标签、焦点和错误提示。"
+  },
+  {
+    name: "游戏化系统设计师",
+    category: "product",
+    source: "product-gamification-designer",
+    level: "留存机制",
+    useFor: "设计 XP、徽章、任务、等级和复访节奏。",
+    input: "学习任务、用户动机、周期、奖励限制。",
+    output: "任务系统、奖励规则、反作弊提醒、复盘机制。",
+    check: "奖励推动真实学习，而不是只刷按钮。",
+    practice: "为 60 个 Agent 设计 5 个解锁徽章。"
+  },
+  {
+    name: "反馈闭环经理",
+    category: "product",
+    source: "product-feedback-loop-manager",
+    level: "迭代机制",
+    useFor: "把用户反馈转成可追踪的问题、决策和发布说明。",
+    input: "反馈内容、截图、影响范围、复现步骤。",
+    output: "问题分类、优先级、Issue 草稿、回访话术。",
+    check: "反馈者能看到自己的建议被如何处理。",
+    practice: "把 10 条反馈整理成 P0-P3 改进列表。"
+  },
+  {
+    name: "定价与赞助设计师",
+    category: "growth",
+    source: "business-pricing-sponsorship-designer",
+    level: "可持续运营",
+    useFor: "设计赞助、会员、课程或咨询的价值边界。",
+    input: "用户价值、成本、竞品、赞助权益。",
+    output: "权益方案、价格假设、风险说明、实验计划。",
+    check: "商业动作不伤害开源信任。",
+    practice: "为本站写 3 档赞助权益，但保留免费核心内容。"
+  },
+  {
+    name: "开源运营官",
+    category: "growth",
+    source: "open-source-community-operator",
+    level: "GitHub 增长",
+    useFor: "提升 Star、Issue、PR、贡献者和项目可信度。",
+    input: "README、Issue 模板、路线图、贡献门槛。",
+    output: "开源运营计划、贡献路径、发布节奏、指标。",
+    check: "新人知道该提什么 Issue，怎么贡献第一步。",
+    practice: "设计一个“good first issue”清单。"
+  },
+  {
+    name: "SEO 内容策划",
+    category: "growth",
+    source: "marketing-seo-content-strategist",
+    level: "搜索流量",
+    useFor: "围绕用户搜索问题组织页面标题、FAQ 和内容集群。",
+    input: "关键词、目标读者、竞争页面、站内模块。",
+    output: "内容地图、标题建议、FAQ、内部链接。",
+    check: "页面能回答一个清晰搜索意图。",
+    practice: "为“AI 自学路线”写 8 个 FAQ 问题。"
+  },
+  {
+    name: "社媒传播官",
+    category: "growth",
+    source: "marketing-social-distribution-manager",
+    level: "传播执行",
+    useFor: "把一次更新改写成适合公众号、小红书、即刻、X 的素材。",
+    input: "更新内容、目标平台、受众、行动目标。",
+    output: "多平台文案、封面建议、评论互动问题。",
+    check: "每个平台文案都符合它的语境。",
+    practice: "把 Agent 学院发布改写成 4 个平台版本。"
+  },
+  {
+    name: "用户转化设计师",
+    category: "growth",
+    source: "growth-conversion-designer",
+    level: "行动设计",
+    useFor: "让用户从浏览走向 Star、打卡、反馈、赞助或联系。",
+    input: "用户路径、CTA、页面位置、转化目标。",
+    output: "CTA 文案、路径优化、实验假设、指标。",
+    check: "转化动作自然，不打断学习体验。",
+    practice: "为 Agent 学院设计 3 个不突兀的 CTA。"
+  },
+  {
+    name: "视觉系统设计师",
+    category: "design",
+    source: "design-visual-system-designer",
+    level: "设计基础",
+    useFor: "统一颜色、字体、间距、卡片和按钮状态。",
+    input: "品牌气质、现有页面、组件截图、使用场景。",
+    output: "视觉规范、组件建议、修正清单。",
+    check: "新增页面看起来属于同一个产品。",
+    practice: "为本站枣红、暖土、绿植色系写 6 条使用规则。"
+  },
+  {
+    name: "交互原型师",
+    category: "design",
+    source: "design-interaction-prototyper",
+    level: "体验原型",
+    useFor: "把功能想法快速画成交互流程和状态变化。",
+    input: "用户任务、入口、状态、成功/失败条件。",
+    output: "流程图、低保真原型、状态清单。",
+    check: "用户不用说明书也知道下一步。",
+    practice: "画出“筛选 Agent → 复制练习 → 打卡”的流程。"
+  },
+  {
+    name: "文案微交互设计师",
+    category: "design",
+    source: "design-microcopy-writer",
+    level: "细节体验",
+    useFor: "优化按钮、空状态、错误提示和确认弹窗里的短文案。",
+    input: "界面位置、用户情绪、限制、动作结果。",
+    output: "微文案、替代版本、语气说明。",
+    check: "文案具体、诚实、让人知道发生了什么。",
+    practice: "给“复制失败”“暂无结果”“已保存”各写 3 个版本。"
+  },
+  {
+    name: "图像提示设计师",
+    category: "design",
+    source: "design-image-prompt-designer",
+    level: "多模态创作",
+    useFor: "为封面、插图、视频画面和产品图写可控图像 Prompt。",
+    input: "主题、风格、构图、比例、禁止元素。",
+    output: "图像 Prompt、负面提示、迭代建议。",
+    check: "输出画面能服务信息，而不只是好看。",
+    practice: "为“AI 学习地图”设计 3 条封面图 Prompt。"
+  },
+  {
+    name: "演示叙事设计师",
+    category: "design",
+    source: "design-presentation-storyteller",
+    level: "表达呈现",
+    useFor: "把项目、课程或产品做成清楚有节奏的演示。",
+    input: "目标听众、核心结论、证据、时间限制。",
+    output: "演示结构、页面标题、讲稿、追问准备。",
+    check: "每页只服务一个明确观点。",
+    practice: "把本站介绍整理成 6 页路演大纲。"
+  },
+  {
+    name: "隐私风险审查员",
+    category: "safety",
+    source: "security-privacy-risk-reviewer",
+    level: "安全底线",
+    useFor: "检查邮箱、二维码、表单、日志和用户数据是否过度暴露。",
+    input: "数据字段、页面代码、存储方式、第三方服务。",
+    output: "隐私风险、最小化建议、告知文案。",
+    check: "不收集不必要数据，敏感信息不直接暴露。",
+    practice: "审查一个联系表单，列出 5 个隐私注意点。"
+  },
+  {
+    name: "版权合规提醒员",
+    category: "safety",
+    source: "legal-copyright-compliance-helper",
+    level: "内容边界",
+    useFor: "判断学习资料、开源 prompt、图片和视频素材如何合规引用。",
+    input: "来源链接、许可证、引用方式、使用场景。",
+    output: "可用性判断、署名建议、替代方案。",
+    check: "区分灵感参考、改写、转载和商用。",
+    practice: "为一个 MIT 项目写出网站引用说明。"
+  },
+  {
+    name: "AI 安全红队员",
+    category: "safety",
+    source: "security-ai-red-team-tester",
+    level: "风险测试",
+    useFor: "测试 Prompt 注入、越权、幻觉、隐私泄露等 AI 应用风险。",
+    input: "应用功能、系统提示、工具权限、敏感场景。",
+    output: "攻击样例、风险等级、缓解建议、复测结果。",
+    check: "问题能复现，修复后能复测。",
+    practice: "为一个知识库问答应用设计 5 条 Prompt 注入测试。"
+  },
+  {
+    name: "内容安全编辑",
+    category: "safety",
+    source: "safety-content-moderation-editor",
+    level: "发布审查",
+    useFor: "检查页面、课程和社媒内容是否含误导、夸大或不适当表达。",
+    input: "待发布内容、受众、平台规则、敏感主题。",
+    output: "风险句、替代表达、发布建议。",
+    check: "降低误解风险，但不把内容改得空洞。",
+    practice: "把 5 句夸大的 AI 宣传语改成可信表达。"
+  },
+  {
+    name: "学术诚信顾问",
+    category: "safety",
+    source: "education-academic-integrity-advisor",
+    level: "学习边界",
+    useFor: "帮助学生合理使用 AI，避免代写、抄袭和引用不当。",
+    input: "作业要求、使用方式、引用材料、学校规则。",
+    output: "可用/不可用边界、披露建议、学习替代方案。",
+    check: "AI 帮助学习者思考，而不是替学习者完成责任。",
+    practice: "为一份课程论文写 AI 使用声明模板。"
+  },
+  {
+    name: "学习路径规划师",
+    category: "learning",
+    source: "education-learning-path-planner",
+    level: "自学导航",
+    useFor: "根据基础、目标和时间设计可执行 AI 学习路线。",
+    input: "当前水平、目标、每周时间、偏好作品。",
+    output: "路线图、周任务、里程碑、复盘问题。",
+    check: "计划能从今天开始执行，而不是只有远景。",
+    practice: "给零基础学习者设计 4 周 AI 入门路线。"
+  },
+  {
+    name: "费曼讲解教练",
+    category: "learning",
+    source: "education-feynman-explainer",
+    level: "理解训练",
+    useFor: "把复杂概念讲到高中生、家长或老板都能听懂。",
+    input: "概念、目标听众、已有理解、类比限制。",
+    output: "三层解释、类比、反例、自测问题。",
+    check: "听众能复述核心意思并举一个例子。",
+    practice: "用三层解释讲清楚 Token 和上下文窗口。"
+  },
+  {
+    name: "错题复盘教练",
+    category: "learning",
+    source: "education-error-review-coach",
+    level: "学习闭环",
+    useFor: "分析学习任务失败原因，提炼下次改进策略。",
+    input: "任务目标、失败输出、尝试过程、时间投入。",
+    output: "错误类型、原因、改进 Prompt、下次练习。",
+    check: "复盘能转成下一次具体行动。",
+    practice: "复盘一次 AI 回答不准确的原因，并改写 Prompt。"
+  },
+  {
+    name: "作品集导师",
+    category: "learning",
+    source: "education-portfolio-mentor",
+    level: "成果展示",
+    useFor: "把学习成果包装成可展示、可讲述、可复盘的作品。",
+    input: "作品材料、目标受众、过程记录、结果证据。",
+    output: "作品说明、截图清单、故事线、改进计划。",
+    check: "别人能看懂你做了什么、为什么做、学到了什么。",
+    practice: "为一个 AI 小工具写 300 字作品说明。"
+  },
+  {
+    name: "面试模拟官",
+    category: "learning",
+    source: "career-interview-simulator",
+    level: "职业连接",
+    useFor: "围绕 AI 项目、实习、作品集和职业方向做模拟面试。",
+    input: "岗位方向、项目经历、简历、薄弱点。",
+    output: "面试问题、追问、参考回答、改进建议。",
+    check: "回答能体现真实经历，而不是背模板。",
+    practice: "为“AI 应用开发实习”准备 10 个面试问题。"
+  },
+  {
+    name: "家长沟通翻译官",
+    category: "learning",
+    source: "education-parent-communication-translator",
+    level: "跨代沟通",
+    useFor: "把 AI 学习价值、风险和行动计划讲给家长或非技术伙伴。",
+    input: "学习目标、担心点、案例、时间投入。",
+    output: "沟通话术、风险说明、共同约定、观察指标。",
+    check: "对方听完知道支持什么、监督什么。",
+    practice: "写一段给家长看的“为什么学 AI 不是玩物丧志”。"
+  },
+  {
+    name: "认知升级教练",
+    category: "learning",
+    source: "education-worldview-coach",
+    level: "世界观训练",
+    useFor: "帮助学习者建立 AI 时代的系统观、协作观和长期主义。",
+    input: "困惑问题、行业案例、个人目标、价值判断。",
+    output: "思考框架、反方观点、行动原则、阅读建议。",
+    check: "能区分技术能力、社会影响和个人选择。",
+    practice: "回答“AI 时代什么能力更值钱”并列出反方观点。"
   }
 ];
 
@@ -814,6 +1367,7 @@ const templates = {
 const state = {
   track: "freshman",
   template: "prompt",
+  agentCategory: "all",
   month: getStoredString("ai-learning-month", "2026-07"),
   leads: getStoredArray("ai-learning-leads", []),
   feedback: getStoredArray("ai-learning-feedback", []),
@@ -999,7 +1553,23 @@ function renderProjects() {
 }
 
 function renderAgentRoles() {
-  document.querySelector("#agentRoleGrid").innerHTML = agentRoles
+  const visibleRoles =
+    state.agentCategory === "all"
+      ? agentRoles
+      : agentRoles.filter((role) => role.category === state.agentCategory);
+  const categoryName =
+    agentRoleCategories.find(([key]) => key === state.agentCategory)?.[1] || "全部";
+
+  document.querySelector("#agentRoleTabs").innerHTML = agentRoleCategories
+    .map(([key, label]) => {
+      const count = key === "all" ? agentRoles.length : agentRoles.filter((role) => role.category === key).length;
+      return `<button class="${state.agentCategory === key ? "active" : ""}" data-agent-category="${safeText(key)}">${safeText(label)} <span>${count}</span></button>`;
+    })
+    .join("");
+
+  document.querySelector("#agentRoleCount").textContent = `${categoryName} · ${visibleRoles.length} / ${agentRoles.length} 个角色`;
+
+  document.querySelector("#agentRoleGrid").innerHTML = visibleRoles
     .map(
       (role) => `
       <article class="agent-role-card">
@@ -1540,6 +2110,13 @@ document.querySelectorAll("[data-track]").forEach((button) => {
     button.classList.add("active");
     renderTrack();
   });
+});
+
+document.querySelector("#agentRoleTabs").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-agent-category]");
+  if (!button) return;
+  state.agentCategory = button.dataset.agentCategory;
+  renderAgentRoles();
 });
 
 document.querySelector("#weekList").addEventListener("change", async (event) => {

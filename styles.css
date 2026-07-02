@@ -966,6 +966,49 @@ h3 {
   font-weight: 800;
 }
 
+.agent-role-toolbar {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+.agent-role-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.agent-role-tabs button {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  min-height: 36px;
+  padding: 8px 12px;
+  color: #5c4f47;
+  font-weight: 800;
+  background: rgba(255, 252, 246, 0.76);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.agent-role-tabs button span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.agent-role-tabs button.active {
+  color: #fffaf2;
+  background: var(--jujube);
+  border-color: var(--jujube);
+}
+
+.agent-role-tabs button.active span {
+  color: rgba(255, 250, 242, 0.78);
+}
+
 .agent-role-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1639,6 +1682,7 @@ h3 {
 @media (max-width: 680px) {
   .topbar,
   .section-head,
+  .agent-role-toolbar,
   .footer {
     align-items: flex-start;
     flex-direction: column;

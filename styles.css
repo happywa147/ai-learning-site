@@ -190,6 +190,26 @@ h3 {
   margin-top: 28px;
 }
 
+.trust-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.trust-strip span {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 0 10px;
+  color: var(--jujube-dark);
+  background: rgba(255, 250, 242, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
 .primary-btn,
 .ghost-btn,
 .segmented button,
@@ -402,7 +422,9 @@ h3 {
 .worldview-grid,
 .monthly-grid,
 .starter-grid,
-.showcase-grid {
+.showcase-grid,
+.open-source-grid,
+.faq-grid {
   display: grid;
   gap: 16px;
 }
@@ -431,6 +453,8 @@ h3 {
 .monthly-card,
 .starter-card,
 .showcase-card,
+.open-source-grid article,
+.faq-grid article,
 .feedback-form,
 .feedback-panel,
 .register-form,
@@ -781,6 +805,33 @@ h3 {
   font-size: 13px;
 }
 
+.month-evidence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.month-evidence span,
+.month-evidence a {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  padding: 0 9px;
+  color: var(--jujube-dark);
+  background: rgba(143, 47, 42, 0.08);
+  border: 1px solid rgba(143, 47, 42, 0.18);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.month-evidence a {
+  color: var(--plant);
+  background: rgba(95, 127, 82, 0.12);
+  border-color: rgba(95, 127, 82, 0.22);
+}
+
 .monthly-score {
   display: grid;
   width: 132px;
@@ -884,6 +935,48 @@ h3 {
   flex-wrap: wrap;
   gap: 7px;
   margin-top: auto;
+}
+
+.open-source-section,
+.faq-section {
+  padding-top: 56px;
+}
+
+.open-source-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.open-source-grid article,
+.faq-grid article {
+  padding: 20px;
+}
+
+.open-source-grid p,
+.faq-grid p {
+  color: #63554c;
+  line-height: 1.72;
+}
+
+.open-source-grid ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  color: #5c4f47;
+  line-height: 1.8;
+}
+
+.inline-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.faq-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.faq-grid article {
+  min-height: 210px;
 }
 
 .badge {
@@ -1421,6 +1514,8 @@ h3 {
   .dashboard,
   .starter-grid,
   .showcase-grid,
+  .open-source-grid,
+  .faq-grid,
   .model-grid,
   .project-grid,
   .worldview-grid,
@@ -1450,6 +1545,8 @@ h3 {
   .dashboard,
   .starter-grid,
   .showcase-grid,
+  .open-source-grid,
+  .faq-grid,
   .model-grid,
   .project-grid,
   .worldview-grid,

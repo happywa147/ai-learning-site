@@ -3,8 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI 原生能力自学站</title>
+    <title>AI 原生能力自学站｜Prompt、Agent、RAG 与 AI 工具学习路线</title>
+    <meta
+      name="description"
+      content="AI 原生能力自学站是面向中文学习者的 AI 学习任务系统，覆盖 Prompt、Agent、Skill、RAG、AI 编程、短视频工作流、国内外模型对比和中国 AI 应用市场。"
+    />
+    <meta name="author" content="舰理 Lonny" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://happywa147.github.io/ai-learning-site/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AI 原生能力自学站" />
+    <meta property="og:title" content="AI 原生能力自学站｜Prompt、Agent、RAG 与 AI 工具学习路线" />
+    <meta
+      property="og:description"
+      content="一个面向中文学习者的 AI 学习任务系统，不是又一份工具清单。用路线、任务、月更、作品集和反馈循环持续学习 AI。"
+    />
+    <meta property="og:url" content="https://happywa147.github.io/ai-learning-site/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="AI 原生能力自学站" />
+    <meta
+      name="twitter:description"
+      content="Prompt、Agent、RAG、AI 编程、短视频工作流和中国 AI 应用市场的持续更新学习站。"
+    />
     <link rel="stylesheet" href="./styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "AI 原生能力自学站",
+        "url": "https://happywa147.github.io/ai-learning-site/",
+        "description": "面向中文学习者的 AI 学习任务系统，覆盖 Prompt、Agent、Skill、RAG、AI 编程、短视频工作流、国内外模型对比和中国 AI 应用市场。",
+        "inLanguage": "zh-CN",
+        "author": {
+          "@type": "Person",
+          "name": "舰理 Lonny"
+        },
+        "keywords": [
+          "AI 自学路线",
+          "Prompt 工程",
+          "AI Agent 入门",
+          "RAG 学习",
+          "AI 编程入门",
+          "短视频 AI 工作流",
+          "中国 AI 应用市场"
+        ]
+      }
+    </script>
   </head>
   <body>
     <p id="statusRegion" class="sr-only" role="status" aria-live="polite"></p>
@@ -38,10 +82,15 @@
             从编程、Prompt、Agent、Skill 到短视频与商业应用，用任务、等级、徽章和作品集驱动学习。每天打开都有下一步，每完成一点都能看到自己变强。
           </p>
           <div class="hero-actions">
-            <a class="primary-btn" href="#game">进入任务板</a>
-            <a class="ghost-btn" href="#starter">60 秒上手</a>
+            <a class="primary-btn" href="#starter">60 秒开始学习</a>
             <a class="ghost-btn" href="#projects">看作品任务</a>
-            <a class="ghost-btn" href="#register">注册学习</a>
+          </div>
+          <div class="trust-strip" aria-label="站点可信信息">
+            <span>已接入月更机制</span>
+            <span>3 条学习路线</span>
+            <span>6 个作品任务</span>
+            <span>纯静态开源</span>
+            <span>数据默认保存在本机</span>
           </div>
         </div>
         <div class="hero-visual" aria-label="AI 学习驾驶舱示意图">
@@ -168,6 +217,7 @@ tools: search, code, video</pre>
             <h3 id="monthTitle"></h3>
             <p id="monthSummary" class="muted"></p>
             <p id="monthUpdated" class="month-updated"></p>
+            <div id="monthEvidence" class="month-evidence"></div>
           </div>
           <div class="monthly-score">
             <strong id="monthFocusCount">0</strong>
@@ -268,6 +318,68 @@ tools: search, code, video</pre>
         </div>
       </section>
 
+      <section id="opensource" class="section open-source-section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Open Source</p>
+            <h2>一起共建月更 AI 学习地图</h2>
+          </div>
+          <span class="badge">欢迎 Star、Issue、PR</span>
+        </div>
+        <div class="open-source-grid">
+          <article>
+            <h3>为什么值得 Star</h3>
+            <p>这个项目把 AI 自学路线、月度更新、作品任务和反馈循环放在一起，目标是长期维护，而不是一次性工具清单。</p>
+            <a class="primary-btn small" href="https://github.com/happywa147/ai-learning-site" target="_blank" rel="noopener noreferrer">打开 GitHub</a>
+          </article>
+          <article>
+            <h3>适合贡献什么</h3>
+            <ul>
+              <li>当月模型变化和真实任务测试</li>
+              <li>中国 AI 应用市场观察</li>
+              <li>可复用的作品样例和 Prompt 模板</li>
+              <li>移动端体验、SEO、无障碍优化</li>
+            </ul>
+          </article>
+          <article>
+            <h3>下一步看哪里</h3>
+            <p>路线图、贡献指南和月更模板都已经在仓库里。你可以先提 Issue，也可以直接提交 PR。</p>
+            <div class="inline-actions">
+              <a class="ghost-btn small" href="https://github.com/happywa147/ai-learning-site/blob/main/ROADMAP.md" target="_blank" rel="noopener noreferrer">Roadmap</a>
+              <a class="ghost-btn small" href="https://github.com/happywa147/ai-learning-site/issues/new/choose" target="_blank" rel="noopener noreferrer">提交 Issue</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="faq" class="section faq-section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">FAQ</p>
+            <h2>常见问题</h2>
+          </div>
+          <span class="badge">给搜索和新人看的短答案</span>
+        </div>
+        <div class="faq-grid">
+          <article>
+            <h3>零基础怎么开始学 AI？</h3>
+            <p>先不要追工具清单。建议从 60 秒上手、三条学习路线和今日挑战开始，用一个小任务建立手感，再进入 12 周节奏。</p>
+          </article>
+          <article>
+            <h3>Prompt、Agent、Skill 有什么区别？</h3>
+            <p>Prompt 是一次任务说明，Agent 是能拆解任务并调用工具的流程，Skill 是把高频能力沉淀成可复用模板。</p>
+          </article>
+          <article>
+            <h3>国内外模型应该怎么选？</h3>
+            <p>不要只看榜单。用自己的任务测试写作、编程、长文档、视频和 Agent 场景，同时记录成本、稳定性和适用边界。</p>
+          </article>
+          <article>
+            <h3>学完以后应该产出什么？</h3>
+            <p>至少完成一个可展示作品，例如学习助教报告、短视频脚本工厂、个人知识库问答或 AI 产品观察报告。</p>
+          </article>
+        </div>
+      </section>
+
       <section id="feedback" class="section feedback-section">
         <div class="section-head">
           <div>
@@ -298,7 +410,7 @@ tools: search, code, video</pre>
               <textarea name="message" rows="4" maxlength="360" placeholder="一句话也可以：哪里卡住了，想看到什么案例。" required></textarea>
             </label>
             <button class="primary-btn" type="submit">提交反馈</button>
-            <p class="form-note">反馈只保存在本机浏览器，适合站长收集测试意见；正式运营时可接入 Issue、表单服务或后端。</p>
+            <p class="form-note">隐私说明：反馈只保存在当前浏览器的 localStorage，不会自动上传。共用电脑请谨慎填写，导出 CSV 后请自行保管。</p>
           </form>
           <aside class="feedback-panel">
             <span class="badge">下月优先级</span>
@@ -361,8 +473,8 @@ tools: search, code, video</pre>
               <textarea name="message" rows="4" maxlength="500" placeholder="你的目标、基础、想解决的问题"></textarea>
             </label>
             <button class="primary-btn" type="submit">提交注册</button>
-            <p class="form-note">当前静态版会把报名信息保存在本机浏览器，适合本地演示和导出跟进；正式上线可接入后端、表单服务或 CRM。</p>
-            <p class="form-note">隐私说明：报名信息存于浏览器 `localStorage`，清理浏览器缓存会清空本机数据，清空按钮可手动重置。</p>
+            <p class="form-note">当前静态版会把报名信息保存在当前浏览器 localStorage，不会自动上传到服务器。</p>
+            <p class="form-note">隐私说明：共用电脑请谨慎填写；导出 CSV 后请自行保管；清理浏览器缓存或点击清空按钮会移除本机记录。</p>
           </form>
           <aside class="contact-card">
             <span class="badge">联系我</span>

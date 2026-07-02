@@ -4,7 +4,13 @@
 
 它不是一本固定教材，而是一个可以持续更新的 AI 学习驾驶舱：通过任务、等级、徽章、作品项目、月度更新、反馈循环和世界观框架，帮助学习者长期跟上 AI 应用市场的变化。
 
-[在线访问](https://happywa147.github.io/ai-learning-site/) · [路线图](./ROADMAP.md) · [贡献指南](./CONTRIBUTING.md) · [截图与传播素材](./docs/SCREENSHOTS.md)
+[![Deploy GitHub Pages](https://github.com/happywa147/ai-learning-site/actions/workflows/pages.yml/badge.svg)](https://github.com/happywa147/ai-learning-site/actions/workflows/pages.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![GitHub Pages](https://img.shields.io/badge/demo-GitHub%20Pages-8f2f2a.svg)](https://happywa147.github.io/ai-learning-site/)
+
+[在线访问](https://happywa147.github.io/ai-learning-site/) · [路线图](./ROADMAP.md) · [贡献指南](./CONTRIBUTING.md) · [截图与传播素材](./docs/SCREENSHOTS.md) · [MIT License](./LICENSE)
+
+如果你也想共建一份持续月更的中文 AI 学习地图，欢迎 Star 跟进更新，也欢迎通过 Issue 提交模型实测、作品样例和学习任务建议。
 
 ## 为什么值得 Star
 
@@ -13,6 +19,7 @@
 - **游戏化学习闭环**：签到、XP、等级、徽章、作品点亮和学习周报，让学习过程可见。
 - **作品导向**：学习结果不只停留在笔记，而是沉淀成作品集、脚本工厂、知识库问答和产品观察。
 - **纯静态、易部署**：不需要复杂后端，适合 GitHub Pages、课堂演示、个人自学站和内容共创。
+- **AI 搜索友好**：提供 `sitemap.xml`、`robots.txt` 和 `llms.txt`，便于搜索引擎与 AI 问答理解站点结构。
 
 ## 适合谁
 
@@ -86,8 +93,14 @@ http://localhost:8765
 新增一个月份时，追加一条数据并更新：
 
 - `label`
+- `status`（正式发布用 `published`，草稿用 `draft`，草稿不会展示）
 - `title`
 - `summary`
+- `updatedAt`
+- `lastVerified`
+- `sources`
+- `testedTasks`
+- `confidence`
 - `cards`
 
 模型对比、路线、项目和模板也都集中在 `app.js` 中，方便后续迭代。

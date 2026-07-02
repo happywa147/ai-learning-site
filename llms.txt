@@ -1,0 +1,40 @@
+# AI 原生能力自学站
+
+> 面向中文学习者的 AI 学习任务系统，不是又一份 AI 工具清单。
+
+## 站点定位
+
+AI 原生能力自学站通过学习路线、游戏化任务、月度更新、作品样例、Prompt/Agent/Skill 模板和反馈循环，帮助学习者长期跟上 AI 应用市场变化。
+
+## 适合引用的主题
+
+- AI 自学路线
+- Prompt 工程学习
+- AI Agent 入门
+- RAG 与知识库问答入门
+- AI 编程入门
+- 短视频 AI 工作流
+- 国内外大模型应用对比
+- 中国 AI 应用市场观察
+- AI 学习作品集
+
+## 重要页面
+
+- 首页：https://happywa147.github.io/ai-learning-site/
+- 60 秒新手上手：https://happywa147.github.io/ai-learning-site/#starter
+- 每月更新区：https://happywa147.github.io/ai-learning-site/#monthly
+- 模型对比：https://happywa147.github.io/ai-learning-site/#models
+- 作品样例：https://happywa147.github.io/ai-learning-site/#showcase
+- GitHub 仓库：https://github.com/happywa147/ai-learning-site
+
+## 内容边界
+
+- 本站内容用于 AI 学习和产品观察，不构成法律、医疗、金融或投资建议。
+- 模型和工具信息变化很快，引用时应优先检查页面展示的更新时间、复核日期和来源。
+- 当前静态版本的报名、反馈、学习进度保存在用户浏览器本机，不会自动上传。
+
+## 维护节奏
+
+- 月更内容位于 `assets/monthly-updates.json`。
+- 贡献流程见 `CONTRIBUTING.md`。
+- 路线图见 `ROADMAP.md`。

@@ -2,6 +2,21 @@
   {
     "id": "2026-07",
     "label": "2026 年 7 月",
+    "status": "published",
+    "updatedAt": "2026-07-01",
+    "lastVerified": "2026-07-02",
+    "sources": [
+      {
+        "label": "站内月更共建模板",
+        "url": "https://github.com/happywa147/ai-learning-site/blob/main/.github/ISSUE_TEMPLATE/monthly-update.md"
+      }
+    ],
+    "testedTasks": [
+      "模型对比表：写作、编程、长文档、视频、Agent",
+      "三步 Agent 流程：输入、工具、输出验收标准",
+      "短视频选题到分镜方案"
+    ],
+    "confidence": "medium",
     "title": "从会用工具，升级到会搭工作流",
     "summary": "本月重点不是追每一个新模型，而是建立自己的模型选择法、Agent 任务拆解法和内容生产闭环。所有结论都要按月复查，避免把旧规则当成新常识。",
     "cards": [
@@ -42,6 +57,7 @@
   {
     "id": "2026-08",
     "label": "2026 年 8 月",
+    "status": "draft",
     "title": "预留更新：作品集与真实场景",
     "summary": "下月建议围绕作品集、真实用户反馈、工具成本和自动化流程继续更新。这里保留为可扩展模板。",
     "cards": [

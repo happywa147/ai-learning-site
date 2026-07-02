@@ -282,7 +282,17 @@ const monthlyFallbackUpdates = [
   {
     id: "2026-07",
     label: "2026 年 7 月",
+    status: "published",
     updatedAt: "2026-07-01",
+    lastVerified: "2026-07-02",
+    sources: [
+      {
+        label: "站内月更共建模板",
+        url: "https://github.com/happywa147/ai-learning-site/blob/main/.github/ISSUE_TEMPLATE/monthly-update.md"
+      }
+    ],
+    testedTasks: ["模型对比表", "三步 Agent 流程", "短视频选题到分镜方案"],
+    confidence: "medium",
     title: "从会用工具，升级到会搭工作流",
     summary: "本月重点不是追每一个新模型，而是建立自己的模型选择法、Agent 任务拆解法和内容生产闭环。所有结论都要按月复查，避免把旧规则当成新常识。",
     cards: [
@@ -327,6 +337,7 @@ const monthlyFallbackUpdates = [
   {
     id: "2026-08",
     label: "2026 年 8 月",
+    status: "draft",
     updatedAt: "2026-08-01",
     title: "预留更新：作品集与真实场景",
     summary: "下月建议围绕作品集、真实用户反馈、工具成本和自动化流程继续更新。这里保留为可扩展模板。",
@@ -386,10 +397,15 @@ function normalizeMonthlyPayload(list) {
         title: item?.title || "",
         summary: item?.summary || "",
         cards: safeCards,
-        updatedAt: item?.updatedAt || item?.date || ""
+        updatedAt: item?.updatedAt || item?.date || "",
+        lastVerified: item?.lastVerified || "",
+        status: item?.status || "published",
+        confidence: item?.confidence || "",
+        sources: Array.isArray(item?.sources) ? item.sources : [],
+        testedTasks: Array.isArray(item?.testedTasks) ? item.testedTasks : []
       };
     })
-    .filter((item) => item.cards.length || item.title || item.summary);
+    .filter((item) => item.status !== "draft" && (item.cards.length || item.title || item.summary));
 }
 
 async function loadMonthlyUpdates() {
@@ -768,11 +784,20 @@ function renderMonthlyUpdate() {
   if (!update) {
     return;
   }
+  const evidenceItems = [
+    update.lastVerified ? `复核日期：${update.lastVerified}` : "",
+    update.confidence ? `可信度：${update.confidence}` : "",
+    update.testedTasks?.length ? `测试任务：${update.testedTasks.join(" / ")}` : ""
+  ].filter(Boolean);
+  const sourceLinks = (update.sources || [])
+    .filter((source) => source && source.label && source.url)
+    .map((source) => `<a href="${safeText(source.url)}" target="_blank" rel="noopener noreferrer">${safeText(source.label)}</a>`);
   document.querySelector("#monthBadge").textContent = safeText(update.label || "");
   document.querySelector("#monthTitle").textContent = safeText(update.title || "");
   document.querySelector("#monthSummary").textContent = safeText(update.summary || "");
   document.querySelector("#monthFocusCount").textContent = String(update.cards?.length || 0);
   document.querySelector("#monthUpdated").textContent = update.updatedAt ? `更新日期：${safeText(update.updatedAt)}` : "";
+  document.querySelector("#monthEvidence").innerHTML = [...evidenceItems.map((item) => `<span>${safeText(item)}</span>`), ...sourceLinks].join("");
   document.querySelector("#monthlyGrid").innerHTML = update.cards
     .map((card) => `<article class="monthly-card"><h3>${safeText(card.title)}</h3><ul>${safeList(card.items)}</ul></article>`)
     .join("");

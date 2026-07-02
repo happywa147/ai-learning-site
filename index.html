@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 原生能力自学站</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="回到首页">
+        <span class="brand-mark">AI</span>
+        <span>原生自学站</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="#game">规则</a>
+        <a href="#worldview">世界观</a>
+        <a href="#monthly">月更</a>
+        <a href="#map">路线</a>
+        <a href="#models">模型</a>
+        <a href="#projects">项目</a>
+        <a href="#toolkit">工具</a>
+        <a href="#register">注册</a>
+        <button id="sponsorNav" class="nav-button" type="button">赞助</button>
+      </nav>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">面向所有 AI 学习者 · 贴近中国应用市场</p>
+          <h1>把 AI 学习变成一场会升级的长期游戏</h1>
+          <p class="hero-text">
+            从编程、Prompt、Agent、Skill 到短视频与商业应用，用任务、等级、徽章和作品集驱动学习。每天打开都有下一步，每完成一点都能看到自己变强。
+          </p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#game">进入任务板</a>
+            <a class="ghost-btn" href="#projects">看作品任务</a>
+            <a class="ghost-btn" href="#register">注册学习</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="AI 学习驾驶舱示意图">
+          <div class="screen main-screen">
+            <div class="screen-title">AI 学习任务地图</div>
+            <div class="pulse-grid">
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="screen code-screen">
+            <div class="dots"><i></i><i></i><i></i></div>
+            <pre>agent.run(task)
+tools: search, code, video</pre>
+          </div>
+          <div class="screen video-screen">
+            <div class="timeline"><b></b><b></b><b></b><b></b></div>
+            <span>短视频脚本 → 分镜 → 剪辑</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard" aria-label="学习总览">
+        <article>
+          <strong id="progressValue">0%</strong>
+          <span>已完成任务</span>
+        </article>
+        <article>
+          <strong id="levelValue">Lv.1</strong>
+          <span>当前等级</span>
+        </article>
+        <article>
+          <strong id="xpValue">0 XP</strong>
+          <span>经验值</span>
+        </article>
+        <article>
+          <strong id="streakValue">0 天</strong>
+          <span>连续学习</span>
+        </article>
+      </section>
+
+      <section id="game" class="section game-section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Game Rules</p>
+            <h2>像打游戏一样学 AI</h2>
+          </div>
+          <button id="checkInButton" class="primary-btn">今日签到 +20 XP</button>
+        </div>
+        <div class="game-grid">
+          <article class="level-card">
+            <span class="badge">成长等级</span>
+            <h3 id="rankTitle">AI 见习生</h3>
+            <div class="xp-bar" aria-label="等级进度">
+              <span id="xpBar"></span>
+            </div>
+            <p id="nextRankText" class="muted">完成任务，解锁下一阶段能力。</p>
+          </article>
+          <article class="daily-card">
+            <span class="badge">今日挑战</span>
+            <h3 id="dailyTitle"></h3>
+            <p id="dailyDesc" class="muted"></p>
+            <button id="dailyButton" class="ghost-btn">完成挑战 +35 XP</button>
+          </article>
+          <article class="rules-card">
+            <span class="badge">网站规则</span>
+            <ul>
+              <li>每天签到一次，保持学习手感。</li>
+              <li>每完成一周任务获得经验值。</li>
+              <li>完成作品项目可以点亮徽章。</li>
+              <li>等级越高，越接近真实 AI 应用能力。</li>
+            </ul>
+          </article>
+        </div>
+        <div id="badgeWall" class="badge-wall" aria-label="徽章墙"></div>
+      </section>
+
+      <section id="worldview" class="section worldview-section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">AI Worldview</p>
+            <h2>AI 时代的世界观</h2>
+          </div>
+          <span class="badge">先升级视野，再升级工具</span>
+        </div>
+        <div class="worldview-lead">
+          <p>
+            AI 学习不只是掌握几个工具，而是重新理解知识、生产力、组织、职业、创作和竞争。真正的格局，是知道技术会变，但判断力、创造力、责任感和长期主义不能丢。
+          </p>
+        </div>
+        <div id="worldviewGrid" class="worldview-grid"></div>
+      </section>
+
+      <section id="monthly" class="section monthly-section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Monthly Update</p>
+            <h2>每月更新区</h2>
+          </div>
+          <label class="month-picker">
+            <span>月份</span>
+            <select id="monthSelect" aria-label="选择月度更新"></select>
+          </label>
+        </div>
+        <div class="monthly-hero">
+          <div>
+            <span id="monthBadge" class="badge"></span>
+            <h3 id="monthTitle"></h3>
+            <p id="monthSummary" class="muted"></p>
+          </div>
+          <div class="monthly-score">
+            <strong id="monthFocusCount">0</strong>
+            <span>本月关注点</span>
+          </div>
+        </div>
+        <div id="monthlyGrid" class="monthly-grid"></div>
+      </section>
+
+      <section id="map" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Learning Map</p>
+            <h2>三条学习路线</h2>
+          </div>
+          <div class="segmented" role="tablist" aria-label="学习路线选择">
+            <button class="active" data-track="freshman">零基础入门</button>
+            <button data-track="creator">短视频创作者</button>
+            <button data-track="builder">AI 应用开发</button>
+          </div>
+        </div>
+        <div id="trackDetail" class="track-detail"></div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Weekly Plan</p>
+          <h2>12 周自学节奏</h2>
+          <p class="muted">每周只抓一个核心能力，避免被工具海淹没。勾选后会保存在本机浏览器里。</p>
+        </div>
+        <div id="weekList" class="week-list"></div>
+      </section>
+
+      <section id="models" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Model Compass</p>
+            <h2>国内外模型应用对比</h2>
+          </div>
+          <label class="search">
+            <span>筛选</span>
+            <input id="modelSearch" type="search" placeholder="例如：编程、长文本、视频、中国市场" />
+          </label>
+        </div>
+        <div id="modelGrid" class="model-grid"></div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Portfolio</p>
+            <h2>作品集项目</h2>
+          </div>
+          <span class="badge">建议 3 个月完成 3 个</span>
+        </div>
+        <div id="projectGrid" class="project-grid"></div>
+      </section>
+
+      <section id="toolkit" class="section toolkit">
+        <div>
+          <p class="eyebrow">Toolkit</p>
+          <h2>Prompt、Agent、Skill 模板</h2>
+          <p class="muted">把一次好用的提示词，沉淀成可复用的工作流。真正重要的是形成自己的 AI 学习与创造系统。</p>
+        </div>
+        <div class="template-panel">
+          <div class="tabs" role="tablist" aria-label="模板类型">
+            <button class="active" data-template="prompt">Prompt</button>
+            <button data-template="agent">Agent</button>
+            <button data-template="skill">Skill</button>
+          </div>
+          <pre id="templateText"></pre>
+          <button id="copyTemplate" class="primary-btn small">复制模板</button>
+        </div>
+      </section>
+
+      <section id="register" class="section register-section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Join & Contact</p>
+            <h2>注册学习，与我联系</h2>
+          </div>
+          <button id="exportLeads" class="ghost-btn">导出报名 CSV</button>
+        </div>
+        <div class="register-grid">
+          <form id="registerForm" class="register-form">
+            <label>
+              <span>姓名</span>
+              <input name="name" type="text" placeholder="怎么称呼你" required />
+            </label>
+            <label>
+              <span>联系方式</span>
+              <input name="contact" type="text" placeholder="微信 / 手机 / 邮箱" required />
+            </label>
+            <label>
+              <span>身份或阶段</span>
+              <select name="profile" required>
+                <option value="">请选择</option>
+                <option>零基础学习者</option>
+                <option>职场提升</option>
+                <option>内容创作者</option>
+                <option>创业 / 业务负责人</option>
+                <option>家长 / 陪伴学习</option>
+              </select>
+            </label>
+            <label>
+              <span>最想学习</span>
+              <select name="interest" required>
+                <option value="">请选择</option>
+                <option>AI 基础与世界观</option>
+                <option>Prompt 与工作流</option>
+                <option>AI 编程与 Agent</option>
+                <option>短视频与内容生产</option>
+                <option>中国 AI 应用市场</option>
+              </select>
+            </label>
+            <label class="full-field">
+              <span>留言</span>
+              <textarea name="message" rows="4" placeholder="你的目标、基础、想解决的问题"></textarea>
+            </label>
+            <button class="primary-btn" type="submit">提交注册</button>
+            <p class="form-note">当前静态版会把报名信息保存在本机浏览器，适合本地演示和导出跟进；正式上线可接入后端、表单服务或 CRM。</p>
+          </form>
+          <aside class="contact-card">
+            <span class="badge">联系我</span>
+            <h3 id="contactName">AI 学习站主理人</h3>
+            <p class="muted">想了解学习路径、共创内容、企业内训或项目合作，可以通过下面方式联系。</p>
+            <div id="contactList" class="contact-list"></div>
+            <div class="lead-panel">
+              <strong id="leadCount">0</strong>
+              <span>本机已记录报名</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>AI 原生能力自学站</span>
+      <span>建议每月更新一次模型清单和工具清单</span>
+    </footer>
+
+    <button id="sponsorFloat" class="sponsor-float" type="button">赞助</button>
+
+    <div id="sponsorModal" class="modal-backdrop" aria-hidden="true">
+      <section class="sponsor-modal" role="dialog" aria-modal="true" aria-labelledby="sponsorTitle">
+        <button id="sponsorClose" class="modal-close" type="button" aria-label="关闭赞助窗口">×</button>
+        <div class="sponsor-copy">
+          <span class="badge">Support</span>
+          <h2 id="sponsorTitle">赞助这个 AI 学习站</h2>
+          <p class="muted">
+            如果这个网站帮你建立了 AI 学习方向，可以赞助它继续更新：每月模型观察、工具流实测、学习任务和作品案例都会持续加入。
+          </p>
+          <div class="sponsor-tiers">
+            <article><strong>随喜支持</strong><span>鼓励持续更新</span></article>
+            <article><strong>共建赞助</strong><span>支持月更内容</span></article>
+            <article><strong>企业支持</strong><span>联系定制共创</span></article>
+          </div>
+        </div>
+        <div class="sponsor-action">
+          <img src="./assets/sponsor-wechat-pay.jpg" alt="微信支付赞助码" />
+          <p>微信扫码赞助，支持这个 AI 学习站持续更新。</p>
+          <button id="sponsorCopyEmail" class="ghost-btn small" type="button">复制邮箱联系</button>
+        </div>
+      </section>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

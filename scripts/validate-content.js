@@ -131,6 +131,20 @@ function validateResourceRadar() {
     const verified = block.match(/lastVerified:\s*"([^"]+)"/)?.[1];
     if (!isValidDate(verified)) fail(`${prefix}.lastVerified 必须是 YYYY-MM-DD`);
   });
+
+  const html = readText("index.html");
+  [
+    "resourceSearch",
+    "resourceCount",
+    "data-resource-action",
+    "data-resource-license",
+    "copy-resource-card",
+    "copy-resource-contribution",
+    "buildResourceRadarText",
+    "buildResourceContributionText"
+  ].forEach((needle) => {
+    if (!html.includes(needle) && !app.includes(needle)) fail(`资源雷达缺少筛选或复制能力：${needle}`);
+  });
 }
 
 function validateCopywritingBoundaries() {

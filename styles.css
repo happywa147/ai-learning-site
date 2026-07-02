@@ -906,6 +906,26 @@ h3 {
   padding-top: 54px;
 }
 
+.resource-toolbar {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.9fr) minmax(320px, 1.6fr);
+  gap: 12px;
+  align-items: end;
+  margin: 20px 0 8px;
+}
+
+.resource-filter-panel {
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+}
+
+.resource-count {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .resource-radar-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -963,6 +983,13 @@ h3 {
 
 .resource-card dd {
   margin: 3px 0 0;
+}
+
+.resource-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
 }
 
 .model-card .tag:nth-child(2n) {
@@ -1773,6 +1800,7 @@ h3 {
   .toolkit,
   .feedback-grid,
   .register-grid,
+  .resource-toolbar,
   .sponsor-modal {
     grid-template-columns: 1fr;
   }
@@ -1810,9 +1838,14 @@ h3 {
   .section-head,
   .project-toolbar,
   .agent-role-toolbar,
+  .resource-filter-panel,
   .footer {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .resource-filter-panel {
+    justify-items: stretch;
   }
 
   .nav {

@@ -1692,6 +1692,9 @@ const state = {
   agentCategory: "all",
   projectLevel: "all",
   projectSearch: "",
+  resourceAction: "all",
+  resourceLicense: "all",
+  resourceSearch: "",
   month: getStoredString("ai-learning-month", "2026-07"),
   leads: getStoredArray("ai-learning-leads", []),
   feedback: getStoredArray("ai-learning-feedback", []),
@@ -1750,8 +1753,26 @@ function renderShowcase() {
 }
 
 function renderResourceRadar() {
-  document.querySelector("#resourceRadarGrid").innerHTML = resourceRadarItems
-    .map((item) => {
+  const query = state.resourceSearch.trim().toLowerCase();
+  const visibleResources = resourceRadarItems
+    .map((item, index) => ({ item, index }))
+    .filter(({ item }) => {
+      const actionMatched = state.resourceAction === "all" || item.action === state.resourceAction;
+      const licenseMatched = state.resourceLicense === "all" || item.licenseSpdx === state.resourceLicense;
+      const text = `${item.name} ${item.type} ${item.licenseSpdx} ${item.action} ${item.useFor} ${item.adapt}`.toLowerCase();
+      return actionMatched && licenseMatched && (!query || text.includes(query));
+    });
+
+  document.querySelector("#resourceCount").textContent = `当前显示 ${visibleResources.length} / ${resourceRadarItems.length} 个资源`;
+
+  if (!visibleResources.length) {
+    document.querySelector("#resourceRadarGrid").innerHTML =
+      '<div class="empty-state">未找到匹配资源，试试关键词：Agent、Prompt、MIT、RAG、工作流。</div>';
+    return;
+  }
+
+  document.querySelector("#resourceRadarGrid").innerHTML = visibleResources
+    .map(({ item, index }) => {
       const href = safeUrl(item.url);
       return `
         <article class="resource-card">
@@ -1766,11 +1787,80 @@ function renderResourceRadar() {
             <div><dt>许可证</dt><dd>${safeText(item.licenseSpdx)} · ${safeText(item.source)} 复核于 ${safeText(item.lastVerified)}</dd></div>
             <div><dt>本站处理</dt><dd>${safeText(item.adapt)}</dd></div>
           </dl>
-          ${href ? `<a class="ghost-btn small" href="${href}" target="_blank" rel="noopener noreferrer">查看仓库</a>` : ""}
+          <div class="resource-actions">
+            <button class="ghost-btn small copy-resource-card" type="button" data-resource-copy="${index}">复制资源卡</button>
+            <button class="ghost-btn small copy-resource-contribution" type="button" data-resource-contribution="${index}">复制贡献模板</button>
+            ${href ? `<a class="ghost-btn small" href="${href}" target="_blank" rel="noopener noreferrer">查看仓库</a>` : ""}
+          </div>
         </article>
       `;
     })
     .join("");
+}
+
+function buildResourceRadarText(item) {
+  return `AI 学习资源卡：${item.name}
+
+仓库：${item.url}
+类型：${item.type}
+许可证：${item.licenseSpdx}
+复核：${item.source} · ${item.lastVerified}
+处理建议：${item.action}
+
+值得学习：
+${item.useFor}
+
+本站改造方向：
+${item.adapt}
+
+使用边界：
+复用前请阅读原仓库 LICENSE；NOASSERTION 或限制性许可证只借鉴机制，不搬运原文。请保留来源链接，并把引用、改写和原创内容区分清楚。`;
+}
+
+function buildResourceContributionText(item = {}) {
+  return `AI 学习资源贡献模板
+
+资源名称：${item.name || ""}
+GitHub 地址：${item.url || ""}
+类型：${item.type || ""}
+当前许可证 SPDX：${item.licenseSpdx || ""}
+复核日期：${item.lastVerified || new Date().toISOString().slice(0, 10)}
+处理建议：${item.action || "值得借鉴 / 可按许可证复用 / 可改造吸收 / 谨慎改造 / 只借鉴机制"}
+
+为什么值得学习：
+${item.useFor || ""}
+
+建议如何改造成本站内容：
+${item.adapt || ""}
+
+风险与边界：
+请说明是否允许复制原文、代码或图片；许可证不清晰时，只提交机制借鉴和自己的重新表达。
+
+贡献者备注：
+`;
+}
+
+async function copyResourceCard(index, button) {
+  const item = resourceRadarItems[index];
+  if (!item) return;
+  const ok = await copyText(buildResourceRadarText(item));
+  const originalText = button.textContent;
+  button.textContent = ok ? "已复制" : "复制失败";
+  setTimeout(() => {
+    button.textContent = originalText;
+  }, 1200);
+  showToast(ok ? `已复制「${item.name}」资源卡。` : "复制失败，请手动复制页面内容。");
+}
+
+async function copyResourceContribution(index, button) {
+  const item = resourceRadarItems[index] || {};
+  const ok = await copyText(buildResourceContributionText(item));
+  const originalText = button.textContent;
+  button.textContent = ok ? "已复制" : "复制失败";
+  setTimeout(() => {
+    button.textContent = originalText;
+  }, 1200);
+  showToast(ok ? "已复制资源贡献模板。" : "复制失败，请手动复制页面内容。");
 }
 
 function renderTrack() {
@@ -2723,6 +2813,41 @@ document.querySelector("#dailyButton").addEventListener("click", () => {
 });
 
 document.querySelector("#exportReport").addEventListener("click", downloadProgressReport);
+
+document.querySelector("#resourceSearch").addEventListener("input", (event) => {
+  state.resourceSearch = event.target.value;
+  renderResourceRadar();
+});
+
+document.querySelectorAll("[data-resource-action]").forEach((button) => {
+  button.addEventListener("click", () => {
+    state.resourceAction = button.dataset.resourceAction;
+    document.querySelectorAll("[data-resource-action]").forEach((item) => item.classList.remove("active"));
+    button.classList.add("active");
+    renderResourceRadar();
+  });
+});
+
+document.querySelectorAll("[data-resource-license]").forEach((button) => {
+  button.addEventListener("click", () => {
+    state.resourceLicense = button.dataset.resourceLicense;
+    document.querySelectorAll("[data-resource-license]").forEach((item) => item.classList.remove("active"));
+    button.classList.add("active");
+    renderResourceRadar();
+  });
+});
+
+document.querySelector("#resourceRadarGrid").addEventListener("click", async (event) => {
+  const copyButton = event.target.closest(".copy-resource-card");
+  if (copyButton) {
+    await copyResourceCard(Number(copyButton.dataset.resourceCopy), copyButton);
+    return;
+  }
+  const contributionButton = event.target.closest(".copy-resource-contribution");
+  if (contributionButton) {
+    await copyResourceContribution(Number(contributionButton.dataset.resourceContribution), contributionButton);
+  }
+});
 
 document.querySelector("#feedbackForm").addEventListener("submit", (event) => {
   event.preventDefault();

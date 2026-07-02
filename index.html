@@ -306,6 +306,29 @@ tools: search, code, video</pre>
         <p class="muted">
           不做无脑收藏夹。每个资源都标明它适合借鉴什么、哪些可以按许可证复用、哪些只适合参考机制，帮助学习者建立开源判断力。
         </p>
+        <div class="resource-toolbar" aria-label="资源雷达筛选">
+          <label class="search-box">
+            <span>搜索资源</span>
+            <input id="resourceSearch" type="search" placeholder="搜索 repo、类型、用途或处理建议" autocomplete="off" />
+          </label>
+          <div class="resource-filter-panel">
+            <div class="segmented compact" aria-label="按处理建议筛选资源">
+              <button class="active" type="button" data-resource-action="all">全部</button>
+              <button type="button" data-resource-action="值得借鉴">借鉴</button>
+              <button type="button" data-resource-action="可改造吸收">改造</button>
+              <button type="button" data-resource-action="可按许可证复用">复用</button>
+              <button type="button" data-resource-action="谨慎改造">谨慎</button>
+              <button type="button" data-resource-action="只借鉴机制">机制</button>
+            </div>
+            <div class="segmented compact" aria-label="按许可证筛选资源">
+              <button class="active" type="button" data-resource-license="all">全部许可</button>
+              <button type="button" data-resource-license="MIT">MIT</button>
+              <button type="button" data-resource-license="Apache-2.0">Apache</button>
+              <button type="button" data-resource-license="NOASSERTION">未确认</button>
+            </div>
+          </div>
+        </div>
+        <p id="resourceCount" class="resource-count" aria-live="polite"></p>
         <div id="resourceRadarGrid" class="resource-radar-grid"></div>
       </section>
 

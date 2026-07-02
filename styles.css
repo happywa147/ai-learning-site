@@ -895,6 +895,69 @@ h3 {
   margin-top: 16px;
 }
 
+.resource-radar-section {
+  padding-top: 54px;
+}
+
+.resource-radar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.resource-card {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: 18px;
+  background: rgba(255, 252, 246, 0.86);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.resource-card-top,
+.project-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resource-card-top small,
+.project-meta span:last-child {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.resource-card p,
+.resource-card dd {
+  color: #5c4f47;
+  line-height: 1.7;
+}
+
+.resource-card dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.resource-card dl div {
+  padding-top: 8px;
+  border-top: 1px solid rgba(119, 88, 62, 0.14);
+}
+
+.resource-card dt {
+  color: var(--jujube-dark);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.resource-card dd {
+  margin: 3px 0 0;
+}
+
 .model-card .tag:nth-child(2n) {
   color: var(--plant);
   background: rgba(95, 127, 82, 0.14);
@@ -902,6 +965,13 @@ h3 {
 
 .project-grid {
   grid-template-columns: repeat(3, 1fr);
+}
+
+.project-card footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 8px 0 2px;
 }
 
 .showcase-section {
@@ -964,6 +1034,30 @@ h3 {
 .agent-academy-note a {
   color: var(--jujube-dark);
   font-weight: 800;
+}
+
+.agent-daily-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  margin-top: 18px;
+  padding: 20px;
+  background:
+    linear-gradient(135deg, rgba(143, 47, 42, 0.12), rgba(95, 127, 82, 0.13)),
+    rgba(255, 250, 242, 0.88);
+  border: 1px solid rgba(143, 47, 42, 0.18);
+  border-radius: 8px;
+}
+
+.agent-daily-card h3 {
+  margin: 12px 0 8px;
+}
+
+.agent-daily-card p:last-child {
+  margin-bottom: 0;
+  color: #4f443d;
+  line-height: 1.7;
 }
 
 .agent-role-toolbar {
@@ -1077,6 +1171,10 @@ h3 {
 .agent-role-card footer {
   padding-top: 10px;
   border-top: 1px solid rgba(119, 88, 62, 0.14);
+}
+
+.agent-role-card .copy-agent-role {
+  justify-self: start;
 }
 
 .open-source-grid {
@@ -1663,6 +1761,7 @@ h3 {
   .dashboard,
   .starter-grid,
   .showcase-grid,
+  .resource-radar-grid,
   .open-source-grid,
   .faq-grid,
   .model-grid,
@@ -1696,6 +1795,7 @@ h3 {
   .dashboard,
   .starter-grid,
   .showcase-grid,
+  .resource-radar-grid,
   .open-source-grid,
   .faq-grid,
   .model-grid,
@@ -1709,7 +1809,8 @@ h3 {
     grid-template-columns: 1fr;
   }
 
-  .monthly-hero {
+  .monthly-hero,
+  .agent-daily-card {
     grid-template-columns: 1fr;
   }
 

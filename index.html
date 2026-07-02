@@ -127,6 +127,7 @@
         <a href="#game">规则</a>
         <a href="#worldview">世界观</a>
         <a href="#monthly">月更</a>
+        <a href="#resources">雷达</a>
         <a href="#showcase">样例</a>
         <a href="#map">路线</a>
         <a href="#models">模型</a>
@@ -294,6 +295,20 @@ tools: search, code, video</pre>
         <div id="monthlyGrid" class="monthly-grid"></div>
       </section>
 
+      <section id="resources" class="section resource-radar-section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Open Source Radar</p>
+            <h2>GitHub AI 学习资源雷达</h2>
+          </div>
+          <span class="badge">借鉴 · 搬运 · 改造</span>
+        </div>
+        <p class="muted">
+          不做无脑收藏夹。每个资源都标明它适合借鉴什么、哪些可以改造吸收、哪些只适合参考机制，帮助学习者建立开源判断力。
+        </p>
+        <div id="resourceRadarGrid" class="resource-radar-grid"></div>
+      </section>
+
       <section id="showcase" class="section showcase-section">
         <div class="section-head">
           <div>
@@ -347,11 +362,12 @@ tools: search, code, video</pre>
       <section id="projects" class="section">
         <div class="section-head">
           <div>
-            <p class="eyebrow">Portfolio</p>
-            <h2>作品集项目</h2>
+            <p class="eyebrow">Project Challenge</p>
+            <h2>AI 项目挑战库</h2>
           </div>
-          <span class="badge">建议 3 个月完成 3 个</span>
+          <span class="badge">12 个可交付挑战</span>
         </div>
+        <p class="muted">每个挑战都有难度、时间、工具、交付物和验收标准。目标不是看懂，而是做出能展示、能复盘、能继续迭代的作品。</p>
         <div id="projectGrid" class="project-grid"></div>
       </section>
 
@@ -400,6 +416,15 @@ tools: search, code, video</pre>
           <strong>改造原则：</strong>
           <span>中文化、适中化、任务化、可验收。灵感参考开源项目 <a href="https://github.com/msitarzewski/agency-agents" target="_blank" rel="noopener noreferrer">msitarzewski/agency-agents</a>，本站内容为学习场景下的重新组织与本地化表达。</span>
         </div>
+        <article class="agent-daily-card">
+          <div>
+            <span class="badge">今日 Agent 挑战</span>
+            <h3 id="agentDailyName"></h3>
+            <p id="agentDailyUse" class="muted"></p>
+            <p><strong>今天练习：</strong><span id="agentDailyPractice"></span></p>
+          </div>
+          <button id="copyDailyAgent" class="primary-btn small" type="button">复制今日角色卡</button>
+        </article>
         <div class="agent-role-toolbar">
           <div id="agentRoleTabs" class="agent-role-tabs" aria-label="筛选 Agent 角色"></div>
           <span id="agentRoleCount" class="muted"></span>

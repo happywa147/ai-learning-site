@@ -112,6 +112,117 @@ const showcaseItems = [
   }
 ];
 
+const resourceRadarItems = [
+  {
+    name: "microsoft/generative-ai-for-beginners",
+    url: "https://github.com/microsoft/generative-ai-for-beginners",
+    type: "课程路线",
+    license: "MIT",
+    action: "值得借鉴",
+    useFor: "章节化课程、每课目标、练习与学习路径设计。",
+    adapt: "把 12 周路线升级成“概念、任务、作品、自测”的课程单元。"
+  },
+  {
+    name: "dair-ai/Prompt-Engineering-Guide",
+    url: "https://github.com/dair-ai/Prompt-Engineering-Guide",
+    type: "Prompt / RAG / Agent",
+    license: "MIT",
+    action: "值得借鉴",
+    useFor: "Prompt 技法、上下文工程、RAG 与 Agent 知识结构。",
+    adapt: "沉淀为中文 Prompt 训练卡和任务型自测题。"
+  },
+  {
+    name: "f/prompts.chat",
+    url: "https://github.com/f/prompts.chat",
+    type: "Prompt 社区库",
+    license: "Other",
+    action: "谨慎改造",
+    useFor: "Prompt 分类、发现、收藏和社区贡献机制。",
+    adapt: "只借鉴交互与分类，不搬运 Prompt 全文。"
+  },
+  {
+    name: "msitarzewski/agency-agents",
+    url: "https://github.com/msitarzewski/agency-agents",
+    type: "Agent 角色库",
+    license: "MIT",
+    action: "可改造吸收",
+    useFor: "专业 agent 的角色分工、人格、流程与交付物设计。",
+    adapt: "已改造成 67 个中文学习角色卡，保留来源说明。"
+  },
+  {
+    name: "wshobson/agents",
+    url: "https://github.com/wshobson/agents",
+    type: "多工具 Agent 市场",
+    license: "MIT",
+    action: "可改造吸收",
+    useFor: "跨 Claude Code、Codex、Cursor 等工具的 agent/skill 分发思路。",
+    adapt: "未来可做“复制到不同工具”的角色卡格式。"
+  },
+  {
+    name: "Shubhamsaboo/awesome-llm-apps",
+    url: "https://github.com/Shubhamsaboo/awesome-llm-apps",
+    type: "LLM 应用案例",
+    license: "Apache-2.0",
+    action: "可搬运改写",
+    useFor: "RAG、Agent 和可运行 LLM 应用的项目选题。",
+    adapt: "转成本站 AI 项目挑战库：难度、交付物、验收标准。"
+  },
+  {
+    name: "datawhalechina/hello-agents",
+    url: "https://github.com/datawhalechina/hello-agents",
+    type: "中文 Agent 教程",
+    license: "Other",
+    action: "谨慎改造",
+    useFor: "中文学习者更容易理解的 Agent 入门路径。",
+    adapt: "借鉴教学顺序，内容重新表达并补来源。"
+  },
+  {
+    name: "langgenius/dify",
+    url: "https://github.com/langgenius/dify",
+    type: "Agent 工作流平台",
+    license: "Other",
+    action: "只借鉴机制",
+    useFor: "低代码工作流、节点编排、知识库与人工审核思路。",
+    adapt: "抽象成“输入、模型、工具、知识库、输出、验收”的挑战模板。"
+  },
+  {
+    name: "langflow-ai/langflow",
+    url: "https://github.com/langflow-ai/langflow",
+    type: "可视化工作流",
+    license: "MIT",
+    action: "值得借鉴",
+    useFor: "节点式 AI 应用搭建体验和流程可视化。",
+    adapt: "为学习者提供工作流草图，而不是直接做复杂编辑器。"
+  },
+  {
+    name: "open-webui/open-webui",
+    url: "https://github.com/open-webui/open-webui",
+    type: "本地 AI 界面",
+    license: "Other",
+    action: "只借鉴机制",
+    useFor: "本地模型、知识库、插件和私有化使用习惯。",
+    adapt: "做“本地优先、隐私优先”的学习档案说明。"
+  },
+  {
+    name: "Mintplex-Labs/anything-llm",
+    url: "https://github.com/Mintplex-Labs/anything-llm",
+    type: "个人知识库",
+    license: "MIT",
+    action: "值得借鉴",
+    useFor: "本地知识库、工作区、文档问答和 Agent 体验。",
+    adapt: "把个人知识库问答项目拆成更可执行的挑战。"
+  },
+  {
+    name: "amitness/learning",
+    url: "https://github.com/amitness/learning",
+    type: "学习日志",
+    license: "MIT",
+    action: "值得借鉴",
+    useFor: "长期公开学习日志和知识沉淀方式。",
+    adapt: "加入学习周报、作品记录和月更复盘的贡献模板。"
+  }
+];
+
 const agentRoleCategories = [
   ["all", "全部"],
   ["core", "核心素养"],
@@ -1345,33 +1456,123 @@ const models = [
 const projects = [
   {
     title: "AI 学习助教",
+    level: "入门",
+    time: "2-4 小时",
+    tools: ["ChatGPT/Claude", "Kimi/Qwen", "Markdown"],
     desc: "上传学习资料，整理重点、生成测验、输出复习计划。",
-    tasks: ["资料结构化", "错题与薄弱点记录", "生成一份复习报告"]
+    tasks: ["资料结构化", "错题与薄弱点记录", "生成一份复习报告"],
+    deliverables: ["知识地图", "10 道自测题", "7 天复习计划"],
+    check: "答案能追溯到原始资料，复习计划能按天执行。"
   },
   {
     title: "短视频脚本工厂",
+    level: "入门",
+    time: "3-5 小时",
+    tools: ["豆包/通义", "剪映", "小红书/抖音"],
     desc: "面向抖音/小红书/B 站，做选题、标题、脚本、分镜和复盘。",
-    tasks: ["建立 30 个选题库", "生成 5 条脚本", "完成 1 条剪辑方案"]
+    tasks: ["建立 30 个选题库", "生成 5 条脚本", "完成 1 条剪辑方案"],
+    deliverables: ["选题表", "口播稿", "分镜表"],
+    check: "任意一条脚本能直接进入拍摄或剪辑。"
   },
   {
     title: "个人知识库问答",
+    level: "进阶",
+    time: "1-2 天",
+    tools: ["RAG", "向量检索", "本地文档"],
     desc: "把笔记、PDF、学习资料做成可追溯引用的问答助手。",
-    tasks: ["资料清洗", "知识库检索", "答案引用来源"]
+    tasks: ["资料清洗", "知识库检索", "答案引用来源"],
+    deliverables: ["资料清单", "问答流程", "引用样例"],
+    check: "问到资料没有的内容时，助手会明确说不知道。"
   },
   {
     title: "AI 简历与作品集",
+    level: "入门",
+    time: "2-4 小时",
+    tools: ["AI 写作", "GitHub Pages", "截图"],
     desc: "把项目经历、实践成果和自学成果包装成可展示作品集。",
-    tasks: ["经历量化", "项目说明", "个人主页"]
+    tasks: ["经历量化", "项目说明", "个人主页"],
+    deliverables: ["项目说明", "作品截图", "个人主页草稿"],
+    check: "别人能在 3 分钟内看懂你做过什么和学会了什么。"
   },
   {
     title: "中国 AI 产品观察",
+    level: "进阶",
+    time: "1 天",
+    tools: ["竞品表", "官方文档", "用户评论"],
     desc: "选择一个国内 AI 产品，拆解用户、场景、商业模式和增长路径。",
-    tasks: ["竞品对比", "用户访谈", "写一份产品分析"]
+    tasks: ["竞品对比", "用户访谈", "写一份产品分析"],
+    deliverables: ["竞品矩阵", "用户画像", "机会判断"],
+    check: "关键判断至少有来源、截图或亲自体验记录。"
   },
   {
     title: "Agent 小工具",
+    level: "进阶",
+    time: "1-2 天",
+    tools: ["Agent", "工具调用", "日志"],
     desc: "做一个能调用搜索、代码或文档工具的自动化助手。",
-    tasks: ["任务拆解", "工具清单", "日志与失败处理"]
+    tasks: ["任务拆解", "工具清单", "日志与失败处理"],
+    deliverables: ["角色说明", "工具清单", "失败恢复流程"],
+    check: "每个工具调用都有触发条件和人工审核点。"
+  },
+  {
+    title: "RAG 官方文档问答",
+    level: "进阶",
+    time: "1-2 天",
+    tools: ["RAG", "官方文档", "引用来源"],
+    desc: "围绕一个模型或工具的官方文档做问答助手，训练“有来源才回答”。",
+    tasks: ["收集官方文档", "设计 20 个验收问题", "标注引用来源"],
+    deliverables: ["文档索引", "验收问题集", "带引用答案样例"],
+    check: "每条关键答案都能点回原文来源。"
+  },
+  {
+    title: "模型对比实验室",
+    level: "入门",
+    time: "2-3 小时",
+    tools: ["OpenAI/Claude/Gemini", "国内模型", "表格"],
+    desc: "用同一批任务对比国内外模型在写作、编程、长文档和多模态上的表现。",
+    tasks: ["设计测试题", "记录结果", "写出选型建议"],
+    deliverables: ["对比表", "任务截图", "选型结论"],
+    check: "结论不能只看感觉，必须对应具体任务结果。"
+  },
+  {
+    title: "AI 搜索与引用报告",
+    level: "入门",
+    time: "2-4 小时",
+    tools: ["AI 搜索", "来源管理", "Markdown"],
+    desc: "围绕一个行业问题生成带来源的研究报告，训练事实核验与引用能力。",
+    tasks: ["提出研究问题", "收集来源", "标注可信度"],
+    deliverables: ["来源表", "800 字报告", "疑点清单"],
+    check: "事实、推测和个人判断要明确分开。"
+  },
+  {
+    title: "Agent 工作流蓝图",
+    level: "高阶",
+    time: "1 天",
+    tools: ["流程图", "角色卡", "工具调用"],
+    desc: "把复杂任务拆成多个 Agent 角色协作，明确输入、输出、审核和失败恢复。",
+    tasks: ["定义角色", "画出流程", "写验收标准"],
+    deliverables: ["工作流图", "角色契约", "失败恢复清单"],
+    check: "每个 Agent 都知道负责什么、不负责什么。"
+  },
+  {
+    title: "本地隐私知识库",
+    level: "高阶",
+    time: "2-3 天",
+    tools: ["本地模型", "AnythingLLM/Open WebUI", "隐私清单"],
+    desc: "用本地优先思路搭建个人资料问答环境，理解隐私、部署和可控性。",
+    tasks: ["整理资料", "搭建本地问答", "做隐私风险检查"],
+    deliverables: ["部署记录", "隐私清单", "问答案例"],
+    check: "敏感资料不上传到不可信平台。"
+  },
+  {
+    title: "开源 AI 项目拆解",
+    level: "进阶",
+    time: "1 天",
+    tools: ["GitHub", "README", "Issue"],
+    desc: "选择一个热门 AI 开源项目，拆解定位、许可证、贡献方式和可借鉴机制。",
+    tasks: ["读 README", "查许可证", "总结可借鉴点"],
+    deliverables: ["项目卡片", "许可证判断", "改造建议"],
+    check: "明确区分可搬运、可改写、只参考三类内容。"
   }
 ];
 
@@ -1502,6 +1703,29 @@ function renderShowcase() {
     .join("");
 }
 
+function renderResourceRadar() {
+  document.querySelector("#resourceRadarGrid").innerHTML = resourceRadarItems
+    .map((item) => {
+      const href = safeUrl(item.url);
+      return `
+        <article class="resource-card">
+          <div class="resource-card-top">
+            <span class="badge">${safeText(item.action)}</span>
+            <small>${safeText(item.license)}</small>
+          </div>
+          <h3>${safeText(item.name)}</h3>
+          <p>${safeText(item.useFor)}</p>
+          <dl>
+            <div><dt>类型</dt><dd>${safeText(item.type)}</dd></div>
+            <div><dt>本站处理</dt><dd>${safeText(item.adapt)}</dd></div>
+          </dl>
+          ${href ? `<a class="ghost-btn small" href="${href}" target="_blank" rel="noopener noreferrer">查看仓库</a>` : ""}
+        </article>
+      `;
+    })
+    .join("");
+}
+
 function renderTrack() {
   const track = tracks[state.track];
   const detail = document.querySelector("#trackDetail");
@@ -1617,8 +1841,15 @@ function renderProjects() {
       const locked = getXp() < PROJECT_UNLOCK_XP && index > 1;
       return `
       <article class="project-card ${locked ? "locked" : ""}">
+        <div class="project-meta">
+          <span class="badge">${safeText(project.level || "挑战")}</span>
+          <span>${safeText(project.time || "")}</span>
+        </div>
         <h3>${safeText(project.title)}</h3>
         <p>${safeText(project.desc)}</p>
+        <footer>${(project.tools || []).map((tag) => `<span class="tag">${safeText(tag)}</span>`).join("")}</footer>
+        <p><strong>交付物：</strong>${safeText((project.deliverables || []).join(" / "))}</p>
+        <p class="muted"><strong>验收：</strong>${safeText(project.check || "")}</p>
         <ul>${safeList(project.tasks)}</ul>
         <button class="${done ? "primary-btn" : "ghost-btn"} small project-toggle" ${locked ? "disabled" : ""} data-project="${index}">
           ${done ? "已点亮 +80 XP" : "点亮作品 +80 XP"}
@@ -1627,6 +1858,54 @@ function renderProjects() {
     `;
     })
     .join("");
+}
+
+function buildAgentRolePrompt(role) {
+  return `Agent 角色：${role.name}
+
+适用场景：${role.useFor}
+来源参考：${role.source}
+能力等级：${role.level}
+
+请你扮演这个角色，按下面规则帮助我：
+1. 先确认任务目标、对象、限制和已有材料。
+2. 根据角色职责给出可执行步骤，不空泛鼓励。
+3. 输出时必须包含“输入、产出、验收标准、下一步练习”。
+4. 遇到不确定信息要标注“需要核实”，不要编造事实。
+
+角色输入：${role.input}
+期望产出：${role.output}
+验收标准：${role.check}
+练习任务：${role.practice}`;
+}
+
+function getDailyAgentRole() {
+  const start = new Date(new Date().getFullYear(), 0, 0);
+  const diff = new Date().setHours(0, 0, 0, 0) - start.getTime();
+  const day = Math.floor(diff / 86400000);
+  return agentRoles[day % agentRoles.length];
+}
+
+function renderAgentDailyChallenge() {
+  const role = getDailyAgentRole();
+  document.querySelector("#agentDailyName").textContent = role.name;
+  document.querySelector("#agentDailyUse").textContent = role.useFor;
+  document.querySelector("#agentDailyPractice").textContent = role.practice;
+  document.querySelector("#copyDailyAgent").dataset.agentName = role.name;
+}
+
+async function copyAgentRoleByName(name, button) {
+  const role = agentRoles.find((item) => item.name === name);
+  if (!role) return;
+  const ok = await copyText(buildAgentRolePrompt(role));
+  if (button) {
+    const originalText = button.textContent;
+    button.textContent = ok ? "已复制" : "复制失败";
+    setTimeout(() => {
+      button.textContent = originalText;
+    }, 1200);
+  }
+  showToast(ok ? `已复制「${role.name}」角色卡。` : "复制失败，请手动复制页面内容。");
 }
 
 function renderAgentRoles() {
@@ -1664,6 +1943,7 @@ function renderAgentRoles() {
         <footer>
           <strong>练习：</strong>${safeText(role.practice)}
         </footer>
+        <button class="ghost-btn small copy-agent-role" type="button" data-agent-name="${safeText(role.name)}">复制角色卡</button>
       </article>
     `
     )
@@ -2196,6 +2476,12 @@ document.querySelector("#agentRoleTabs").addEventListener("click", (event) => {
   renderAgentRoles();
 });
 
+document.querySelector("#agents").addEventListener("click", (event) => {
+  const roleButton = event.target.closest(".copy-agent-role, #copyDailyAgent");
+  if (!roleButton) return;
+  copyAgentRoleByName(roleButton.dataset.agentName, roleButton);
+});
+
 document.querySelector("#weekList").addEventListener("change", async (event) => {
   const input = event.target.closest("[data-week]");
   if (!input) return;
@@ -2433,10 +2719,12 @@ async function bootstrap() {
   renderWorldview();
   renderMonthOptions();
   renderMonthlyUpdate();
+  renderResourceRadar();
   renderWeeks();
   renderModels();
   renderProjects();
   renderShowcase();
+  renderAgentDailyChallenge();
   renderAgentRoles();
   renderTemplate();
   renderContact();

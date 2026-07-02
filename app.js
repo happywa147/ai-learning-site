@@ -45,6 +45,10 @@ const ownerContact = {
   ]
 };
 
+const repoLinks = {
+  newIssue: "https://github.com/happywa147/ai-learning-site/issues/new"
+};
+
 const weeks = [
   ["第 1 周", "AI 认知与工具地图", "会区分模型、应用、插件、Agent"],
   ["第 2 周", "Prompt 基础", "写出可复用的任务提示词"],
@@ -209,6 +213,19 @@ function escapeHtml(value) {
 
 function safeText(value) {
   return escapeHtml(value);
+}
+
+function safeUrl(value) {
+  const text = String(value ?? "").trim();
+  try {
+    const url = new URL(text, window.location.href);
+    if (["http:", "https:", "mailto:"].includes(url.protocol)) {
+      return escapeHtml(url.href);
+    }
+  } catch (error) {
+    return "";
+  }
+  return "";
 }
 
 function safeList(items) {
@@ -791,7 +808,12 @@ function renderMonthlyUpdate() {
   ].filter(Boolean);
   const sourceLinks = (update.sources || [])
     .filter((source) => source && source.label && source.url)
-    .map((source) => `<a href="${safeText(source.url)}" target="_blank" rel="noopener noreferrer">${safeText(source.label)}</a>`);
+    .map((source) => {
+      const href = safeUrl(source.url);
+      if (!href) return "";
+      return `<a href="${href}" target="_blank" rel="noopener noreferrer">${safeText(source.label)}</a>`;
+    })
+    .filter(Boolean);
   document.querySelector("#monthBadge").textContent = safeText(update.label || "");
   document.querySelector("#monthTitle").textContent = safeText(update.title || "");
   document.querySelector("#monthSummary").textContent = safeText(update.summary || "");
@@ -1072,6 +1094,11 @@ function requestProof({ title = "补充实践证据", description = "" }) {
         handleSubmit();
       }
     };
+    const handleBackdropClose = (event) => {
+      if (event.target === modal) {
+        handleCancel();
+      }
+    };
     const cleanup = () => {
       submit.removeEventListener("click", handleSubmit);
       cancel.removeEventListener("click", handleCancel);
@@ -1080,11 +1107,6 @@ function requestProof({ title = "补充实践证据", description = "" }) {
       modal.removeEventListener("click", handleBackdropClose);
     };
     activeProofCleanup = cleanup;
-    const handleBackdropClose = (event) => {
-      if (event.target === modal) {
-        handleCancel();
-      }
-    };
 
     submit.addEventListener("click", handleSubmit);
     cancel.addEventListener("click", handleCancel);
@@ -1159,6 +1181,107 @@ function downloadLeadsCsv() {
   link.remove();
   URL.revokeObjectURL(url);
   showToast("报名 CSV 已导出。");
+}
+
+function buildIssueUrl({ title, body, labels = "" }) {
+  const params = new URLSearchParams({ title, body });
+  if (labels) params.set("labels", labels);
+  return `${repoLinks.newIssue}?${params.toString()}`;
+}
+
+function getFeedbackDraft(form = document.querySelector("#feedbackForm")) {
+  const data = new FormData(form);
+  const fallback = state.feedback[0] || {};
+  const topic = toTrimmed(data.get("topic")) || fallback.topic || "";
+  const message = toTrimmed(data.get("message")) || fallback.message || "";
+  if (!topic || !message) return null;
+  return {
+    title: `[Feedback] ${topic}`,
+    body: [
+      "## 反馈主题",
+      "",
+      topic,
+      "",
+      "## 建议内容",
+      "",
+      message,
+      "",
+      "## 来源",
+      "",
+      "- 来自 AI 原生能力自学站页面反馈表单",
+      `- 生成时间：${new Date().toLocaleString("zh-CN", { hour12: false })}`
+    ].join("\n")
+  };
+}
+
+async function copyFeedbackIssueDraft() {
+  const draft = getFeedbackDraft();
+  if (!draft) {
+    showToast("请先填写反馈主题和建议。");
+    return;
+  }
+  const text = `${draft.title}\n\n${draft.body}`;
+  const ok = await copyText(text);
+  showToast(ok ? "反馈 Issue 草稿已复制，可粘贴到 GitHub。" : "复制失败，请手动复制反馈内容。", 2200);
+}
+
+function openFeedbackIssue() {
+  const draft = getFeedbackDraft();
+  if (!draft) {
+    showToast("请先填写反馈主题和建议。");
+    return;
+  }
+  window.open(buildIssueUrl({ ...draft, labels: "feedback" }), "_blank", "noopener");
+}
+
+function getLeadDraft(form = document.querySelector("#registerForm")) {
+  const data = new FormData(form);
+  const fallbackLead = state.leads[0] || {};
+  const lead = {
+    name: toTrimmed(data.get("name")) || fallbackLead.name || "",
+    contact: toTrimmed(data.get("contact")) || fallbackLead.contact || "",
+    profile: data.get("profile") || fallbackLead.profile || "",
+    interest: data.get("interest") || fallbackLead.interest || "",
+    message: toTrimmed(data.get("message")) || fallbackLead.message || "",
+    createdAt: fallbackLead.createdAt || new Date().toLocaleString("zh-CN", { hour12: false })
+  };
+  if (!lead.name || !lead.contact || !lead.profile || !lead.interest) return null;
+  return lead;
+}
+
+function buildLeadContactText(lead) {
+  return [
+    "你好，我想加入 AI 原生能力自学站的月更学习名单。",
+    "",
+    `称呼：${lead.name}`,
+    `联系方式：${lead.contact}`,
+    `身份或阶段：${lead.profile}`,
+    `最想学习：${lead.interest}`,
+    lead.message ? `留言：${lead.message}` : "留言：",
+    "",
+    "说明：这段内容由网页本地生成，请通过邮箱或微信发送给主理人。"
+  ].join("\n");
+}
+
+async function copyLeadContactDraft() {
+  const lead = getLeadDraft();
+  if (!lead) {
+    showToast("请先完整填写报名信息，或使用最近一条本机报名记录。", 2200);
+    return;
+  }
+  const ok = await copyText(buildLeadContactText(lead));
+  showToast(ok ? "联系草稿已复制，请通过邮箱或微信发给我。" : "复制失败，请手动整理联系内容。", 2200);
+}
+
+function openLeadEmailDraft() {
+  const lead = getLeadDraft();
+  if (!lead) {
+    showToast("请先完整填写报名信息，或使用最近一条本机报名记录。", 2200);
+    return;
+  }
+  const subject = encodeURIComponent("加入 AI 原生能力自学站月更学习名单");
+  const body = encodeURIComponent(buildLeadContactText(lead));
+  window.location.href = `mailto:${getOwnerEmail()}?subject=${subject}&body=${body}`;
 }
 
 function updateProgress() {
@@ -1406,10 +1529,12 @@ document.querySelector("#feedbackForm").addEventListener("submit", (event) => {
     message
   });
   form.reset();
-  showToast("反馈已记录，会进入下一轮月更参考。");
+  showToast("反馈已记录在本机；如需让我收到，请生成 GitHub Issue。", 2600);
 });
 
 document.querySelector("#exportFeedback").addEventListener("click", downloadFeedbackCsv);
+document.querySelector("#copyFeedbackIssue").addEventListener("click", copyFeedbackIssueDraft);
+document.querySelector("#openFeedbackIssue").addEventListener("click", openFeedbackIssue);
 
 document.querySelector("#registerForm").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -1437,9 +1562,12 @@ document.querySelector("#registerForm").addEventListener("submit", (event) => {
     message
   });
   form.reset();
-  showToast("注册成功，信息已保存在本机。");
+  showToast("报名草稿已保存在本机；请复制草稿或写邮件联系我。", 2600);
   setTimeout(() => document.querySelector("#game").scrollIntoView({ behavior: "smooth", block: "start" }), 300);
 });
+
+document.querySelector("#copyLeadContact").addEventListener("click", copyLeadContactDraft);
+document.querySelector("#openLeadEmail").addEventListener("click", openLeadEmailDraft);
 
 document.querySelector("#clearLeads").addEventListener("click", () => {
   if (!state.leads.length) {

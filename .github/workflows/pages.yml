@@ -25,13 +25,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate static site
+        run: node scripts/validate-content.js
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
+
+      - name: Prepare Pages artifact
+        run: |
+          mkdir -p _site
+          cp index.html styles.css app.js robots.txt sitemap.xml llms.txt LICENSE README.md _site/
+          cp -R assets _site/assets
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy
         id: deployment

@@ -7,8 +7,20 @@
     "lastVerified": "2026-07-02",
     "sources": [
       {
-        "label": "站内月更共建模板",
-        "url": "https://github.com/happywa147/ai-learning-site/blob/main/.github/ISSUE_TEMPLATE/monthly-update.md"
+        "label": "OpenAI 模型文档",
+        "url": "https://platform.openai.com/docs/models"
+      },
+      {
+        "label": "Anthropic Claude 模型文档",
+        "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview"
+      },
+      {
+        "label": "Google Gemini 模型文档",
+        "url": "https://ai.google.dev/gemini-api/docs/models"
+      },
+      {
+        "label": "DeepSeek API 模型与价格文档",
+        "url": "https://api-docs.deepseek.com/quick_start/pricing"
       }
     ],
     "testedTasks": [
@@ -18,7 +30,7 @@
     ],
     "confidence": "medium",
     "title": "从会用工具，升级到会搭工作流",
-    "summary": "本月重点不是追每一个新模型，而是建立自己的模型选择法、Agent 任务拆解法和内容生产闭环。所有结论都要按月复查，避免把旧规则当成新常识。",
+    "summary": "本月重点不是追每一个新模型，而是建立自己的模型选择法、Agent 任务拆解法和内容生产闭环。模型能力、价格和上下文窗口会快速变化，所有结论都要以官方文档和自己的任务实测为准，并按月复查。",
     "cards": [
       {
         "title": "模型观察",

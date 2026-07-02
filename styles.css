@@ -1385,8 +1385,20 @@ h3 {
 
 .full-field,
 .register-form .primary-btn,
+.form-actions,
 .form-note {
   grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.form-actions .primary-btn,
+.form-actions .ghost-btn {
+  min-height: 44px;
 }
 
 .form-note {

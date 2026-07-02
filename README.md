@@ -12,6 +12,12 @@
 
 如果你也想共建一份持续月更的中文 AI 学习地图，欢迎 Star 跟进更新，也欢迎通过 Issue 提交模型实测、作品样例和学习任务建议。
 
+## 当前版本状态
+
+- 最新版本以 `main` 分支和 GitHub Pages 部署结果为准。
+- 每次发布前会运行 `node scripts/validate-content.js`，检查 JS、月更 JSON、结构化数据和关键 SEO 文件。
+- 线上地址应能访问 `index.html`、`sitemap.xml`、`robots.txt` 和 `llms.txt`。
+
 ## 为什么值得 Star
 
 - **持续更新**：把 AI 学习从“看完就过时”的教材，变成可月更的学习系统。
@@ -43,7 +49,7 @@
 - Prompt、Agent、Skill 模板库
 - 反馈循环：本地记录反馈，可导出 CSV 供月更参考
 - 学习周报：导出 Markdown 学习报告
-- 注册与联系：本地保存报名信息，可导出 CSV
+- 注册与联系：本地保存报名草稿，可复制联系内容或生成邮件草稿
 - 赞助窗口：支持微信扫码赞助
 
 ## 项目截图
@@ -67,6 +73,12 @@
 
 这是一个纯静态网站，不需要构建工具。
 
+环境建议：
+
+- Node.js 18 或更高版本，用于语法和内容校验。
+- Python 3，用于启动本地静态服务。
+- 推荐使用 Chrome、Edge 或 Safari 进行桌面与移动端预览。
+
 ```bash
 python3 -m http.server 8765
 ```
@@ -79,16 +91,35 @@ http://localhost:8765
 
 也可以直接打开 `index.html` 预览，但使用本地服务器更接近真实部署环境。
 
+## 本地验收
+
+提交前建议运行：
+
+```bash
+node scripts/validate-content.js
+```
+
+再手动检查：
+
+- 首页、60 秒上手、月更、作品、反馈、注册区是否能正常访问。
+- 签到、周任务证明、作品点亮、周报导出是否正常。
+- 反馈是否能生成 GitHub Issue 或复制 Issue 草稿。
+- 报名是否明确为本机草稿，并能复制联系内容或生成邮件草稿。
+- 390x844 与 1600x900 两种视口下文字和按钮不重叠。
+
 ## 数据与隐私说明
 
 - 学习进度、签到、徽章、报名信息保存在浏览器 `localStorage` 中。
 - 当前静态版本不会把报名信息自动发送到服务器。
+- 如果希望主理人收到反馈或报名信息，需要使用页面上的 GitHub Issue、复制草稿、邮件或微信方式主动发送。
 - 邮箱在页面上不直接明文展示，而是通过点击按钮复制。
 - 微信联系二维码和赞助二维码分别作为图片资源保存在 `assets/` 目录。
 
 ## 维护方式
 
 每月更新内容位于 `assets/monthly-updates.json`。
+
+字段规范见 [docs/monthly-updates-schema.md](./docs/monthly-updates-schema.md)。
 
 新增一个月份时，追加一条数据并更新：
 
@@ -116,9 +147,11 @@ http://localhost:8765
 3. 在 PR 说明里写明：
    - 更新月份 ID（如 `2026-09`）
    - 核心场景与观察结论
+   - 官方来源、实测任务、复核日期和可信度
    - 是否含模型、应用场景、作业建议与避坑三部分
    - 是否已本地验证
-4. 通过页面中“每月更新区”手动验证：月份切换、卡片展示、更新日期是否正常。
+4. 运行 `node scripts/validate-content.js`。
+5. 通过页面中“每月更新区”手动验证：月份切换、卡片展示、更新日期是否正常。
 
 ### 内容质量标准（建议执行）
 
@@ -126,6 +159,7 @@ http://localhost:8765
 - 模型对比避免绝对化结论，明确适用场景和边界。
 - 每月至少保留 1 条中国应用场景观察与 1 条作品实践建议。
 - 涉及证据链时使用来源链条，不要出现无来源的结论断言。
+- 站内模板只能说明贡献流程，不能作为模型能力或市场判断的唯一事实来源。
 
 ### 开发与提交流程
 
@@ -135,7 +169,7 @@ http://localhost:8765
 
 ```bash
 python3 -m http.server 8765
-node --check app.js
+node scripts/validate-content.js
 ```
 
 4. 打开 `http://localhost:8765` 验证页面交互。
@@ -154,8 +188,15 @@ node --check app.js
 
 1. 确认 `Settings` → `Pages` 的 Source 为 `GitHub Actions`。
 2. 合并到 `main` 后 GitHub Actions 会自动构建并部署静态文件。
-3. 推送成功后在 Actions 页面可查看部署运行状态。
-4. 访问地址可在 Pages 的 `Visit site` 中获取。
+3. workflow 会先运行 `node scripts/validate-content.js`，通过后只发布 `_site` 目录中的静态文件。
+4. 推送成功后在 Actions 页面可查看部署运行状态。
+5. 访问地址可在 Pages 的 `Visit site` 中获取。
+
+常见排查：
+
+- 如果 Actions 的 `Deploy` 步骤失败，优先确认 `Settings` → `Pages` 是否选择 `GitHub Actions`。
+- 如果 `sitemap.xml`、`robots.txt` 或 `llms.txt` 线上 404，确认 workflow 的 `_site` 打包步骤包含这些文件。
+- 如果月更内容没有展示，确认条目 `status` 为 `published`，并通过内容校验脚本。
 
 ## 项目定位
 

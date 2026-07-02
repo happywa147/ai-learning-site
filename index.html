@@ -11,6 +11,10 @@
     <meta name="author" content="舰理 Lonny" />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://happywa147.github.io/ai-learning-site/" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%238f2f2a'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial,sans-serif' font-size='24' font-weight='700' fill='%23fff7ed'%3EAI%3C/text%3E%3C/svg%3E"
+    />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="AI 原生能力自学站" />
     <meta property="og:title" content="AI 原生能力自学站｜Prompt、Agent、RAG 与 AI 工具学习路线" />
@@ -29,23 +33,84 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "AI 原生能力自学站",
-        "url": "https://happywa147.github.io/ai-learning-site/",
-        "description": "面向中文学习者的 AI 学习任务系统，覆盖 Prompt、Agent、Skill、RAG、AI 编程、短视频工作流、国内外模型对比和中国 AI 应用市场。",
-        "inLanguage": "zh-CN",
-        "author": {
-          "@type": "Person",
-          "name": "舰理 Lonny"
-        },
-        "keywords": [
-          "AI 自学路线",
-          "Prompt 工程",
-          "AI Agent 入门",
-          "RAG 学习",
-          "AI 编程入门",
-          "短视频 AI 工作流",
-          "中国 AI 应用市场"
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://happywa147.github.io/ai-learning-site/#website",
+            "name": "AI 原生能力自学站",
+            "url": "https://happywa147.github.io/ai-learning-site/",
+            "description": "面向中文学习者的 AI 学习任务系统，覆盖 Prompt、Agent、Skill、RAG、AI 编程、短视频工作流、国内外模型对比和中国 AI 应用市场。",
+            "inLanguage": "zh-CN",
+            "author": {
+              "@type": "Person",
+              "name": "舰理 Lonny"
+            },
+            "keywords": [
+              "AI 自学路线",
+              "Prompt 工程",
+              "AI Agent 入门",
+              "RAG 学习",
+              "AI 编程入门",
+              "短视频 AI 工作流",
+              "中国 AI 应用市场"
+            ]
+          },
+          {
+            "@type": "LearningResource",
+            "@id": "https://happywa147.github.io/ai-learning-site/#learning-resource",
+            "name": "AI 原生能力自学站",
+            "learningResourceType": "interactive learning site",
+            "educationalLevel": "beginner to practitioner",
+            "teaches": ["Prompt", "Agent", "Skill", "RAG", "AI 编程", "短视频 AI 工作流"],
+            "inLanguage": "zh-CN",
+            "url": "https://happywa147.github.io/ai-learning-site/"
+          },
+          {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://github.com/happywa147/ai-learning-site#source",
+            "name": "ai-learning-site",
+            "codeRepository": "https://github.com/happywa147/ai-learning-site",
+            "programmingLanguage": ["HTML", "CSS", "JavaScript"],
+            "license": "https://github.com/happywa147/ai-learning-site/blob/main/LICENSE"
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://happywa147.github.io/ai-learning-site/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "零基础怎么开始学 AI？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "先不要追工具清单。建议从 60 秒上手、三条学习路线和今日挑战开始，用一个小任务建立手感，再进入 12 周节奏。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Prompt、Agent、Skill 有什么区别？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Prompt 是一次任务说明，Agent 是能拆解任务并调用工具的流程，Skill 是把高频能力沉淀成可复用模板。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "国内外模型应该怎么选？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "不要只看榜单。用自己的任务测试写作、编程、长文档、视频和 Agent 场景，同时记录成本、稳定性和适用边界。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "学完以后应该产出什么？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "至少完成一个可展示作品，例如学习助教报告、短视频脚本工厂、个人知识库问答或 AI 产品观察报告。"
+                }
+              }
+            ]
+          }
         ]
       }
     </script>
@@ -84,6 +149,7 @@
           <div class="hero-actions">
             <a class="primary-btn" href="#starter">60 秒开始学习</a>
             <a class="ghost-btn" href="#projects">看作品任务</a>
+            <a class="ghost-btn" href="https://github.com/happywa147/ai-learning-site" target="_blank" rel="noopener noreferrer">Star 跟进月更</a>
           </div>
           <div class="trust-strip" aria-label="站点可信信息">
             <span>已接入月更机制</span>
@@ -409,8 +475,12 @@ tools: search, code, video</pre>
               <span>你的建议</span>
               <textarea name="message" rows="4" maxlength="360" placeholder="一句话也可以：哪里卡住了，想看到什么案例。" required></textarea>
             </label>
-            <button class="primary-btn" type="submit">提交反馈</button>
-            <p class="form-note">隐私说明：反馈只保存在当前浏览器的 localStorage，不会自动上传。共用电脑请谨慎填写，导出 CSV 后请自行保管。</p>
+            <div class="form-actions">
+              <button class="primary-btn" type="submit">本机记录反馈</button>
+              <button id="openFeedbackIssue" class="ghost-btn" type="button">生成 GitHub Issue</button>
+              <button id="copyFeedbackIssue" class="ghost-btn" type="button">复制 Issue 草稿</button>
+            </div>
+            <p class="form-note">隐私说明：反馈默认只保存在当前浏览器，不会自动上传；如希望主理人收到，请生成 GitHub Issue 或复制草稿后发送。</p>
           </form>
           <aside class="feedback-panel">
             <span class="badge">下月优先级</span>
@@ -472,8 +542,12 @@ tools: search, code, video</pre>
               <span>留言</span>
               <textarea name="message" rows="4" maxlength="500" placeholder="你的目标、基础、想解决的问题"></textarea>
             </label>
-            <button class="primary-btn" type="submit">提交注册</button>
-            <p class="form-note">当前静态版会把报名信息保存在当前浏览器 localStorage，不会自动上传到服务器。</p>
+            <div class="form-actions">
+              <button class="primary-btn" type="submit">保存本机报名草稿</button>
+              <button id="copyLeadContact" class="ghost-btn" type="button">复制联系草稿</button>
+              <button id="openLeadEmail" class="ghost-btn" type="button">写邮件联系</button>
+            </div>
+            <p class="form-note">当前静态版只会把报名信息保存在当前浏览器，不会自动上传。请点击“复制联系草稿”或“写邮件联系”，把报名信息发给主理人。</p>
             <p class="form-note">隐私说明：共用电脑请谨慎填写；导出 CSV 后请自行保管；清理浏览器缓存或点击清空按钮会移除本机记录。</p>
           </form>
           <aside class="contact-card">

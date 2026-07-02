@@ -1690,6 +1690,8 @@ const state = {
   track: "freshman",
   template: "prompt",
   agentCategory: "all",
+  projectLevel: "all",
+  projectSearch: "",
   month: getStoredString("ai-learning-month", "2026-07"),
   leads: getStoredArray("ai-learning-leads", []),
   feedback: getStoredArray("ai-learning-feedback", []),
@@ -1880,8 +1882,25 @@ function renderModels(keyword = "") {
 }
 
 function renderProjects() {
-  document.querySelector("#projectGrid").innerHTML = projects
-    .map((project, index) => {
+  const query = state.projectSearch.trim().toLowerCase();
+  const visibleProjects = projects
+    .map((project, index) => ({ project, index }))
+    .filter(({ project }) => {
+      const levelMatched = state.projectLevel === "all" || project.level === state.projectLevel;
+      const text = `${project.title} ${project.level} ${project.time} ${project.desc} ${(project.tools || []).join(" ")} ${(project.tasks || []).join(" ")} ${(project.deliverables || []).join(" ")} ${project.check || ""}`.toLowerCase();
+      return levelMatched && (!query || text.includes(query));
+    });
+
+  document.querySelector("#projectCount").textContent = `当前显示 ${visibleProjects.length} / ${projects.length} 个挑战`;
+
+  if (!visibleProjects.length) {
+    document.querySelector("#projectGrid").innerHTML =
+      '<div class="empty-state">未找到匹配挑战，试试关键词：RAG、短视频、Agent、隐私、模型。</div>';
+    return;
+  }
+
+  document.querySelector("#projectGrid").innerHTML = visibleProjects
+    .map(({ project, index }) => {
       const done = state.doneProjects.has(index);
       const requiredXp = getProjectUnlockXp(project);
       const locked = getXp() < requiredXp;
@@ -1897,13 +1916,50 @@ function renderProjects() {
         <p><strong>交付物：</strong>${safeText((project.deliverables || []).join(" / "))}</p>
         <p class="muted"><strong>验收：</strong>${safeText(project.check || "")}</p>
         <ul>${safeList(project.tasks)}</ul>
-        <button class="${done ? "primary-btn" : "ghost-btn"} small project-toggle" ${locked ? "disabled" : ""} data-project="${index}">
-          ${done ? "已点亮 +80 XP" : "点亮作品 +80 XP"}
-        </button>
+        <div class="project-actions">
+          <button class="ghost-btn small copy-project-challenge" type="button" data-project-copy="${index}">复制挑战模板</button>
+          <button class="${done ? "primary-btn" : "ghost-btn"} small project-toggle" ${locked ? "disabled" : ""} data-project="${index}">
+            ${done ? "已点亮 +80 XP" : "点亮作品 +80 XP"}
+          </button>
+        </div>
       </article>
     `;
     })
     .join("");
+}
+
+function buildProjectChallengeText(project) {
+  return `AI 项目挑战：${project.title}
+
+难度：${project.level}
+预计时间：${project.time}
+建议工具：${(project.tools || []).join(" / ")}
+
+目标：
+${project.desc}
+
+任务步骤：
+${(project.tasks || []).map((task, index) => `${index + 1}. ${task}`).join("\n")}
+
+交付物：
+${(project.deliverables || []).map((item, index) => `${index + 1}. ${item}`).join("\n")}
+
+验收标准：
+${project.check}
+
+请你作为 AI 学习教练，先帮我把这个挑战拆成今天可完成的最小版本、标准版本和挑战版本，并提醒我哪些事实或来源需要核实。`;
+}
+
+async function copyProjectChallenge(index, button) {
+  const project = projects[index];
+  if (!project) return;
+  const ok = await copyText(buildProjectChallengeText(project));
+  const originalText = button.textContent;
+  button.textContent = ok ? "已复制" : "复制失败";
+  setTimeout(() => {
+    button.textContent = originalText;
+  }, 1200);
+  showToast(ok ? `已复制「${project.title}」挑战模板。` : "复制失败，请手动复制页面内容。");
 }
 
 function buildAgentRolePrompt(role) {
@@ -2561,6 +2617,12 @@ document.querySelector("#weekList").addEventListener("change", async (event) => 
 });
 
 document.querySelector("#projectGrid").addEventListener("click", async (event) => {
+  const copyButton = event.target.closest("[data-project-copy]");
+  if (copyButton) {
+    copyProjectChallenge(Number(copyButton.dataset.projectCopy), copyButton);
+    return;
+  }
+
   const button = event.target.closest("[data-project]");
   if (!button) return;
   const index = Number(button.dataset.project);
@@ -2591,6 +2653,20 @@ document.querySelector("#projectGrid").addEventListener("click", async (event) =
   renderProjects();
   refreshGame();
   showToast(state.doneProjects.has(index) ? "作品已点亮，获得 80 XP。" : "作品已取消点亮。");
+});
+
+document.querySelector("#projectSearch").addEventListener("input", (event) => {
+  state.projectSearch = event.target.value;
+  renderProjects();
+});
+
+document.querySelectorAll("[data-project-level]").forEach((button) => {
+  button.addEventListener("click", () => {
+    state.projectLevel = button.dataset.projectLevel;
+    document.querySelectorAll("[data-project-level]").forEach((item) => item.classList.remove("active"));
+    button.classList.add("active");
+    renderProjects();
+  });
 });
 
 document.querySelector("#modelSearch").addEventListener("input", (event) => {

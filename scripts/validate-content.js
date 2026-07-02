@@ -140,11 +140,38 @@ function validateCopywritingBoundaries() {
   });
 }
 
+function validateProjectChallenges() {
+  const app = readText("app.js");
+  const html = readText("index.html");
+  const match = app.match(/const projects = \[([\s\S]*?)\n\];\n\nconst ranks/);
+  if (!match) {
+    fail("app.js 缺少 projects 挑战数据");
+    return;
+  }
+
+  const blocks = match[1].split(/\n  \{/).slice(1);
+  if (blocks.length < 12) fail("projects 至少应包含 12 个项目挑战");
+  blocks.forEach((block, index) => {
+    const prefix = `projects[${index}]`;
+    ["title", "level", "time", "desc", "check"].forEach((field) => {
+      if (!new RegExp(`${field}:\\s*\"[^\"]+\"`).test(block)) fail(`${prefix}.${field} 缺失`);
+    });
+    ["tools", "tasks", "deliverables"].forEach((field) => {
+      if (!new RegExp(`${field}:\\s*\\[[^\\]]+\\]`).test(block)) fail(`${prefix}.${field} 必须是非空数组`);
+    });
+  });
+
+  ["projectSearch", "data-project-level", "copy-project-challenge", "buildProjectChallengeText"].forEach((needle) => {
+    if (!html.includes(needle) && !app.includes(needle)) fail(`项目挑战库缺少交互入口或逻辑：${needle}`);
+  });
+}
+
 run("node", ["--check", "app.js"]);
 validateMonthlyUpdates();
 validateKeyFiles();
 validateResourceRadar();
 validateCopywritingBoundaries();
+validateProjectChallenges();
 
 if (errors.length) {
   console.error("内容校验失败：");

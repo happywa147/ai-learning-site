@@ -590,6 +590,12 @@ h3 {
   box-shadow: 0 4px 16px rgba(80, 49, 35, 0.1);
 }
 
+.segmented.compact button {
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
 .track-detail {
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
@@ -968,11 +974,31 @@ h3 {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.project-toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 18px 0 8px;
+}
+
+.project-count {
+  margin: 0 0 14px;
+  font-size: 13px;
+}
+
 .project-card footer {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
   margin: 8px 0 2px;
+}
+
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
 }
 
 .showcase-section {
@@ -1782,6 +1808,7 @@ h3 {
 @media (max-width: 680px) {
   .topbar,
   .section-head,
+  .project-toolbar,
   .agent-role-toolbar,
   .footer {
     align-items: flex-start;

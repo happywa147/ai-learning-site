@@ -368,6 +368,19 @@ tools: search, code, video</pre>
           <span class="badge">12 个可交付挑战</span>
         </div>
         <p class="muted">每个挑战都有难度、时间、工具、交付物和验收标准。目标不是看懂，而是做出能展示、能复盘、能继续迭代的作品。</p>
+        <div class="project-toolbar">
+          <label class="search">
+            <span>搜索</span>
+            <input id="projectSearch" type="search" placeholder="例如：RAG、短视频、隐私、Agent" />
+          </label>
+          <div class="segmented compact" role="tablist" aria-label="项目挑战难度筛选">
+            <button class="active" data-project-level="all">全部</button>
+            <button data-project-level="入门">入门</button>
+            <button data-project-level="进阶">进阶</button>
+            <button data-project-level="高阶">高阶</button>
+          </div>
+        </div>
+        <p id="projectCount" class="muted project-count"></p>
         <div id="projectGrid" class="project-grid"></div>
       </section>
 

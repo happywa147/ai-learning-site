@@ -1,8 +1,8 @@
 const tracks = {
   freshman: {
     title: "零基础入门路线",
-    summary: "先建立 AI 素养，再把 AI 用到学习、写作、资料整理、编程入门和个人作品集中。",
-    outcomes: ["能独立判断一个 AI 工具是否适合自己", "能用 AI 辅助完成学习、研究与资料整理", "能做出一个可展示的小应用或分析报告"],
+    summary: "把 AI 素养作为底座，再把 AI 用到学习、写作、资料整理、编程入门和个人作品集中。",
+    outcomes: ["能独立判断一个 AI 工具是否适合自己", "能用 AI 辅助推进学习、研究与资料整理", "能做出一个可展示的小应用或分析报告"],
     modules: [
       ["认知", "大模型、Token、上下文、多模态、幻觉与验证"],
       ["学习", "AI 读书、论文精读、知识复盘、资料助教"],
@@ -49,17 +49,32 @@ const repoLinks = {
   newIssue: "https://github.com/happywa147/ai-learning-site/issues/new"
 };
 
+const storageKeys = {
+  month: "ai-learning-month",
+  worldview30Weeks: "ai-learning-worldview-30-weeks",
+  leads: "ai-learning-leads",
+  feedback: "ai-learning-feedback",
+  weeks: "ai-learning-weeks",
+  projects: "ai-learning-projects",
+  weekProofs: "ai-learning-week-proofs",
+  projectProofs: "ai-learning-project-proofs",
+  bonusXp: "ai-learning-bonus-xp",
+  streak: "ai-learning-streak",
+  lastCheckIn: "ai-learning-last-checkin",
+  dailyDone: "ai-learning-daily-done"
+};
+
 const weeks = [
   ["第 1 周", "AI 认知与工具地图", "会区分模型、应用、插件、Agent"],
   ["第 2 周", "Prompt 基础", "写出可复用的任务提示词"],
   ["第 3 周", "上下文工程", "学会喂资料、设格式、做验证"],
-  ["第 4 周", "AI 辅助学习", "完成一次学习资料整理和复盘"],
+  ["第 4 周", "AI 辅助学习", "做一次学习资料整理并复盘"],
   ["第 5 周", "Python 入门", "做一个自动处理表格的小脚本"],
   ["第 6 周", "网页入门", "做一个个人 AI 作品主页"],
-  ["第 7 周", "模型 API", "调用一个模型完成问答或生成任务"],
+  ["第 7 周", "模型 API", "调用一个模型给出一次问答或生成输出"],
   ["第 8 周", "RAG 知识库", "让 AI 基于自己的资料回答"],
   ["第 9 周", "Agent 工作流", "设计工具调用与任务拆解流程"],
-  ["第 10 周", "短视频生产", "完成选题、脚本、分镜、剪辑方案"],
+  ["第 10 周", "短视频生产", "打磨一条从选题到分镜、剪辑的执行链"],
   ["第 11 周", "中国市场应用", "分析一个 AI 产品的商业模式"],
   ["第 12 周", "作品集发布", "整理 3 个作品并写项目说明"]
 ];
@@ -67,21 +82,21 @@ const weeks = [
 const starterSteps = [
   {
     title: "选一条路线",
-    text: "从零基础、内容创作或应用开发里选一个入口，先确定本月主线。",
+    text: "从零基础、内容创作或应用开发里选一个入口，并选定本月主线。",
     action: "查看路线",
-    href: "#map"
+    href: "index.html?page=map"
   },
   {
-    title: "完成今日挑战",
-    text: "用 10 分钟做一次模型侦察、Prompt 打磨或事实核查，先拿到手感。",
+    title: "开启今日挑战",
+    text: "用 10 分钟做一次模型侦察、Prompt 打磨或事实核查，先建立一组学习手感。",
     action: "进入任务板",
-    href: "#game"
+    href: "index.html?page=game"
   },
   {
     title: "点亮一个作品",
     text: "从样例里挑一个方向，把学习结果变成能展示、能复盘的产出。",
-    action: "看作品样例",
-    href: "#showcase"
+    action: "看作品任务",
+    href: "index.html?page=projects"
   }
 ];
 
@@ -346,7 +361,7 @@ const agentRoles = [
     level: "增长进阶",
     useFor: "让 AI 搜索、问答引擎和浏览器 agent 更容易理解网站。",
     input: "页面结构、FAQ、llms.txt、结构化数据。",
-    output: "可引用答案块、Schema 建议、任务可完成性检查。",
+    output: "可引用答案块、Schema 建议、任务可交付性检查。",
     check: "用户问问题时，AI 能引用清楚段落，而不是猜测。",
     practice: "为一个 FAQ 补 2 句可直接引用的短答案。"
   },
@@ -359,7 +374,7 @@ const agentRoles = [
     input: "访问入口、CTA、用户行为、传播素材。",
     output: "增长实验、指标、预期影响、复盘方式。",
     check: "每个动作都有可观察指标，如 Star、Issue、复访。",
-    practice: "设计一个“完成周报后分享到 GitHub Issue”的流程。"
+    practice: "设计一个“周报准备好后分享到 GitHub Issue”的流程。"
   },
   {
     name: "中文总编辑",
@@ -388,9 +403,9 @@ const agentRoles = [
     category: "learning",
     source: "product-behavioral-nudge-engine",
     level: "留存设计",
-    useFor: "降低学习焦虑，把大任务拆成能完成的小胜利。",
+    useFor: "降低学习焦虑，把大任务拆成能推进的小胜利。",
     input: "学习目标、用户状态、卡点、时间预算。",
-    output: "最低完成版、标准版、挑战版和复盘提示。",
+    output: "最小可执行版、标准版、挑战版和复盘提示。",
     check: "学习者就算只有 5 分钟，也知道下一步能做什么。",
     practice: "把一个 2 小时项目拆成 5 分钟、30 分钟、2 小时三档。"
   },
@@ -479,7 +494,7 @@ const agentRoles = [
     useFor: "把 AI 功能做成用户能理解、能反复使用的网页体验。",
     input: "用户路径、页面结构、交互状态、异常情况。",
     output: "组件方案、状态设计、响应式检查、空状态文案。",
-    check: "手机和桌面都能顺畅完成核心任务。",
+    check: "手机和桌面都能顺畅推进核心任务。",
     practice: "为一个 AI 工具页补加载、失败、成功三个状态。"
   },
   {
@@ -685,11 +700,11 @@ const agentRoles = [
     category: "content",
     source: "community-moderator",
     level: "陪伴学习",
-    useFor: "设计群内讨论、打卡、答疑和优秀作品展示。",
+    useFor: "设计群内讨论、日更复盘、答疑和优秀作品展示。",
     input: "社群目标、成员水平、周期、激励方式。",
-    output: "讨论题、打卡模板、答疑规则、精选机制。",
+    output: "讨论题、复盘模板、答疑规则、精选机制。",
     check: "规则让新人敢发言，老手愿意贡献。",
-    practice: "设计一个 7 天 AI 学习打卡社群规则。"
+    practice: "设计一个 7 天 AI 学习复盘社群规则。"
   },
   {
     name: "产品经理",
@@ -732,7 +747,7 @@ const agentRoles = [
     useFor: "检查颜色对比、键盘可用、表单标签和移动端可读性。",
     input: "页面截图、DOM 结构、交互流程。",
     output: "可访问性问题、修复建议、验证方法。",
-    check: "不依赖鼠标也能完成主要操作。",
+    check: "不依赖鼠标也能顺畅执行主要操作。",
     practice: "检查一个表单的标签、焦点和错误提示。"
   },
   {
@@ -806,7 +821,7 @@ const agentRoles = [
     category: "growth",
     source: "growth-conversion-designer",
     level: "行动设计",
-    useFor: "让用户从浏览走向 Star、打卡、反馈、赞助或联系。",
+    useFor: "让用户从浏览走向 Star、复盘、反馈、赞助或联系。",
     input: "用户路径、CTA、页面位置、转化目标。",
     output: "CTA 文案、路径优化、实验假设、指标。",
     check: "转化动作自然，不打断学习体验。",
@@ -843,7 +858,7 @@ const agentRoles = [
     input: "用户任务、入口、状态、成功/失败条件。",
     output: "流程图、低保真原型、状态清单。",
     check: "用户不用说明书也知道下一步。",
-    practice: "画出“筛选 Agent → 复制练习 → 打卡”的流程。"
+    practice: "画出“筛选 Agent → 复制练习 → 日更复盘”的流程。"
   },
   {
     name: "文案微交互设计师",
@@ -930,7 +945,7 @@ const agentRoles = [
     useFor: "帮助学生合理使用 AI，避免代写、抄袭和引用不当。",
     input: "作业要求、使用方式、引用材料、学校规则。",
     output: "可用/不可用边界、披露建议、学习替代方案。",
-    check: "AI 帮助学习者思考，而不是替学习者完成责任。",
+    check: "AI 帮助学习者思考，而不是替学习者承担全部责任。",
     practice: "为一份课程论文写 AI 使用声明模板。"
   },
   {
@@ -1144,6 +1159,54 @@ function isValidContact(contact) {
   return isPhone || isEmail || isWechat;
 }
 
+function downloadTextFile(content, { fileName, type = "text/plain;charset=utf-8", toastMessage } = {}) {
+  if (!fileName) return;
+  const blob = new Blob([`\ufeff${String(content ?? "")}`], { type });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+  if (toastMessage) {
+    showToast(toastMessage);
+  }
+}
+
+function openCopyFallback(text, message = "复制失败，系统未能直接写入剪贴板。") {
+  const fallbackText = String(text ?? "");
+  if (!fallbackText) return;
+  try {
+    window.prompt(`${message}`, fallbackText);
+  } catch (error) {
+    // ignore
+  }
+}
+
+async function copyTextWithFallback(text, { button, successText, failureText = "复制失败，系统未能直接写入剪贴板，请手动复制。", hideButtonLabelDelay = 1200 } = {}) {
+  const originalText = button?.textContent;
+  const ok = await copyText(text);
+  if (button) {
+    button.textContent = ok ? successText || "已复制" : "复制失败";
+    if (hideButtonLabelDelay > 0) {
+      setTimeout(() => {
+        button.textContent = originalText;
+      }, hideButtonLabelDelay);
+    }
+  }
+  if (!ok) {
+    openCopyFallback(text, failureText);
+    showToast(failureText, 2200);
+    return false;
+  }
+  if (successText) {
+    showToast(successText, 1800);
+  }
+  return true;
+}
+
 async function copyText(text) {
   const plainText = String(text ?? "");
   try {
@@ -1237,14 +1300,14 @@ const monthlyFallbackUpdates = [
         items: [
           "做一张自己的模型对比表：写作、编程、长文档、视频、Agent。",
           "搭一个 3 步 Agent 流程：输入、工具、输出验收标准。",
-          "完成 1 条短视频从选题到分镜的完整方案。"
+          "打磨 1 条短视频从选题到分镜的完整方案。"
         ]
       },
       {
         id: "2026-07-4",
         title: "避坑提醒",
         items: [
-          "不要只看榜单，必须拿自己的任务实测。",
+          "不要只看榜单，建议用一个自己的任务做一次实测。",
           "不要把 AI 输出直接当事实，重要内容要查来源。",
           "不要囤工具，先固定 3 到 5 个高频工具形成肌肉记忆。"
         ]
@@ -1281,7 +1344,7 @@ const monthlyFallbackUpdates = [
         id: "2026-08-3",
         title: "本月训练",
         items: [
-          "完成 1 个可展示作品。",
+          "产出 1 个可展示作品。",
           "做 1 次真实用户反馈。",
           "整理 1 份项目复盘。"
         ]
@@ -1349,37 +1412,200 @@ async function loadMonthlyUpdates() {
 const worldviewItems = [
   {
     title: "把 AI 看成新基础设施",
-    text: "它不是一个软件，而是一层新的生产力底座，会进入学习、办公、制造、内容、科研、商业和公共服务。"
+    text: "它不是一个软件，而是一层新的生产力底座，会进入学习、办公、制造、内容、科研、商业和公共服务。",
+    action: "可先画出你本周 3 个高频任务，明确哪些任务可交给 AI，哪些必须保留人工把控。"
   },
   {
     title: "从记住答案到提出好问题",
-    text: "AI 降低了获取答案的成本，人的价值更集中在定义问题、设定标准、判断真假和选择方向。"
+    text: "AI 降低了获取答案的成本，人的价值更集中在定义问题、设定标准、判断真假和选择方向。",
+    action: "每次开场建议先写清“判断标准”和“反例清单”，再让 AI 生成候选答案。"
   },
   {
     title: "从单人能力到人机协作能力",
-    text: "未来的强者不是不用 AI 的人，也不是盲信 AI 的人，而是能指挥、校验、组合 AI 的人。"
+    text: "未来的强者不是不用 AI 的人，也不是盲信 AI 的人，而是能指挥、校验、组合 AI 的人。",
+    action: "执行一个固定闭环：人类输入目标→AI 产出草案→人工校验→迭代发布。"
   },
   {
     title: "从工具清单到工作流系统",
-    text: "不要追着每个新工具跑。真正有复利的是把常用任务沉淀成 Prompt、Agent、Skill 和可复用流程。"
+    text: "不要追着每个新工具跑。真正有复利的是把常用任务沉淀成 Prompt、Agent、Skill 和可复用流程。",
+    action: "本周只允许新增 1 个工具，新增 1 个流程，保留 2 个高频模板。"
   },
   {
     title: "从信息消费者到作品创造者",
-    text: "AI 会让内容更多，注意力更稀缺。最好的学习证据不是收藏了多少资料，而是做出了什么作品。"
+    text: "AI 会让内容更多，注意力更稀缺。最好的学习证据不是收藏了多少资料，而是做出了什么作品。",
+    action: "每周选 1 个可外部展示的作品目标，补齐输入、过程、输出、复盘。"
   },
   {
     title: "同时看中国市场与全球格局",
-    text: "国际模型提供技术前沿参照，中国市场提供高频真实场景。两边都看，视野才不窄。"
+    text: "国际模型提供技术前沿参照，中国市场提供高频真实场景。两边都看，视野才不窄。",
+    action: "每月对比 1 个国内场景和 1 个国际模型方向，写一段适配与迁移成本。"
   },
   {
     title: "保持验证精神",
-    text: "AI 会流畅地犯错。越是看起来顺滑的答案，越要追问来源、边界、反例和成本。"
+    text: "AI 会流畅地犯错。越是看起来顺滑的答案，越要追问来源、边界、反例和成本。",
+    action: "发布任何结论前，给它补 2 个来源和 1 个可复验的反例。"
   },
   {
     title: "守住人的责任",
-    text: "隐私、版权、偏见、学术诚信和商业合规都不能外包给模型。工具越强，人越要有边界感。"
+    text: "隐私、版权、偏见、学术诚信和商业合规都不能外包给模型。工具越强，人越要有边界感。",
+    action: "建立发布前清单：隐私、授权、引用、可解释性和回滚路径。"
+  },
+  {
+    title: "把学习变成能力资产",
+    text: "AI 时代不是奖励“会用工具”，而是奖励“能沉淀可复用能力资产”的人。",
+    action: "每次任务后，把输入、约束、输出、验收标准提炼为一条可复用模板。"
+  },
+  {
+    title: "模型切换不是升级本身",
+    text: "换模型能带来体验变化，但更关键的是是否改善了产出质量、成本和风险控制。",
+    action: "为每类任务设定默认模型与备选模型，按质量、成本、稳定性打分。"
+  },
+  {
+    title: "重视协作与复盘生态",
+    text: "AI 学习不是单兵作战，真正的增长来自反馈循环与共创网络。",
+    action: "每两周做一次公开复盘：展示一个成果、至少一条批评、一次修订。"
+  },
+  {
+    title: "理解制度与平台边界",
+    text: "平台规则、API 额度、隐私政策和版权框架会决定你可以持续交付的速度。",
+    action: "每月更新一次规则清单：账号边界、数据留存、发布权限、合规红线。"
   }
 ];
+
+const worldviewRoadmap = [
+  {
+    phase: "第1-2天 · 建立坐标系",
+    goal: "用 1 张图把你自己的定位从“工具焦虑”拉到“可复用能力”上。",
+    action: "列出你最近 14 天最常见的 10 个 AI 使用场景（写作、查资料、编程、短视频、复盘等），并按‘价值-成本-风险’排序，标出只做前 3 优先。",
+    check: "你能在 30 分钟内向自己解释：下一次学习目标为何优先。",
+    result: "输出一页《个人 AI 使用坐标表》。"
+  },
+  {
+    phase: "第3-5天 · 训练闭环",
+    goal: "把“会让 AI 回答”升级为“会判断输出质量”。",
+    action: "挑一个高频任务，按‘目标-约束-评审标准-反例’四段改写 prompt；连续执行 3 次，记录三组结果并对比。",
+    check: "每次输出都能在 2 条可核验标准下复核并给出‘是否达标’。",
+    result: "形成一个长期复用的任务 Prompt 模板。"
+  },
+  {
+    phase: "第6-10天 · 工具系统化",
+    goal: "从零散尝试变成可重复的工作流。",
+    action: "只新增一个新工具（如 NotebookLM/飞书/代码平台），并为同一任务写 1 条标准流程：输入来源→生成稿件→人工复核→发布版本。",
+    check: "流程在同类任务下至少跑通一次且你能独立复现。",
+    result: "沉淀一个“可复制的学习生产线”。"
+  },
+  {
+    phase: "第11-14天 · 对接现实场景",
+    goal: "把能力从“看起来会”转成“能交付”。",
+    action: "选一个真实场景做小项目（课程复盘、短视频脚本、代码工具、项目复盘），输出完整证据链：输入、版本、反馈、修改日志。",
+    check: "能对外展示一个作品，并用世界观四问（问题/风险/成本/复用）解释决策。",
+    result: "形成第一版“可分享成果页”。"
+  }
+];
+
+const worldview30DayPlan = [
+  {
+    week: "第1周（1-7天）",
+    goal: "搭建世界观的“可复用底盘”而不是只做零碎实验。",
+    metrics: [
+      "推进 3 次以上“问题→检验→修订”学习循环，且每次都有结论。",
+      "补一页 7 天世界观日志（至少 5 条高价值记录）。",
+      "把“学习投入 / 输出 / 复盘”用一页卡片写出来。"
+    ],
+    risks: ["只关注工具名和速度，忽略学习目标。", "重复做任务但没有留下验证证据。", "把 AI 输出当事实，不做复核。"],
+    action: "写一篇 500 字世界观实践周报，附 1 条证据链。"
+  },
+  {
+    week: "第2周（8-14天）",
+    goal: "把一次性体验升级为稳定的“流程习惯”。",
+    metrics: [
+      "固定 2 个高频任务，并为其形成标准输入模板。",
+      "每个模板至少跑通 2 次，平均耗时下降 20% 以上。",
+      "每次输出都补完整 3 元素复盘：来源、反例、下次改法。"
+    ],
+    risks: ["重复新增工具导致流程分心。", "模板跑不通却仍强行继续。", "没有把失误写进下一版改进。"],
+    action: "把一个模板沉淀为“可复用的 SOP”并公开给自己回看。"
+  },
+  {
+    week: "第3周（15-21天）",
+    goal: "引入“结果质量”与“合规边界”评估。",
+    metrics: [
+      "至少做 1 次国内外模型对比，输出优缺点与适配点。",
+      "每项作品明确 2 个验收标准和 1 个红线条款。",
+      "建立风险登记表并每天下午补 1 条更新。"
+    ],
+    risks: ["只比速度，不比准确性与可复核性。", "忽略隐私、版权、来源可追踪性。", "把高风险问题外包给模型。"],
+    action: "做 1 个“模型/场景对照”实验，并给出决策建议。"
+  },
+  {
+    week: "第4周（22-30天）",
+    goal: "输出可以展示和复用的能力资产。",
+    metrics: [
+      "产出 1 个可复用作品（视频/课程摘要/脚本/小工具）。",
+      "提交 1 次公开复盘：1 条批评 + 1 次修订。",
+      "将 30 天数据转成可持续执行的下一月动作清单。"
+    ],
+    risks: ["沉迷“完美作品”导致长期拖延。", "只做一次性成果，不可复制。", "没有把风险和改进项闭环。"],
+    action: "把这4周成果做成可复制模板页，明后月直接沿用。"
+  }
+];
+
+function renderWorldviewRoadmap() {
+  const roadmapRoot = document.querySelector("#worldviewRoadmap");
+  if (!roadmapRoot) return;
+  roadmapRoot.innerHTML = worldviewRoadmap
+    .map(
+      (item, index) => `
+        <article class="worldview-roadmap-stage" data-index="${index + 1}">
+          <header>
+            <span>${safeText(item.phase)}</span>
+            <h4>${safeText(item.goal)}</h4>
+          </header>
+          <p>${safeText(item.action)}</p>
+          <ul>
+            <li><strong>验收：</strong>${safeText(item.check)}</li>
+            <li><strong>交付：</strong>${safeText(item.result)}</li>
+          </ul>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function renderWorldview30DayPlan() {
+  const container = document.querySelector("#worldview30Plan");
+  const summary = document.querySelector("#worldview30Summary");
+  if (!container || !summary) return;
+  const total = worldview30DayPlan.length;
+  const doneCount = state.worldview30Done.size;
+  summary.textContent = `已记录 ${doneCount}/${total} 周（可选）：你可以先从中任意选择一周。`;
+  container.innerHTML = worldview30DayPlan
+    .map((item, index) => {
+      const isDone = state.worldview30Done.has(String(index));
+      return `
+        <article class="worldview-30day-card ${isDone ? "done" : ""}">
+          <label class="worldview-30day-item">
+            <input type="checkbox" data-worldview-30="${index}" ${isDone ? "checked" : ""} />
+            <div>
+              <span class="worldview-30day-head">${safeText(item.week)} · 每周复盘指标</span>
+              <h4>${safeText(item.goal)}</h4>
+            </div>
+            <span class="badge">${isDone ? "本周已记录" : "可后续"}</span>
+          </label>
+          <div class="worldview-30day-block">
+            <h5>复盘指标</h5>
+            <ul>${safeList(item.metrics)}</ul>
+          </div>
+          <div class="worldview-30day-block worldview-30day-risk">
+            <h5>风险清单</h5>
+            <ul>${safeList(item.risks)}</ul>
+          </div>
+          <p><strong>执行动作：</strong>${safeText(item.action)}</p>
+        </article>
+      `;
+    })
+    .join("");
+}
 
 function renderWorldview() {
   document.querySelector("#worldviewGrid").innerHTML = worldviewItems
@@ -1389,6 +1615,7 @@ function renderWorldview() {
           <span>${safeText(String(index + 1).padStart(2, "0"))}</span>
           <h3>${safeText(item.title)}</h3>
           <p>${safeText(item.text)}</p>
+          ${item.action ? `<p class="worldview-action">${safeText(item.action)}</p>` : ""}
         </article>
       `
     )
@@ -1398,7 +1625,7 @@ function renderWorldview() {
 const dailyChallenges = [
   ["模型侦察", "任选一个模型，记录它最适合的 3 个任务和 1 个明显短板。"],
   ["Prompt 打磨", "把一个随手问题改写成有目标、约束、格式和评价标准的 Prompt。"],
-  ["工具试炼", "用 AI 完成一次资料整理，并把原始资料和输出结果对比检查。"],
+  ["工具试炼", "用 AI 做一次资料整理，并把原始资料和输出结果对比检查。"],
   ["短视频演练", "为一个成长、行业或兴趣主题写 3 个标题、1 个开头钩子和 30 秒脚本。"],
   ["代码小步", "让 AI 帮你写一个 20 行以内的小脚本，然后逐行解释给自己听。"],
   ["事实核查", "找出 AI 回答中 2 个需要核实的点，并记录核实来源。"],
@@ -1506,7 +1733,7 @@ const projects = [
     time: "3-5 小时",
     tools: ["豆包/通义", "剪映", "小红书/抖音"],
     desc: "面向抖音/小红书/B 站，做选题、标题、脚本、分镜和复盘。",
-    tasks: ["建立 30 个选题库", "生成 5 条脚本", "完成 1 条剪辑方案"],
+    tasks: ["建立 30 个选题库", "生成 5 条脚本", "提交 1 条剪辑方案"],
     deliverables: ["选题表", "口播稿", "分镜表"],
     check: "任意一条脚本能直接进入拍摄或剪辑。"
   },
@@ -1632,12 +1859,12 @@ function getProjectUnlockXp(project) {
 }
 
 const achievements = [
-  { id: "firstWeek", title: "点火", desc: "完成任意一周学习任务", test: () => state.doneWeeks.size >= 1 },
-  { id: "threeWeeks", title: "进入节奏", desc: "完成 3 周学习任务", test: () => state.doneWeeks.size >= 3 },
-  { id: "halfWay", title: "半程推进", desc: "完成 6 周学习任务", test: () => state.doneWeeks.size >= 6 },
+  { id: "firstWeek", title: "点火", desc: "拿到任意 1 周学习里程碑", test: () => state.doneWeeks.size >= 1 },
+  { id: "threeWeeks", title: "进入节奏", desc: "有 3 周里程碑记录", test: () => state.doneWeeks.size >= 3 },
+  { id: "halfWay", title: "半程推进", desc: "有 6 周里程碑记录", test: () => state.doneWeeks.size >= 6 },
   { id: "projectOne", title: "第一件作品", desc: "点亮 1 个作品项目", test: () => state.doneProjects.size >= 1 },
   { id: "creator", title: "作品集雏形", desc: "点亮 3 个作品项目", test: () => state.doneProjects.size >= 3 },
-  { id: "streak", title: "连续手感", desc: "连续签到 3 天", test: () => state.streak >= 3 }
+  { id: "streak", title: "连续手感", desc: "连续记录 3 天", test: () => state.streak >= 3 },
 ];
 
 const templates = {
@@ -1695,18 +1922,166 @@ const state = {
   resourceAction: "all",
   resourceLicense: "all",
   resourceSearch: "",
-  month: getStoredString("ai-learning-month", "2026-07"),
-  leads: getStoredArray("ai-learning-leads", []),
-  feedback: getStoredArray("ai-learning-feedback", []),
-  doneWeeks: new Set(getStoredArray("ai-learning-weeks", [])),
-  doneProjects: new Set(getStoredArray("ai-learning-projects", [])),
-  weekProofs: getStoredObject("ai-learning-week-proofs", {}),
-  projectProofs: getStoredObject("ai-learning-project-proofs", {}),
-  bonusXp: getStoredNumber("ai-learning-bonus-xp", 0),
-  streak: getStoredNumber("ai-learning-streak", 0),
-  lastCheckIn: getStoredString("ai-learning-last-checkin", ""),
-  dailyDone: getStoredString("ai-learning-daily-done", "")
+  month: getStoredString(storageKeys.month, "2026-07"),
+  worldview30Done: new Set(getStoredArray(storageKeys.worldview30Weeks, [])),
+  leads: getStoredArray(storageKeys.leads, []),
+  feedback: getStoredArray(storageKeys.feedback, []),
+  doneWeeks: new Set(getStoredArray(storageKeys.weeks, [])),
+  doneProjects: new Set(getStoredArray(storageKeys.projects, [])),
+  weekProofs: getStoredObject(storageKeys.weekProofs, {}),
+  projectProofs: getStoredObject(storageKeys.projectProofs, {}),
+  bonusXp: getStoredNumber(storageKeys.bonusXp, 0),
+  streak: getStoredNumber(storageKeys.streak, 0),
+  lastCheckIn: getStoredString(storageKeys.lastCheckIn, ""),
+  dailyDone: getStoredString(storageKeys.dailyDone, "")
 };
+
+const PAGE_IDS = [
+  "home",
+  "starter",
+  "map",
+  "worldview",
+  "game",
+  "models",
+  "resources",
+  "showcase",
+  "projects",
+  "agents",
+  "weekly",
+  "monthly",
+  "toolkit",
+  "opensource",
+  "faq",
+  "feedback",
+  "register"
+];
+
+function getRequestedPageId() {
+  const searchParams = new URLSearchParams(location.search);
+  const hashCandidate = (location.hash || "").replace("#", "");
+  const raw = searchParams.get("page") || hashCandidate;
+  const page = PAGE_IDS.includes(raw) ? raw : "home";
+  return page;
+}
+
+function syncPageUrl(pageId, options = {}) {
+  const targetPage = PAGE_IDS.includes(pageId) ? pageId : "home";
+  const url = new URL(location.href);
+  if (targetPage === "home") {
+    url.searchParams.delete("page");
+  } else {
+    url.searchParams.set("page", targetPage);
+  }
+  url.hash = "";
+  const method = options.replace ? "replaceState" : "pushState";
+  history[method](null, "", `${url.pathname}${url.search}`);
+}
+
+function applyCurrentPage(pageId, options = {}) {
+  const targetPage = PAGE_IDS.includes(pageId) ? pageId : "home";
+  const allSections = Array.from(document.querySelectorAll("main > .section"));
+  allSections.forEach((section) => {
+    const isActive = section.id === targetPage;
+    section.classList.toggle("page-active", isActive);
+    section.hidden = !isActive;
+    section.setAttribute("aria-hidden", String(!isActive));
+    if ("inert" in section) {
+      section.inert = !isActive;
+    }
+  });
+  setActiveNavItem(targetPage);
+  document.body.setAttribute("data-page", targetPage);
+
+  if (!options.silent) {
+    syncPageUrl(targetPage, { replace: options.replace });
+  }
+}
+
+function resetPageViewport(targetPage) {
+  if (typeof targetPage !== "string") return;
+  const section = document.querySelector(`main > .section#${CSS.escape(targetPage)}`);
+  if (!section) return;
+
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  section.setAttribute("tabindex", "-1");
+  section.focus({ preventScroll: true });
+  section.setAttribute("data-focus-locked", "true");
+  requestAnimationFrame(() => {
+    section.focus({ preventScroll: true });
+  });
+  window.setTimeout(() => {
+    section.removeAttribute("tabindex");
+    section.removeAttribute("data-focus-locked");
+  }, 350);
+}
+
+function renderCurrentPageContent(pageId) {
+  const targetPage = PAGE_IDS.includes(pageId) ? pageId : "home";
+  const renderMap = {
+    home() {
+      updateGameHud();
+      renderStarter();
+    },
+    starter() {
+      renderStarter();
+    },
+    map() {
+      renderTrack();
+    },
+    worldview() {
+      renderWorldview();
+      renderWorldviewRoadmap();
+      renderWorldview30DayPlan();
+    },
+    game() {
+      renderDailyChallenge();
+      renderBadges();
+      updateGameHud();
+    },
+    models() {
+      renderModels(state.modelSearch);
+    },
+    resources() {
+      renderResourceRadar();
+    },
+    showcase() {
+      renderShowcase();
+    },
+    projects() {
+      renderProjects();
+    },
+    agents() {
+      renderAgentDailyChallenge();
+      renderAgentRoles();
+    },
+    weekly() {
+      renderWeeks();
+    },
+    monthly() {
+      renderMonthOptions();
+      renderMonthlyUpdate();
+    },
+    toolkit() {
+      renderTemplate();
+    },
+    opensource() {
+      // 纯静态内容区，不需要额外渲染
+    },
+    faq() {
+      // 纯静态内容区，不需要额外渲染
+    },
+    feedback() {
+      renderFeedbackCount();
+    },
+    register() {
+      renderContact();
+      renderFeedbackCount();
+    }
+  };
+
+  const renderer = renderMap[targetPage] || renderMap.home;
+  renderer();
+}
 
 function getTodayKey() {
   return getLocalDateKey(new Date());
@@ -1716,7 +2091,7 @@ function ensureMonthExists() {
   if (!monthlyUpdates.length) return;
   if (!monthlyUpdates.find((entry) => entry.id === state.month)) {
     state.month = monthlyUpdates[0].id;
-    if (!setStoredValue("ai-learning-month", state.month)) {
+    if (!setStoredValue(storageKeys.month, state.month)) {
       showStorageUnavailableNotice();
     }
   }
@@ -1843,24 +2218,22 @@ ${item.adapt || ""}
 async function copyResourceCard(index, button) {
   const item = resourceRadarItems[index];
   if (!item) return;
-  const ok = await copyText(buildResourceRadarText(item));
-  const originalText = button.textContent;
-  button.textContent = ok ? "已复制" : "复制失败";
-  setTimeout(() => {
-    button.textContent = originalText;
-  }, 1200);
-  showToast(ok ? `已复制「${item.name}」资源卡。` : "复制失败，请手动复制页面内容。");
+  const ok = await copyTextWithFallback(buildResourceRadarText(item), {
+    button,
+    successText: `已复制「${item.name}」资源卡。`,
+    failureText: "复制失败，请手动复制页面内容。"
+  });
+  if (!ok) return;
 }
 
 async function copyResourceContribution(index, button) {
   const item = resourceRadarItems[index] || {};
-  const ok = await copyText(buildResourceContributionText(item));
-  const originalText = button.textContent;
-  button.textContent = ok ? "已复制" : "复制失败";
-  setTimeout(() => {
-    button.textContent = originalText;
-  }, 1200);
-  showToast(ok ? "已复制资源贡献模板。" : "复制失败，请手动复制页面内容。");
+  const ok = await copyTextWithFallback(buildResourceContributionText(item), {
+    button,
+    successText: "已复制资源贡献模板。",
+    failureText: "复制失败，请手动复制页面内容。"
+  });
+  if (!ok) return;
 }
 
 function renderTrack() {
@@ -1892,7 +2265,7 @@ function renderWeeks() {
         <label class="week-item ${checked ? "done" : ""}">
           <input type="checkbox" data-week="${index}" ${checked ? "checked" : ""} />
           <span><strong>${safeText(week)} · ${safeText(title)}</strong><small class="muted">${safeText(goal)}</small></span>
-          <span class="tag">${checked ? "已完成" : "待学习"}</span>
+          <span class="tag">${checked ? "已记录" : "可后续"}</span>
         </label>
       `;
     })
@@ -2037,19 +2410,17 @@ ${(project.deliverables || []).map((item, index) => `${index + 1}. ${item}`).joi
 验收标准：
 ${project.check}
 
-请你作为 AI 学习教练，先帮我把这个挑战拆成今天可完成的最小版本、标准版本和挑战版本，并提醒我哪些事实或来源需要核实。`;
+请你作为 AI 学习教练，先帮我把这个挑战拆成今天可交付的最小版本、标准版本和挑战版本，并提醒我哪些事实或来源需要核实。`;
 }
 
 async function copyProjectChallenge(index, button) {
   const project = projects[index];
   if (!project) return;
-  const ok = await copyText(buildProjectChallengeText(project));
-  const originalText = button.textContent;
-  button.textContent = ok ? "已复制" : "复制失败";
-  setTimeout(() => {
-    button.textContent = originalText;
-  }, 1200);
-  showToast(ok ? `已复制「${project.title}」挑战模板。` : "复制失败，请手动复制页面内容。");
+  await copyTextWithFallback(buildProjectChallengeText(project), {
+    button,
+    successText: `已复制「${project.title}」挑战模板。`,
+    failureText: "复制失败，请手动复制页面内容。"
+  });
 }
 
 function buildAgentRolePrompt(role) {
@@ -2089,15 +2460,11 @@ function renderAgentDailyChallenge() {
 async function copyAgentRoleByName(name, button) {
   const role = agentRoles.find((item) => item.name === name);
   if (!role) return;
-  const ok = await copyText(buildAgentRolePrompt(role));
-  if (button) {
-    const originalText = button.textContent;
-    button.textContent = ok ? "已复制" : "复制失败";
-    setTimeout(() => {
-      button.textContent = originalText;
-    }, 1200);
-  }
-  showToast(ok ? `已复制「${role.name}」角色卡。` : "复制失败，请手动复制页面内容。");
+  await copyTextWithFallback(buildAgentRolePrompt(role), {
+    button,
+    successText: `已复制「${role.name}」角色卡。`,
+    failureText: "复制失败，请手动复制页面内容。"
+  });
 }
 
 function renderAgentRoles() {
@@ -2195,15 +2562,15 @@ function generateProgressReport() {
     `当前版本：${currentMonth.title ? escapeMarkdownLine(currentMonth.title) : "默认月度"}`,
     `当前等级：${rankName}`,
     `当前 XP：${getXp()}`,
-    `连续签到：${state.streak} 天`,
-    `已完成周任务：${state.doneWeeks.size} / ${weeks.length}`,
+    `连续学习记录：${state.streak} 天`,
+    `已记录周任务：${state.doneWeeks.size} / ${weeks.length}`,
     `已点亮作品：${state.doneProjects.size} / ${projects.length}`,
     ""
   ];
   if (doneWeekList.length) {
     lines.push("## 周任务进度", ...doneWeekList);
   } else {
-    lines.push("## 周任务进度", "- 暂无完成任务");
+    lines.push("## 周任务进度", "- 暂无已记录任务");
   }
   lines.push("");
   if (doneProjectsList.length) {
@@ -2217,24 +2584,19 @@ function generateProgressReport() {
   if (nextWeekCandidates.length) {
     lines.push(`- 下一个推荐任务：${nextWeekCandidates[0][1]}（${nextWeekCandidates[0][2]}）`);
   } else {
-    lines.push("- 本阶段任务完成，可切换到下月更新继续跟进。");
+    lines.push("- 本阶段里程碑还在持续推进中，可切换到下月更新继续延展。");
   }
   return lines.join("\n");
 }
 
 function downloadProgressReport() {
   const report = generateProgressReport();
-  const blob = new Blob([`\ufeff${report}`], { type: "text/markdown;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
   const today = formatReportDate(new Date());
-  link.href = url;
-  link.download = `ai-learning-report-${today}.md`;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
-  showToast("学习周报已导出。");
+  downloadTextFile(report, {
+    fileName: `ai-learning-report-${today}.md`,
+    type: "text/markdown;charset=utf-8",
+    toastMessage: "学习周报已导出。"
+  });
 }
 
 function getOwnerEmail() {
@@ -2385,7 +2747,7 @@ function requestProof({ title = "补充实践证据", description = "" }) {
 
 function saveLead(lead) {
   state.leads.unshift(lead);
-  if (!setStoredValue("ai-learning-leads", state.leads)) {
+  if (!setStoredValue(storageKeys.leads, state.leads)) {
     showStorageUnavailableNotice();
   }
   renderContact();
@@ -2397,7 +2759,7 @@ function renderFeedbackCount() {
 
 function saveFeedback(entry) {
   state.feedback.unshift(entry);
-  if (!setStoredValue("ai-learning-feedback", state.feedback)) {
+  if (!setStoredValue(storageKeys.feedback, state.feedback)) {
     showStorageUnavailableNotice();
   }
   renderFeedbackCount();
@@ -2411,16 +2773,7 @@ function downloadFeedbackCsv() {
   const headers = ["提交时间", "主题", "建议"];
   const rows = state.feedback.map((item) => [item.createdAt, item.topic, item.message]);
   const csv = [headers, ...rows].map((row) => row.map(escapeCsvCell).join(",")).join("\n");
-  const blob = new Blob(["\ufeff", csv], { type: "text/csv;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `ai-learning-feedback-${getTodayKey()}.csv`;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
-  showToast("反馈 CSV 已导出。");
+  downloadTextFile(csv, { fileName: `ai-learning-feedback-${getTodayKey()}.csv`, type: "text/csv;charset=utf-8", toastMessage: "反馈 CSV 已导出。" });
 }
 
 function downloadLeadsCsv() {
@@ -2438,16 +2791,161 @@ function downloadLeadsCsv() {
     lead.message
   ]);
   const csv = [headers, ...rows].map((row) => row.map(escapeCsvCell).join(",")).join("\n");
-  const blob = new Blob(["\ufeff", csv], { type: "text/csv;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `ai-learning-leads-${getTodayKey()}.csv`;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
-  showToast("报名 CSV 已导出。");
+  downloadTextFile(csv, { fileName: `ai-learning-leads-${getTodayKey()}.csv`, type: "text/csv;charset=utf-8", toastMessage: "报名 CSV 已导出。" });
+}
+
+function hasAnyLocalData() {
+  return (
+    state.leads.length > 0 ||
+    state.feedback.length > 0 ||
+    state.worldview30Done.size > 0 ||
+    state.doneWeeks.size > 0 ||
+    state.doneProjects.size > 0 ||
+    Object.keys(state.weekProofs).length > 0 ||
+    Object.keys(state.projectProofs).length > 0 ||
+    state.bonusXp > 0 ||
+    state.streak > 0 ||
+    Boolean(state.lastCheckIn) ||
+    Boolean(state.dailyDone)
+  );
+}
+
+function exportAllLocalData() {
+  if (!hasAnyLocalData()) {
+    showToast("当前没有本机数据可导出。", 1400);
+    return;
+  }
+  const payload = {
+    exportedAt: new Date().toLocaleString("zh-CN", { hour12: false }),
+    version: "1.0",
+    storageSummary: {
+      leads: state.leads.length,
+      feedback: state.feedback.length,
+      doneWeeks: state.doneWeeks.size,
+      worldview30Done: state.worldview30Done.size,
+      doneProjects: state.doneProjects.size
+    },
+    leads: state.leads,
+    feedback: state.feedback,
+    progress: {
+      month: state.month,
+      doneWeeks: [...state.doneWeeks],
+      worldview30Done: [...state.worldview30Done],
+      doneProjects: [...state.doneProjects],
+      weekProofs: state.weekProofs,
+      projectProofs: state.projectProofs,
+      bonusXp: state.bonusXp,
+      streak: state.streak,
+      lastCheckIn: state.lastCheckIn,
+      dailyDone: state.dailyDone
+    }
+  };
+  downloadTextFile(JSON.stringify(payload, null, 2), {
+    fileName: `ai-learning-local-data-${getTodayKey()}.json`,
+    type: "application/json;charset=utf-8",
+    toastMessage: "全部本机数据已导出。"
+  });
+}
+
+function clearFeedbackData({ confirmFirst = false, showMessage = true } = {}) {
+  if (!state.feedback.length) {
+    if (showMessage) showToast("当前没有反馈数据。", 1400);
+    return false;
+  }
+  if (confirmFirst) {
+    if (!window.confirm("确认清空所有本机反馈数据？清除后无法恢复。")) return false;
+  }
+  state.feedback = [];
+  if (!removeStoredValue(storageKeys.feedback)) {
+    showStorageUnavailableNotice();
+  }
+  renderFeedbackCount();
+  if (showMessage) showToast("反馈数据已清空。", 1600);
+  return true;
+}
+
+function clearLeadsData({ confirmFirst = false, showMessage = true } = {}) {
+  if (!state.leads.length) {
+    if (showMessage) showToast("当前没有报名数据。", 1400);
+    return false;
+  }
+  if (confirmFirst) {
+    const needBackup = window.confirm("清空前建议先备份，是否先导出报名 CSV？");
+    if (needBackup) {
+      downloadLeadsCsv();
+    }
+    if (!window.confirm("确认清空所有本机报名数据？清除后可从页面手动恢复不了。")) {
+      return false;
+    }
+  }
+  state.leads = [];
+  if (!removeStoredValue(storageKeys.leads)) {
+    showStorageUnavailableNotice();
+  }
+  renderContact();
+  if (showMessage) showToast("报名数据已清空。", 1600);
+  return true;
+}
+
+function clearGameProgressData({ confirmFirst = false, showMessage = true } = {}) {
+  if (
+    !state.doneWeeks.size &&
+    !state.doneProjects.size &&
+    !state.worldview30Done.size &&
+    !Object.keys(state.weekProofs).length &&
+    !Object.keys(state.projectProofs).length &&
+    state.bonusXp === 0 &&
+    state.streak === 0 &&
+    !state.lastCheckIn &&
+    !state.dailyDone
+  ) {
+    if (showMessage) showToast("当前没有进度数据。", 1400);
+    return false;
+  }
+  if (confirmFirst) {
+    if (!window.confirm("确认清空所有本机任务与学习进度记录？清除后无法恢复。")) {
+      return false;
+    }
+  }
+  state.doneWeeks = new Set();
+  state.worldview30Done = new Set();
+  state.doneProjects = new Set();
+  state.weekProofs = {};
+  state.projectProofs = {};
+  state.bonusXp = 0;
+  state.streak = 0;
+  state.lastCheckIn = "";
+  state.dailyDone = "";
+  if (!removeStoredValue(storageKeys.weeks) || !removeStoredValue(storageKeys.projects) || !removeStoredValue(storageKeys.weekProofs) || !removeStoredValue(storageKeys.projectProofs) || !removeStoredValue(storageKeys.bonusXp) || !removeStoredValue(storageKeys.streak) || !removeStoredValue(storageKeys.lastCheckIn) || !removeStoredValue(storageKeys.dailyDone)) {
+    showStorageUnavailableNotice();
+  }
+  if (!removeStoredValue(storageKeys.worldview30Weeks)) {
+    showStorageUnavailableNotice();
+  }
+  renderWeeks();
+  renderProjects();
+  renderBadges();
+  refreshGame();
+  if (showMessage) showToast("学习进度数据已清空。", 1600);
+  return true;
+}
+
+function clearAllLocalData() {
+  if (!hasAnyLocalData()) {
+    showToast("当前没有本机数据可清空。", 1400);
+    return;
+  }
+    const needBackup = window.confirm("清空前建议先备份，是否先导出全部本机数据？");
+  if (needBackup) {
+    exportAllLocalData();
+  }
+  if (!window.confirm("确认清空全部本机数据？包括报名、反馈和任务进度，清空后不可恢复。")) {
+    return;
+  }
+  clearFeedbackData({ showMessage: false });
+  clearLeadsData({ showMessage: false });
+  clearGameProgressData({ showMessage: false });
+  showToast("全部本机数据已清空。", 1800);
 }
 
 function buildIssueUrl({ title, body, labels = "" }) {
@@ -2484,18 +2982,20 @@ function getFeedbackDraft(form = document.querySelector("#feedbackForm")) {
 async function copyFeedbackIssueDraft() {
   const draft = getFeedbackDraft();
   if (!draft) {
-    showToast("请先填写反馈主题和建议。");
+    showToast("建议先把反馈主题和建议补齐，信息会更完整。", 1800);
     return;
   }
   const text = `${draft.title}\n\n${draft.body}`;
-  const ok = await copyText(text);
-  showToast(ok ? "反馈 Issue 草稿已复制，可粘贴到 GitHub。" : "复制失败，请手动复制反馈内容。", 2200);
+  await copyTextWithFallback(text, {
+    successText: "反馈 Issue 草稿已复制，可粘贴到 GitHub。",
+    failureText: "复制失败，请手动复制反馈内容。"
+  });
 }
 
 function openFeedbackIssue() {
   const draft = getFeedbackDraft();
   if (!draft) {
-    showToast("请先填写反馈主题和建议。");
+    showToast("建议先把反馈主题和建议补齐，发 Issue 更完整。", 1800);
     return;
   }
   window.open(buildIssueUrl({ ...draft, labels: "feedback" }), "_blank", "noopener");
@@ -2533,17 +3033,19 @@ function buildLeadContactText(lead) {
 async function copyLeadContactDraft() {
   const lead = getLeadDraft();
   if (!lead) {
-    showToast("请先完整填写报名信息，或使用最近一条本机报名记录。", 2200);
+    showToast("建议先补齐报名信息，或者先用最近一条本机报名记录继续。", 2200);
     return;
   }
-  const ok = await copyText(buildLeadContactText(lead));
-  showToast(ok ? "联系草稿已复制，请通过邮箱或微信发给我。" : "复制失败，请手动整理联系内容。", 2200);
+  await copyTextWithFallback(buildLeadContactText(lead), {
+    successText: "联系草稿已复制，请通过邮箱或微信发给我。",
+    failureText: "复制失败，请手动整理联系内容。"
+  });
 }
 
 function openLeadEmailDraft() {
   const lead = getLeadDraft();
   if (!lead) {
-    showToast("请先完整填写报名信息，或使用最近一条本机报名记录。", 2200);
+    showToast("建议先补齐报名信息，或者先用最近一条本机报名记录继续。", 2200);
     return;
   }
   const subject = encodeURIComponent("加入 AI 原生能力自学站月更学习名单");
@@ -2594,9 +3096,9 @@ function renderDailyChallenge() {
   const done = state.dailyDone === todayKey;
   document.querySelector("#dailyTitle").textContent = title;
   document.querySelector("#dailyDesc").textContent = desc;
-  document.querySelector("#dailyButton").textContent = done ? "今日挑战已完成" : "完成挑战 +35 XP";
+  document.querySelector("#dailyButton").textContent = done ? "今日练习已记录" : "记录今日练习 +35 XP";
   document.querySelector("#dailyButton").disabled = done;
-  document.querySelector("#checkInButton").textContent = state.lastCheckIn === todayKey ? "今日已签到" : "今日签到 +20 XP";
+  document.querySelector("#checkInButton").textContent = state.lastCheckIn === todayKey ? "今日已记录" : "记录今日进度 +20 XP";
   document.querySelector("#checkInButton").disabled = state.lastCheckIn === todayKey;
 }
 
@@ -2616,13 +3118,14 @@ function renderBadges() {
 
 function persistGameState() {
   const isStorageOk =
-    setStoredValue("ai-learning-projects", [...state.doneProjects]) &&
-    setStoredValue("ai-learning-week-proofs", state.weekProofs) &&
-    setStoredValue("ai-learning-project-proofs", state.projectProofs) &&
-    setStoredValue("ai-learning-bonus-xp", state.bonusXp) &&
-    setStoredValue("ai-learning-streak", state.streak) &&
-    setStoredValue("ai-learning-last-checkin", state.lastCheckIn) &&
-    setStoredValue("ai-learning-daily-done", state.dailyDone);
+    setStoredValue(storageKeys.projects, [...state.doneProjects]) &&
+    setStoredValue(storageKeys.worldview30Weeks, [...state.worldview30Done]) &&
+    setStoredValue(storageKeys.weekProofs, state.weekProofs) &&
+    setStoredValue(storageKeys.projectProofs, state.projectProofs) &&
+    setStoredValue(storageKeys.bonusXp, state.bonusXp) &&
+    setStoredValue(storageKeys.streak, state.streak) &&
+    setStoredValue(storageKeys.lastCheckIn, state.lastCheckIn) &&
+    setStoredValue(storageKeys.dailyDone, state.dailyDone);
   if (!isStorageOk) {
     showStorageUnavailableNotice();
   }
@@ -2651,6 +3154,234 @@ function refreshGame() {
   renderDailyChallenge();
   renderBadges();
 }
+
+function initSectionRevealAnimations() {
+  const activeId = getRequestedPageId();
+  const activeSection = document.querySelector(`main > .section#${CSS.escape(activeId)}`);
+  if (!activeSection) return;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  activeSection.classList.add("reveal-ready");
+  activeSection.style.setProperty("--reveal-delay", "0ms");
+  if (prefersReducedMotion) {
+    activeSection.classList.add("in-view");
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("in-view");
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.16,
+    rootMargin: "0px 0px -12% 0px"
+  });
+
+  observer.observe(activeSection);
+}
+
+function setActiveNavItem(sectionId) {
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    const isActive = link.dataset.page === sectionId;
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+      link.classList.add("active-nav");
+    } else {
+      link.removeAttribute("aria-current");
+      link.classList.remove("active-nav");
+    }
+  });
+}
+
+function updateActiveNav() {
+  const active = getRequestedPageId();
+  setActiveNavItem(active);
+}
+
+function runActionRegressionChecks() {
+  const startedAt = new Date().toLocaleString("zh-CN", { hour12: false });
+  const currentPage = getRequestedPageId();
+  const checks = [];
+  const pageJumpChecks = [];
+
+  const add = (name, passed, detail = "") => {
+    checks.push({ name, passed, detail });
+  };
+
+  const checkInButton = document.querySelector("#checkInButton");
+  const dailyButton = document.querySelector("#dailyButton");
+  const exportReportButton = document.querySelector("#exportReport");
+  const weekInputs = document.querySelectorAll("#weekList [data-week]");
+  const copyButtons = document.querySelectorAll("[data-resource-copy], [data-resource-contribution], .copy-project-challenge, .copy-agent-role");
+  const resourceNav = document.querySelectorAll("a.nav-link[data-page]").length === PAGE_IDS.length;
+  const allNavLinks = document.querySelectorAll("a.nav-link[data-page]");
+
+  add("学习记录按钮存在且可见", Boolean(checkInButton));
+  add("今日挑战按钮存在且可见", Boolean(dailyButton));
+  add("周报导出按钮存在", Boolean(exportReportButton));
+  add("周任务条目勾选控件存在", weekInputs.length >= 1);
+  add("复制类按钮存在", copyButtons.length >= 3);
+  add("导航条页签覆盖全部页面", resourceNav);
+
+  for (const link of allNavLinks) {
+    const target = link.dataset.page;
+    if (!PAGE_IDS.includes(target)) {
+      add(`无效导航目标 (${target})`, false, `发现非法 page=${target}`);
+      continue;
+    }
+    try {
+      applyCurrentPage(target, { silent: true });
+      renderCurrentPageContent(target);
+      const section = document.querySelector(`#${CSS.escape(target)}`);
+      const visible = Boolean(section && !section.hidden && section.getAttribute("aria-hidden") === "false");
+      pageJumpChecks.push({ target, visible });
+      const hasHorizontalOverflow =
+        section &&
+        section.scrollWidth >
+          (section.clientWidth || document.documentElement.clientWidth || window.innerWidth || 0) + 2;
+      if (hasHorizontalOverflow) {
+        add(`分页跳转可见性：${target}`, false, "页面在当前断点存在水平溢出");
+      }
+      if (!visible) {
+        add(`分页跳转可见性：${target}`, false, "切换后页面仍被隐藏");
+      }
+    } catch (error) {
+      pageJumpChecks.push({ target, visible: false, error: String(error) });
+      add(`分页跳转可见性：${target}`, false, String(error));
+    }
+  }
+
+  applyCurrentPage(currentPage, { silent: true });
+  renderCurrentPageContent(currentPage);
+  initSectionRevealAnimations();
+
+  add("分页跳转可见性全部通过", pageJumpChecks.every((item) => item.visible));
+  add("任务与周报导出文案能力", Boolean(exportReportButton && typeof downloadProgressReport === "function"));
+
+  return {
+    passed: checks.every((item) => item.passed),
+    startedAt,
+    checks,
+    pageJumpChecks
+  };
+}
+
+function runPreLaunchReadinessChecks() {
+  const startedAt = new Date().toLocaleString("zh-CN", { hour12: false });
+  const checks = [];
+  const add = (name, category, passed, detail = "") => {
+    checks.push({ name, category, passed, detail });
+  };
+  const actionResult = runActionRegressionChecks();
+
+  const p0Items = actionResult.checks.filter((item) => item.name.includes("分页跳转"));
+  const p0Passed = p0Items.length >= PAGE_IDS.length && p0Items.every((item) => item.passed);
+  const p1Passed = actionResult.passed;
+  add("基础路由与分页可见性恢复", "P0", p0Passed, p0Passed ? "通过" : "存在异常");
+
+  const p1Critical = [
+    "学习记录按钮存在且可见",
+    "今日挑战按钮存在且可见",
+    "周报导出按钮存在",
+    "周任务条目勾选控件存在",
+    "复制类按钮存在",
+    "任务与周报导出文案能力"
+  ];
+  const p1Checks = p1Critical.map((name) => {
+    const item = actionResult.checks.find((entry) => entry.name === name);
+    if (!item) {
+      return { name, passed: false, detail: "未找到该检查项" };
+    }
+    return item;
+  });
+  const p1Ok = p1Checks.every((item) => item.passed);
+  p1Checks.forEach((item) => add(`功能动作：${item.name}`, "P1", item.passed, item.detail));
+  add("P1 综合", "P1", p1Ok, p1Ok ? "通过" : "关键动作存在缺失");
+
+  const localStorageTestPassed = (() => {
+    try {
+      const testKey = "__ai_site_smoke__";
+      localStorage.setItem(testKey, "1");
+      localStorage.removeItem(testKey);
+      return true;
+    } catch {
+      return false;
+    }
+  })();
+  add("本机数据持久化可写", "P1", localStorageTestPassed, localStorageTestPassed ? "通过" : "localStorage 不可用");
+
+  const contactLabel = document.querySelector("#copyEmail");
+  const contactSafe = Boolean(contactLabel && !contactLabel.textContent.includes("@"));
+  add("邮箱不明文展示", "P1", contactSafe, contactSafe ? "通过" : "邮箱或联系方式文案可能泄露明文");
+
+  const touchControls = Array.from(document.querySelectorAll(".primary-btn, .ghost-btn, .copy-agent-role, .copy-project-challenge, .copy-resource-card, .copy-resource-contribution, .small, .section-actions button, .form-actions button, .register-actions button, .segmented button, .tabs button, .agent-role-tabs button"))
+    .filter((button) => button.offsetParent !== null);
+  const unsafeTouchCount = touchControls.filter((button) => {
+    const minHeight = Number.parseFloat(getComputedStyle(button).minHeight || "0");
+    return minHeight > 0 && minHeight < 44;
+  }).length;
+  const p2TouchPassed = unsafeTouchCount === 0;
+  add("移动端按钮触达 >= 44px", "P2", p2TouchPassed, p2TouchPassed ? "通过" : `${unsafeTouchCount} 个按钮小于 44px`);
+
+  const listItems = Array.from(document.querySelectorAll("section li"))
+    .filter((item) => item.offsetParent !== null);
+  const badListMargin = listItems.filter((item) => Number.parseFloat(getComputedStyle(item).marginBottom || "0") < 4).length;
+  const p2ListPassed = listItems.length === 0 || badListMargin === 0;
+  add("列表行距不挤压", "P2", p2ListPassed, p2ListPassed ? "通过" : `${badListMargin} 个列表项行距不足`);
+
+  const reachableScore = actionResult.pageJumpChecks.every((entry) => entry.visible !== false);
+  add("分页跳转与聚焦可达", "P2", reachableScore, reachableScore ? "通过" : "至少一页跳转后不可见或异常");
+
+  let p0Failed = checks.filter((item) => item.category === "P0" && !item.passed).length;
+  let p1Failed = checks.filter((item) => item.category === "P1" && !item.passed).length;
+  let p2Failed = checks.filter((item) => item.category === "P2" && !item.passed).length;
+  const score = Math.max(0, 100 - p0Failed * 25 - p1Failed * 10 - p2Failed * 4);
+  const level = score >= 90 ? "可发布" : score >= 80 ? "预发布（待修）" : "阻塞中";
+
+  return {
+    startedAt,
+    score,
+    level,
+    passed: p0Passed && p1Passed,
+    p0Failed,
+    p1Failed,
+    p2Failed,
+    checks,
+    actionRegression: actionResult
+  };
+}
+
+window.__aiLearningActionRegression = runActionRegressionChecks;
+window.__aiLearningPreLaunchReadiness = runPreLaunchReadinessChecks;
+
+document.querySelectorAll(".nav-link").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const targetId = link.dataset.page;
+    if (!targetId) return;
+    if (targetId === getRequestedPageId()) {
+      event.preventDefault();
+      resetPageViewport(targetId);
+      return;
+    }
+    event.preventDefault();
+    applyCurrentPage(targetId);
+    renderCurrentPageContent(targetId);
+    initSectionRevealAnimations();
+    resetPageViewport(targetId);
+    window.setTimeout(() => updateActiveNav(), 30);
+  });
+});
+
+window.addEventListener("popstate", () => {
+  const pageId = getRequestedPageId();
+  applyCurrentPage(pageId, { silent: true });
+  renderCurrentPageContent(pageId);
+  initSectionRevealAnimations();
+  updateActiveNav();
+  resetPageViewport(pageId);
+});
 
 document.querySelectorAll("[data-track]").forEach((button) => {
   button.addEventListener("click", () => {
@@ -2681,12 +3412,12 @@ document.querySelector("#weekList").addEventListener("change", async (event) => 
   const proofKey = String(index);
   if (input.checked && !state.weekProofs[proofKey]) {
     const proof = await requestProof({
-      title: "补充周度实践证据",
-      description: "请写一句本周完成证据（学习内容、复盘、链接或产出）。"
+      title: "补充周度进展证据",
+      description: "建议先写一句本周学习记录（内容、复盘、链接或产出）。"
     });
     if (!proof || !proof.trim()) {
       input.checked = false;
-      showToast("请先填写一条实践证据，再完成任务。", 1600);
+    showToast("建议补一条学习记录，再把它整理进归档会更完整。", 1600);
       return;
     }
     state.weekProofs[proofKey] = proof.trim();
@@ -2697,13 +3428,30 @@ document.querySelector("#weekList").addEventListener("change", async (event) => 
   } else {
     state.doneWeeks.add(index);
   }
-  if (!setStoredValue("ai-learning-weeks", [...state.doneWeeks]) || !setStoredValue("ai-learning-week-proofs", state.weekProofs)) {
+  if (!setStoredValue(storageKeys.weeks, [...state.doneWeeks]) || !setStoredValue(storageKeys.weekProofs, state.weekProofs)) {
     showStorageUnavailableNotice();
   }
   renderWeeks();
   renderProjects();
   renderBadges();
-  showToast(input.checked ? "任务完成，获得 60 XP。" : "任务已取消，XP 已重新计算。");
+  showToast(input.checked ? "已记录本周状态，获得 60 XP。" : "已取消本周记录，不影响后续进度。");
+});
+
+document.querySelector("#worldview30Plan").addEventListener("change", (event) => {
+  const input = event.target.closest("[data-worldview-30]");
+  if (!input) return;
+  const index = String(Number(input.dataset.worldview30));
+  if (input.checked) {
+    state.worldview30Done.add(index);
+    showToast("本周记录已保存。", 1200);
+  } else {
+    state.worldview30Done.delete(index);
+    showToast("已取消本周记录。", 1200);
+  }
+  if (!setStoredValue(storageKeys.worldview30Weeks, [...state.worldview30Done])) {
+    showStorageUnavailableNotice();
+  }
+  renderWorldview30DayPlan();
 });
 
 document.querySelector("#projectGrid").addEventListener("click", async (event) => {
@@ -2719,16 +3467,16 @@ document.querySelector("#projectGrid").addEventListener("click", async (event) =
   const requiredXp = getProjectUnlockXp(projects[index]);
   const locked = getXp() < requiredXp;
   if (button.disabled || locked) {
-    showToast(`这个挑战还没解锁，请先累积 ${requiredXp} XP。`, 1600);
+    showToast(`这个挑战还在沉淀中，建议先到 ${requiredXp} XP 再继续，也来得及。`, 1600);
     return;
   }
   if (!state.doneProjects.has(index) && !state.projectProofs[index]) {
     const proof = await requestProof({
-      title: "补充作品完成证据",
-      description: "请写一句该作品的完成依据（链接、文件名、提交口径）。"
+      title: "补充作品进展证据",
+      description: "建议写一句该作品的进展依据（链接、文件名、提交口径）。"
     });
     if (!proof || !proof.trim()) {
-      showToast("请先填写一条作品完成证据。", 1600);
+      showToast("建议补一条作品进展证据，方便后续复盘会更清晰。", 1600);
       return;
     }
     state.projectProofs[index] = proof.trim();
@@ -2765,7 +3513,7 @@ document.querySelector("#modelSearch").addEventListener("input", (event) => {
 
 document.querySelector("#monthSelect").addEventListener("change", (event) => {
   state.month = event.target.value;
-  if (!setStoredValue("ai-learning-month", state.month)) {
+  if (!setStoredValue(storageKeys.month, state.month)) {
     showStorageUnavailableNotice();
   }
   renderMonthlyUpdate();
@@ -2781,13 +3529,13 @@ document.querySelectorAll("[data-template]").forEach((button) => {
 });
 
 document.querySelector("#copyTemplate").addEventListener("click", async () => {
-  const ok = await copyText(templates[state.template]);
   const button = document.querySelector("#copyTemplate");
-  button.textContent = ok ? "已复制" : "复制失败";
-  if (!ok) showToast("复制失败，请长按选择文本手动复制。");
-  setTimeout(() => {
-    button.textContent = "复制模板";
-  }, 1200);
+  await copyTextWithFallback(templates[state.template], {
+    button,
+    successText: "已复制模板。",
+    failureText: "复制失败，请长按选择文本手动复制。",
+    hideButtonLabelDelay: 1200
+  });
 });
 
 document.querySelector("#checkInButton").addEventListener("click", () => {
@@ -2799,7 +3547,7 @@ document.querySelector("#checkInButton").addEventListener("click", () => {
   state.bonusXp += 20;
   persistGameState();
   refreshGame();
-  showToast("签到成功，获得 20 XP。");
+  showToast("今日进度已记录，获得 20 XP。");
 });
 
 document.querySelector("#dailyButton").addEventListener("click", () => {
@@ -2809,7 +3557,7 @@ document.querySelector("#dailyButton").addEventListener("click", () => {
   state.bonusXp += 35;
   persistGameState();
   refreshGame();
-  showToast("今日挑战完成，获得 35 XP。");
+  showToast("今日练习已记录，获得 35 XP。");
 });
 
 document.querySelector("#exportReport").addEventListener("click", downloadProgressReport);
@@ -2899,43 +3647,33 @@ document.querySelector("#registerForm").addEventListener("submit", (event) => {
   });
   form.reset();
   showToast("报名草稿已保存在本机；请复制草稿或写邮件联系我。", 2600);
-  setTimeout(() => document.querySelector("#game").scrollIntoView({ behavior: "smooth", block: "start" }), 300);
+  applyCurrentPage("game");
+  renderCurrentPageContent("game");
+  initSectionRevealAnimations();
 });
 
 document.querySelector("#copyLeadContact").addEventListener("click", copyLeadContactDraft);
 document.querySelector("#openLeadEmail").addEventListener("click", openLeadEmailDraft);
 
 document.querySelector("#clearLeads").addEventListener("click", () => {
-  if (!state.leads.length) {
-    showToast("当前没有报名数据。", 1400);
-    return;
-  }
-  const needBackup = window.confirm("清空前建议先导出 CSV，是否先导出备份？");
-  if (needBackup) {
-    downloadLeadsCsv();
-  }
-  if (!window.confirm("确认清空所有本机报名数据？清除后可从页面手动恢复不了。")) {
-    return;
-  }
-  state.leads = [];
-  if (!removeStoredValue("ai-learning-leads")) {
-    showStorageUnavailableNotice();
-  }
-  renderContact();
-  showToast("报名数据已清空。", 1600);
+  clearLeadsData({ confirmFirst: true });
 });
 
 document.querySelector("#exportLeads").addEventListener("click", downloadLeadsCsv);
+document.querySelector("#clearFeedback").addEventListener("click", () => {
+  clearFeedbackData({ confirmFirst: true });
+});
+document.querySelector("#exportAllData").addEventListener("click", exportAllLocalData);
+document.querySelector("#clearAllData").addEventListener("click", clearAllLocalData);
 
 document.querySelector("#contactList").addEventListener("click", async (event) => {
   const button = event.target.closest("#copyEmail");
   if (!button) return;
-  const ok = await copyText(getOwnerEmail());
-  button.textContent = ok ? "已复制" : "复制失败";
-  showToast(ok ? "邮箱已复制。" : "复制失败，请长按邮箱文本手动复制。");
-  setTimeout(() => {
-    button.textContent = "点击复制";
-  }, 1200);
+  await copyTextWithFallback(getOwnerEmail(), {
+    button,
+    successText: "邮箱已复制。",
+    failureText: "复制失败，请长按邮箱文本手动复制。"
+  });
 });
 
 document.querySelector("#sponsorNav").addEventListener("click", openSponsorModal);
@@ -2948,12 +3686,10 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeModalWithResult(null);
 });
 document.querySelector("#sponsorCopyEmail").addEventListener("click", async () => {
-  const ok = await copyText(getOwnerEmail());
-  if (!ok) {
-    showToast("复制失败，请手动识别弹窗中的邮箱。请在下一步联系。", 2200);
-    return;
-  }
-  showToast("邮箱已复制，可联系赞助合作。");
+  await copyTextWithFallback(getOwnerEmail(), {
+    successText: "邮箱已复制，可联系赞助合作。",
+    failureText: "复制失败，请手动识别弹窗中的邮箱。请在下一步联系。"
+  });
 });
 
 async function bootstrap() {
@@ -2978,6 +3714,14 @@ async function bootstrap() {
   renderContact();
   renderFeedbackCount();
   refreshGame();
+  const initialPage = getRequestedPageId();
+  applyCurrentPage(initialPage, { silent: true });
+  renderCurrentPageContent(initialPage);
+  syncPageUrl(initialPage, { replace: true });
+  initSectionRevealAnimations();
+  updateActiveNav();
+  resetPageViewport(initialPage);
+  window.setTimeout(() => updateActiveNav(), 120);
 }
 
 bootstrap();

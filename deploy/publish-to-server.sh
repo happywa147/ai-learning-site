@@ -3,7 +3,7 @@ set -euo pipefail
 
 REMOTE="${1:-}"
 PORT="${2:-22}"
-REMOTE_DIR="${REMOTE_DIR:-/var/www/mynaxis/ai-learning-site}"
+REMOTE_DIR="${REMOTE_DIR:-/www/wwwroot/ai.mynaxis.com}"
 
 if [[ -z "$REMOTE" ]]; then
   echo "用法：./deploy/publish-to-server.sh 用户名@服务器IP [端口]"

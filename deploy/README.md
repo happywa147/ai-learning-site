@@ -15,8 +15,8 @@ https://ai.mynaxis.com/
 在服务器上执行：
 
 ```bash
-sudo mkdir -p /var/www/mynaxis/ai-learning-site
-sudo chown -R "$USER":"$USER" /var/www/mynaxis/ai-learning-site
+sudo mkdir -p /www/wwwroot/ai.mynaxis.com
+sudo chown -R "$USER":"$USER" /www/wwwroot/ai.mynaxis.com
 ```
 
 安装或确认 Nginx：
@@ -28,7 +28,7 @@ nginx -v
 把 `nginx-ai-learning-site.conf` 复制到服务器：
 
 ```bash
-sudo cp nginx-ai-learning-site.conf /etc/nginx/conf.d/ai-learning-site.conf
+sudo cp nginx-ai-learning-site.conf /www/server/panel/vhost/nginx/ai.mynaxis.com.conf
 sudo nginx -t
 sudo systemctl reload nginx
 ```
@@ -59,13 +59,18 @@ sudo systemctl reload nginx
 
 ## HTTPS
 
-如果服务器上已经有 `certbot`：
+当前服务器使用 `acme.sh` 和 Let’s Encrypt：
 
 ```bash
-sudo certbot --nginx -d ai.mynaxis.com
+sudo /root/.acme.sh/acme.sh --issue -d ai.mynaxis.com -w /www/wwwroot/ai.mynaxis.com --keylength ec-256
+sudo mkdir -p /www/server/panel/vhost/cert/ai.mynaxis.com
+sudo /root/.acme.sh/acme.sh --install-cert -d ai.mynaxis.com --ecc \
+  --key-file /www/server/panel/vhost/cert/ai.mynaxis.com/privkey.pem \
+  --fullchain-file /www/server/panel/vhost/cert/ai.mynaxis.com/fullchain.pem \
+  --reloadcmd "sudo nginx -s reload"
 ```
 
-如果用腾讯云 SSL 证书，也可以把证书配置到 `nginx-ai-learning-site.conf` 中的 HTTPS server block。
+`nginx-ai-learning-site.conf` 已包含 80 跳转 HTTPS 和 443 证书配置。
 
 ## 验收地址
 

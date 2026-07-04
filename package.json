@@ -1,0 +1,13 @@
+{
+  "name": "ai-learning-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI 原生能力自学站 - 面向中文学习者的 AI 学习任务系统",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "serve": "node scripts/serve-dist.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

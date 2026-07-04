@@ -826,6 +826,22 @@ li:last-child {
   border-radius: 8px;
 }
 
+/* L2: Module difficulty tags */
+.module-difficulty {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+.module-diff-beginner { background: rgba(95,127,82,0.1); color: #5f7f52; }
+.module-diff-intermediate { background: rgba(184,130,30,0.1); color: #b8821e; }
+.module-diff-advanced { background: rgba(143,47,42,0.1); color: #8f2f2a; }
+
+/* R3: Common errors in modules */
+.module-errors summary { color: #b8821e !important; }
+
 .module,
 .model-card,
 .project-card,
@@ -3398,6 +3414,16 @@ button,
   border-radius: 100px;
   font-size: 0.72rem;
   color: var(--earth);
+}
+
+/* S3: XP purchase animation */
+.xp-purchased {
+  animation: xpPurchaseFlash 0.8s ease-out;
+}
+@keyframes xpPurchaseFlash {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(216,163,74,0.6); background: rgba(216,163,74,0.15); }
+  30% { transform: scale(1.05); box-shadow: 0 0 20px 6px rgba(216,163,74,0.4); background: rgba(216,163,74,0.2); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(216,163,74,0); background: rgba(95,127,82,0.08); }
 }
 
 /* Model decision tree (Dr. 李修远) */

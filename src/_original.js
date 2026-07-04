@@ -464,8 +464,7 @@ const PAGE_IDS = [
   "opensource",
   "faq",
   "feedback",
-  "register",
-  "admin"
+  "register"
 ];
 
 const PAGE_META = {
@@ -485,8 +484,7 @@ const PAGE_META = {
   opensource: "开源共建",
   faq: "常见问题",
   feedback: "反馈循环",
-  register: "注册学习与联系",
-  admin: "管理仪表盘"
+  register: "注册学习与联系"
 };
 
 function getRequestedPageId() {
@@ -621,9 +619,6 @@ function renderCurrentPageContent(pageId) {
     register() {
       renderContact();
       renderFeedbackCount();
-    },
-    admin() {
-      renderAdminDashboard();
     }
   };
 
@@ -822,47 +817,18 @@ function renderTrack() {
     ${prereqHTML}
     <div class="track-modules">
       ${track.modules
-        .map((mod) => {
-          const name = mod.title || mod[0] || "";
-          const text = mod.desc || mod[1] || "";
-          const example = codeExamples[name] || "";
-          const practiceHTML = mod.practice ? `
-            <details class="module-practice" style="margin-top:12px;">
-              <summary style="cursor:pointer;font-weight:600;color:var(--earth);font-size:0.9rem;">🎯 5分钟实操（${mod.practice.length}步）${mod.difficulty ? `<span style="font-size:0.72rem;color:var(--muted);margin-left:6px;">${difficultyLabel(mod.difficulty)}</span>` : ""}</summary>
-              <ol style="margin-top:10px;padding-left:20px;font-size:0.88rem;line-height:1.8;">
-                ${mod.practice.map((p, pi) => `
-                  <li style="margin-bottom:8px;">
-                    <strong>第${pi+1}步：</strong>${safeText(p.step)}<br>
-                    <span style="color:var(--muted);font-size:0.82rem;">→ ${safeText(p.expect || "")}</span>
-                  </li>
-                `).join("")}
-              </ol>
-            </details>
-          ` : "";
-          /* R3: Common errors */
-          const errorsHTML = mod.commonErrors && mod.commonErrors.length ? `
-            <details class="module-errors" style="margin-top:8px;">
-              <summary style="cursor:pointer;font-weight:600;color:#b8821e;font-size:0.85rem;">⚠️ 常见错误（${mod.commonErrors.length}条）</summary>
-              <div style="margin-top:8px;font-size:0.82rem;line-height:1.7;">
-                ${mod.commonErrors.map(ce => `
-                  <div style="margin-bottom:6px;padding:6px 10px;background:rgba(184,130,30,0.06);border-radius:6px;border-left:3px solid #b8821e;">
-                    <strong>❌ ${safeText(ce.error)}</strong><br>
-                    <span style="color:var(--earth);">✅ ${safeText(ce.fix)}</span>
-                  </div>
-                `).join("")}
-              </div>
-            </details>
-          ` : "";
-          return `<article class="module">
-              ${mod.difficulty ? `<span class="module-difficulty module-diff-${mod.difficulty}">${difficultyLabel(mod.difficulty)}</span>` : ""}
+        .map(
+          ([name, text]) => {
+            const example = codeExamples[name] || "";
+            return `<article class="module">
               <span>${safeText(name)}</span>
               <h3>${safeText(name)}模块</h3>
               <p class="muted">${safeText(text)}</p>
               ${example ? `<pre style="background:rgba(143,47,42,0.06);padding:12px;border-radius:8px;overflow-x:auto;font-size:13px;margin:8px 0;">${escapeHtml(example)}</pre>` : ""}
-              ${practiceHTML}
               <button type="button" class="ai-tutor-btn" onclick="openAiTutor({title: '${safeText(track.title)} - ${safeText(name)}', desc: '${safeText(text)}'})">问 AI</button>
             </article>`;
-        })
+          }
+        )
         .join("")}
     </div>
     ${selfCheckHTML}
@@ -1114,12 +1080,6 @@ function getAgentQualityTier(role) {
   if (promptLen > 500) return { tier: "expert", label: "专家版" };
   if (promptLen > 200) return { tier: "advanced", label: "进阶版" };
   return { tier: "basic", label: "基础版" };
-}
-
-/* L2: Difficulty label helper */
-function difficultyLabel(level) {
-  const labels = { beginner: "🌱 入门", intermediate: "🌿 进阶", advanced: "🔥 高级" };
-  return labels[level] || "";
 }
 
 const AGENT_PAGE_SIZE = 12;
@@ -1868,154 +1828,6 @@ function refreshGame() {
   updateGameHud();
   renderDailyChallenge();
   renderBadges();
-  renderInviteSection();
-  renderXpShop();
-}
-
-/* ====== Invite System ====== */
-function generateInviteCode() {
-  const existing = localStorage.getItem("ai-invite-code");
-  if (existing) return existing;
-  const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-  let code = "";
-  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
-  localStorage.setItem("ai-invite-code", code);
-  return code;
-}
-
-function getInviteLink() {
-  const code = generateInviteCode();
-  const base = location.origin + location.pathname;
-  return `${base}?invite=${code}&ref=${code}&utm_source=invite&utm_medium=link&utm_campaign=referral`;
-}
-
-function processInviteParam() {
-  const params = new URLSearchParams(location.search);
-  const inviteCode = params.get("invite");
-  if (inviteCode && !localStorage.getItem("ai-invited-by")) {
-    localStorage.setItem("ai-invited-by", inviteCode);
-    showToast("🎁 你通过邀请链接加入！完成首次签到可获得 +50 XP 奖励", 3000);
-  }
-}
-
-function renderInviteSection() {
-  const container = document.querySelector("#inviteSection");
-  if (!container) return;
-  const inviteCount = parseInt(localStorage.getItem("ai-invite-count") || "0", 10);
-  const link = getInviteLink();
-  /* L3: Invite leaderboard / progress tracker */
-  const milestones = [
-    { count: 1, badge: "🔰", label: "引路人" },
-    { count: 3, badge: "🌟", label: "传播者" },
-    { count: 5, badge: "🔥", label: "布道师" },
-    { count: 10, badge: "👑", label: "意见领袖" },
-    { count: 20, badge: "🏆", label: "社群之光" },
-  ];
-  const currentMilestone = milestones.filter(m => inviteCount >= m.count).pop();
-  const nextMilestone = milestones.find(m => inviteCount < m.count);
-  const progressPct = nextMilestone ? Math.min(100, Math.round(inviteCount / nextMilestone.count * 100)) : 100;
-  container.innerHTML = `
-    <div class="invite-box" style="margin-top:16px;padding:16px;background:rgba(143,47,42,0.04);border-radius:12px;border:1px solid rgba(143,47,42,0.1);">
-      <h4 style="margin-bottom:8px;font-size:0.95rem;">🎁 邀请好友一起学</h4>
-      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:10px;">
-        邀请好友加入，双方各得 <strong style="color:var(--jujube);">+50 XP</strong>！已邀请 <strong style="color:var(--jujube);">${inviteCount}</strong> 人
-        ${currentMilestone ? ` — ${currentMilestone.badge} ${currentMilestone.label}` : ""}
-      </p>
-      ${nextMilestone ? `
-        <div style="margin-bottom:10px;font-size:0.75rem;color:var(--muted);">
-          邀请 ${nextMilestone.count} 人解锁 ${nextMilestone.badge}「${nextMilestone.label}」称号
-          <div style="height:6px;border-radius:3px;background:rgba(143,47,42,0.08);margin-top:4px;overflow:hidden;">
-            <div style="height:100%;width:${progressPct}%;background:linear-gradient(90deg,var(--earth),var(--jujube));border-radius:3px;transition:width 0.5s;"></div>
-          </div>
-          <span style="float:right;margin-top:2px;">${inviteCount}/${nextMilestone.count}</span>
-        </div>
-      ` : '<div style="margin-bottom:10px;font-size:0.78rem;color:var(--earth);">🏆 已达最高邀请称号！</div>'}
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <input type="text" readonly value="${escapeHtml(link)}" style="flex:1;min-width:140px;padding:6px 10px;font-size:0.78rem;border:1px solid var(--line);border-radius:6px;background:var(--surface);" onclick="this.select()" />
-        <button onclick="copyInviteLink(this)" style="padding:6px 14px;font-size:0.82rem;background:var(--jujube);color:#fff;border:none;border-radius:6px;cursor:pointer;">复制链接</button>
-      </div>
-    </div>
-  `;
-}
-
-async function copyInviteLink(btn) {
-  try {
-    await navigator.clipboard.writeText(getInviteLink());
-    const orig = btn.textContent;
-    btn.textContent = "已复制！";
-    btn.style.background = "var(--plant)";
-    setTimeout(() => { btn.textContent = orig; btn.style.background = "var(--jujube)"; }, 1500);
-  } catch (e) {
-    showToast("复制失败，请手动复制链接");
-  }
-}
-
-/* ====== XP Shop ====== */
-const xpShop = [
-  { id: "avatar-gold", name: "金色头像框", cost: 200, icon: "🟡", desc: "在个人档案中显示金色边框" },
-  { id: "avatar-diamond", name: "钻石头像框", cost: 500, icon: "💎", desc: "最稀有的头像框，彰显坚持" },
-  { id: "badge-custom", name: "自定义徽章名", cost: 300, icon: "✏️", desc: "给一枚徽章起你喜欢的名字" },
-  { id: "role-exclusive", name: "神秘角色卡", cost: 400, icon: "🔮", desc: "解锁一张专属隐藏角色卡" },
-  { id: "theme-night", name: "暗夜主题", cost: 150, icon: "🌙", desc: "解锁暗色模式皮肤" },
-];
-
-function getXpShopPurchases() {
-  try {
-    return JSON.parse(localStorage.getItem("ai-xp-shop") || "[]");
-  } catch (e) { return []; }
-}
-
-function purchaseXpItem(itemId) {
-  const item = xpShop.find(i => i.id === itemId);
-  if (!item) return;
-  const xp = getXp();
-  if (xp < item.cost) {
-    showToast(`XP 不足！需要 ${item.cost} XP，当前 ${xp} XP`, 2000);
-    return;
-  }
-  const purchases = getXpShopPurchases();
-  if (purchases.includes(itemId)) {
-    showToast("你已经拥有这个物品了", 1500);
-    return;
-  }
-  state.bonusXp -= item.cost;
-  purchases.push(itemId);
-  localStorage.setItem("ai-xp-shop", JSON.stringify(purchases));
-  persistGameState();
-  showToast(`🎉 成功解锁「${item.name}」！消耗 ${item.cost} XP`, 2000);
-  /* S3: Purchase animation — flash purchased card */
-  const card = document.querySelector(`[data-xp-item="${itemId}"]`);
-  if (card) { card.classList.add("xp-purchased"); setTimeout(() => card.classList.remove("xp-purchased"), 800); }
-  refreshGame();
-}
-
-function renderXpShop() {
-  const container = document.querySelector("#xpShopSection");
-  if (!container) return;
-  const xp = getXp();
-  const purchases = getXpShopPurchases();
-  container.innerHTML = `
-    <div style="margin-top:20px;">
-      <h4 style="margin-bottom:12px;font-size:0.95rem;">🏪 XP 商店 <span style="font-size:0.78rem;color:var(--muted);">余额 ${xp} XP</span></h4>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">
-        ${xpShop.map(item => {
-          const owned = purchases.includes(item.id);
-          const canBuy = xp >= item.cost && !owned;
-          return `
-            <div data-xp-item="${item.id}" style="padding:12px;border-radius:10px;background:${owned?'rgba(95,127,82,0.08)':'var(--surface)'};border:1px solid ${owned?'rgba(95,127,82,0.3)':'var(--line)'};text-align:center;transition:transform 0.3s,box-shadow 0.3s;">
-              <div style="font-size:1.6rem;">${item.icon}</div>
-              <div style="font-weight:600;font-size:0.85rem;margin:6px 0;">${escapeHtml(item.name)}</div>
-              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;">${escapeHtml(item.desc)}</div>
-              ${owned
-                ? '<span style="font-size:0.78rem;color:var(--plant);">✅ 已拥有</span>'
-                : `<button onclick="purchaseXpItem('${item.id}')" style="padding:4px 12px;font-size:0.78rem;background:${canBuy?'var(--earth)':'#ccc'};color:#fff;border:none;border-radius:6px;cursor:${canBuy?'pointer':'not-allowed'};" ${canBuy?'':'disabled'}>${item.cost} XP</button>`
-              }
-            </div>
-          `;
-        }).join("")}
-      </div>
-    </div>
-  `;
 }
 
 function initSectionRevealAnimations() {
@@ -2418,17 +2230,6 @@ document.querySelector("#checkInButton").addEventListener("click", () => {
     : `今日进度已记录，获得 ${earnedXp} XP。`;
   showToast(streakMsg);
   if (typeof gtag === "function") gtag("event", "check_in", { streak: state.streak, xp: earnedXp });
-
-  /* Invite reward: if this is a new user's first check-in and they were invited */
-  const inviterId = localStorage.getItem("ai-invited-by");
-  if (inviterId && !localStorage.getItem("ai-invite-rewarded")) {
-    state.bonusXp += 50;
-    localStorage.setItem("ai-invite-rewarded", "1");
-    persistGameState();
-    refreshGame();
-    showToast("🎉 邀请奖励 +50 XP！你的邀请人也获得了 50 XP。", 2500);
-    if (typeof gtag === "function") gtag("event", "invite_reward", { inviter: inviterId });
-  }
 });
 
 document.querySelector("#dailyButton").addEventListener("click", () => {
@@ -2650,6 +2451,39 @@ async function loadAllData() {
   } catch (err) {
     console.warn("Failed to load site-config.json:", err.message);
   }
+}
+
+async function bootstrap() {
+  await loadAllData();
+  await loadMonthlyUpdates();
+  if (!state.month || !monthlyUpdates.length) {
+    state.month = "2026-07";
+  }
+  ensureMonthExists();
+  renderStarter();
+  renderTrack();
+  renderWorldview();
+  renderMonthOptions();
+  renderMonthlyUpdate();
+  renderResourceRadar();
+  renderWeeks();
+  renderModels();
+  renderProjects();
+  renderShowcase();
+  renderAgentDailyChallenge();
+  renderAgentRoles();
+  renderTemplate();
+  renderContact();
+  renderFeedbackCount();
+  refreshGame();
+  const initialPage = getRequestedPageId();
+  applyCurrentPage(initialPage, { silent: true });
+  renderCurrentPageContent(initialPage);
+  syncPageUrl(initialPage, { replace: true });
+  initSectionRevealAnimations();
+  updateActiveNav();
+  resetPageViewport(initialPage);
+  window.setTimeout(() => updateActiveNav(), 120);
 }
 
 /* ====== P0-PR2: Mobile Navigation Toggle ====== */
@@ -3181,11 +3015,11 @@ function renderModelDecisionTree() {
     </div>
   `;
   const recommendations = {
-    coding: `推荐 <a href="#" onclick="event.preventDefault();applyCurrentPage('models');syncPageUrl('models');renderCurrentPageContent('models');resetPageViewport('models');" style="color:var(--jujube);text-decoration:underline;">Claude 3.5 Sonnet</a>（编程能力最强）或 <a href="#" onclick="event.preventDefault();applyCurrentPage('models');syncPageUrl('models');renderCurrentPageContent('models');resetPageViewport('models');" style="color:var(--jujube);text-decoration:underline;">DeepSeek Coder</a>（国内免费可用）。`,
-    longtext: `推荐 <a href="#" onclick="event.preventDefault();applyCurrentPage('models');syncPageUrl('models');renderCurrentPageContent('models');resetPageViewport('models');" style="color:var(--jujube);text-decoration:underline;">Gemini 1.5 Pro</a>（200 万 token 上下文）或 Claude 3.5 Sonnet（20 万 token），国内可选 Kimi（长文本处理优秀）。`,
-    video: `推荐 <a href="#" onclick="event.preventDefault();applyCurrentPage('models');syncPageUrl('models');renderCurrentPageContent('models');resetPageViewport('models');" style="color:var(--jujube);text-decoration:underline;">可灵 / 即梦 / 通义万相</a>（国内视频生成）。国际可选 Runway Gen-3 或 Sora。`,
-    chinese: `推荐 <a href="#" onclick="event.preventDefault();applyCurrentPage('models');syncPageUrl('models');renderCurrentPageContent('models');resetPageViewport('models');" style="color:var(--jujube);text-decoration:underline;">DeepSeek</a>（中文理解优秀且免费）或通义千问。国际模型中 Claude 中文表现也不错。`,
-    agent: `推荐 <a href="#" onclick="event.preventDefault();applyCurrentPage('models');syncPageUrl('models');renderCurrentPageContent('models');resetPageViewport('models');" style="color:var(--jujube);text-decoration:underline;">GPT-4o</a>（Agent 生态最成熟）或 Claude 3.5 Sonnet。国内可选 DeepSeek（性价比高）。`
+    coding: "推荐 <strong>Claude 3.5 Sonnet</strong>（编程能力最强）或 <strong>DeepSeek Coder</strong>（国内免费可用）。两者都支持长上下文编程任务。",
+    longtext: "推荐 <strong>Gemini 1.5 Pro</strong>（200 万 token 上下文窗口）或 <strong>Claude 3.5 Sonnet</strong>（20 万 token）。国内可选 <strong>Kimi</strong>（长文本处理优秀）。",
+    video: "推荐 <strong>可灵 / 即梦 / 通义万相</strong>（国内视频生成）。国际可选 <strong>Runway Gen-3</strong> 或 <strong>Sora</strong>（如有访问权限）。",
+    chinese: "推荐 <strong>DeepSeek</strong>（中文理解优秀且免费）或 <strong>通义千问</strong>（阿里生态集成好）。国际模型中 <strong>Claude</strong> 中文表现也不错。",
+    agent: "推荐 <strong>GPT-4o</strong>（Agent 生态最成熟）或 <strong>Claude 3.5 Sonnet</strong>（工具调用能力强）。国内可选 <strong>DeepSeek</strong>（性价比高）。"
   };
   container.querySelectorAll(".decision-option").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -3228,297 +3062,12 @@ function renderSelfCheck(trackId) {
       <p class="muted" style="margin-bottom:10px;">确认你能做到以下事项，再进入下一个模块。</p>
       ${track.selfCheck.map((item, i) => `
         <label class="self-check-item">
-          <input type="checkbox" id="selfcheck-${trackId}-${i}" onchange="updateSelfCheckFeedback('${trackId}')" />
+          <input type="checkbox" id="selfcheck-${trackId}-${i}" />
           <span>${safeText(item)}</span>
         </label>
       `).join("")}
-      <div id="selfcheck-feedback-${trackId}" style="margin-top:10px;font-size:0.82rem;color:var(--muted);"></div>
     </div>
   `;
-}
-
-/* L4: Adaptive self-check feedback */
-function updateSelfCheckFeedback(trackId) {
-  const track = tracks[trackId];
-  if (!track || !track.selfCheck) return;
-  const feedbackEl = document.querySelector(`#selfcheck-feedback-${trackId}`);
-  if (!feedbackEl) return;
-  const allBoxes = document.querySelectorAll(`[id^="selfcheck-${trackId}-"]`);
-  const allChecked = Array.from(allBoxes).every(b => b.checked);
-  const noneChecked = Array.from(allBoxes).every(b => !b.checked);
-  if (allChecked) {
-    feedbackEl.innerHTML = `<span style="color:var(--plant);">✅ 太棒了！你已经完全掌握了这条路线，可以去挑战下一个模块了。</span>`;
-  } else if (noneChecked) {
-    feedbackEl.innerHTML = "";
-  } else {
-    const unchecked = track.selfCheck.filter((_, i) => !(document.querySelector(`#selfcheck-${trackId}-${i}`)||{}).checked);
-    const firstUnchecked = unchecked[0] || "";
-    feedbackEl.innerHTML = `<span style="color:var(--earth);">💡 如果你还不能「${safeText(firstUnchecked)}」，请回到对应模块重新练习，或使用下方「问 AI」按钮寻求帮助。</span>`;
-  }
-}
-
-/* ====== Admin Dashboard ====== */
-function renderAdminDashboard() {
-  const container = document.querySelector("#adminContent");
-  if (!container) return;
-  const xp = getXp();
-  const rank = getRank();
-  const doneWeeks = state.doneWeeks.size;
-  const badges = achievements.filter(a => a.test()).length;
-  const allData = {};
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith("ai-")) {
-      try { allData[key] = JSON.parse(localStorage.getItem(key)); }
-      catch { allData[key] = localStorage.getItem(key); }
-    }
-  }
-  const checks = {
-    "localStorage 可用": true,
-    "签到记录": state.lastCheckIn || "无",
-    "连续天数": state.streak,
-    "完成周数": `${doneWeeks}/12`,
-    "徽章获得": `${badges}/${achievements.length}`,
-    "API Key 已配置": !!sessionStorage.getItem("ai-tutor-api-key"),
-    "云同步启用": syncState.enabled,
-    "邀请码": generateInviteCode(),
-    "XP 商店购买数": (JSON.parse(localStorage.getItem("ai-xp-shop") || "[]")).length,
-  };
-  container.innerHTML = `
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:24px;">
-      ${Object.entries(checks).map(([k, v]) => `
-        <div style="padding:16px;border-radius:10px;background:var(--surface);border:1px solid var(--line);">
-          <div style="font-size:0.8rem;color:var(--muted);">${k}</div>
-          <div style="font-size:1.3rem;font-weight:700;color:var(--jujube);margin-top:4px;">${v}</div>
-        </div>
-      `).join("")}
-    </div>
-    <!-- S1: Aggregation stats -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-      <div style="padding:16px;border-radius:10px;background:var(--surface);border:1px solid var(--line);">
-        <div style="font-weight:600;margin-bottom:10px;color:var(--earth);">📊 游戏化数据概览</div>
-        <div style="font-size:0.85rem;line-height:2;">
-          <div>总累计 XP：<strong style="color:var(--jujube);">${xp}</strong></div>
-          <div>签到次数：<strong style="color:var(--jujube);">${state.streak || 0} 次</strong></div>
-          <div>完成周数比例：<strong style="color:var(--jujube);">${doneWeeks}/12 (${Math.round(doneWeeks/12*100)}%)</strong></div>
-          <div>等级进度：<strong style="color:var(--jujube);">${xp}/${getNextRank() ? getNextRank().minXp : '∞'} XP → ${getNextRank() ? getNextRank().name : 'MAX'}</strong></div>
-          <div>徽章完成率：<strong style="color:var(--jujube);">${badges}/${achievements.length} (${Math.round(badges/achievements.length*100)}%)</strong></div>
-          <div>累积反馈次数：<strong style="color:var(--jujube);">${parseInt(localStorage.getItem("ai-feedback-count")||"0",10)} 次</strong></div>
-        </div>
-      </div>
-      <div style="padding:16px;border-radius:10px;background:var(--surface);border:1px solid var(--line);">
-        <div style="font-weight:600;margin-bottom:10px;color:var(--earth);">🎯 XP 消耗分析</div>
-        <div style="font-size:0.85rem;line-height:2;">
-          <div>XP 商店购买数：<strong style="color:var(--jujube);">${(JSON.parse(localStorage.getItem("ai-xp-shop")||"[]")).length} / ${xpShop.length}</strong></div>
-          <div>已花费 XP：<strong style="color:var(--jujube);">${(JSON.parse(localStorage.getItem("ai-xp-shop")||"[]")).reduce((sum, id) => sum + (xpShop.find(i => i.id===id)||{}).cost||0, 0)} XP</strong></div>
-          <div>邀请成功次数：<strong style="color:var(--jujube);">${localStorage.getItem("ai-invite-count")||"0"} 人</strong></div>
-          <div>邀请获得 XP：<strong style="color:var(--jujube);">${(parseInt(localStorage.getItem("ai-invite-count")||"0",10)) * 50} XP</strong></div>
-        </div>
-      </div>
-    </div>
-    <details style="margin-top:16px;">
-      <summary style="cursor:pointer;font-weight:600;color:var(--earth);">📊 完整 localStorage 数据</summary>
-      <pre style="margin-top:10px;background:rgba(143,47,42,0.04);padding:16px;border-radius:8px;overflow-x:auto;font-size:12px;max-height:400px;overflow-y:auto;">${escapeHtml(JSON.stringify(allData, null, 2))}</pre>
-    </details>
-    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
-      <button class="ghost-btn" onclick="downloadAllData()">📥 导出完整数据 (JSON)</button>
-      <button class="ghost-btn" style="color:var(--jujube);" onclick="if(confirm('确定要清除所有本地数据？此操作不可撤销！')){localStorage.clear();sessionStorage.clear();location.reload();}">🗑️ 清除所有数据</button>
-    </div>
-  `;
-}
-
-function downloadAllData() {
-  const data = {};
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    try { data[key] = JSON.parse(localStorage.getItem(key)); }
-    catch { data[key] = localStorage.getItem(key); }
-  }
-  downloadTextFile(JSON.stringify(data, null, 2), { fileName: `ai-learning-backup-${formatReportDate()}.json`, type: "application/json", toastMessage: "数据已导出" });
-}
-
-/* ====== Share Image Generator ====== */
-async function generateShareImage() {
-  const canvas = document.createElement("canvas");
-  canvas.width = 600;
-  canvas.height = 800;
-  const ctx = canvas.getContext("2d");
-
-  const xp = getXp();
-  const rank = getRank();
-
-  /* L5: Level-based color scheme */
-  const levelColors = (xp >= 2500) ? { top: "#d8a34a", mid: "#b8860b", bot: "#8b6914" }
-    : (xp >= 500) ? { top: "#8f2f2a", mid: "#64221f", bot: "#3d2817" }
-    : { top: "#5c3a1e", mid: "#3d2817", bot: "#241710" };
-
-  /* Background */
-  const bg = ctx.createLinearGradient(0, 0, 0, 800);
-  bg.addColorStop(0, levelColors.top);
-  bg.addColorStop(0.4, levelColors.mid);
-  bg.addColorStop(1, levelColors.bot);
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, 600, 800);
-
-  /* Decorative accent */
-  ctx.fillStyle = "rgba(255,255,255,0.06)";
-  ctx.beginPath();
-  ctx.arc(520, 100, 200, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.arc(80, 700, 150, 0, Math.PI * 2);
-  ctx.fill();
-
-  /* Title */
-  ctx.fillStyle = "#fffaf2";
-  ctx.font = "bold 32px 'PingFang SC','Microsoft YaHei',sans-serif";
-  ctx.textAlign = "center";
-  ctx.fillText("AI 原生能力自学站", 300, 70);
-
-  /* Subtitle */
-  ctx.font = "16px 'PingFang SC','Microsoft YaHei',sans-serif";
-  ctx.fillStyle = "rgba(255,250,242,0.7)";
-  ctx.fillText("ai.mynaxis.com", 300, 100);
-
-  /* Divider */
-  ctx.strokeStyle = "rgba(255,250,242,0.3)";
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(60, 120);
-  ctx.lineTo(540, 120);
-  ctx.stroke();
-
-  /* Stats card */
-  ctx.fillStyle = "rgba(255,250,242,0.1)";
-  ctx.beginPath();
-  roundRect(ctx, 40, 140, 520, 340, 16);
-  ctx.fill();
-
-  const nextRank = getNextRank();
-  const progress = nextRank ? Math.min(100, Math.round(((xp - (nextRank.minXp || 0)) / ((nextRank.minXp || 1) - (rank.minXp || 0))) * 100)) : 100;
-
-  /* Rank */
-  ctx.fillStyle = "#fffaf2";
-  ctx.font = "bold 22px 'PingFang SC','Microsoft YaHei',sans-serif";
-  ctx.textAlign = "center";
-  ctx.fillText(`🏆 ${rank.name}`, 300, 185);
-
-  /* XP */
-  ctx.font = "bold 48px 'PingFang SC','Microsoft YaHei',sans-serif";
-  ctx.fillText(`${xp} XP`, 300, 245);
-
-  /* Progress bar */
-  ctx.fillStyle = "rgba(255,250,242,0.15)";
-  ctx.fillRect(80, 270, 440, 12);
-  ctx.fillStyle = "#d8a34a";
-  ctx.fillRect(80, 270, 440 * (progress / 100), 12);
-
-  ctx.font = "13px 'PingFang SC','Microsoft YaHei',sans-serif";
-  ctx.fillStyle = "rgba(255,250,242,0.6)";
-  ctx.fillText(`距 ${nextRank ? nextRank.name : "MAX"} 还需 ${nextRank ? nextRank.minXp - xp : 0} XP`, 300, 305);
-
-  /* Streak */
-  ctx.font = "18px 'PingFang SC','Microsoft YaHei',sans-serif";
-  ctx.fillStyle = "#fffaf2";
-  ctx.fillText(`🔥 连续学习 ${state.streak} 天`, 300, 345);
-
-  /* Stats row */
-  const weeksCompleted = state.doneWeeks.size;
-  const badges = achievements.filter(a => a.test()).length;
-  ctx.font = "15px 'PingFang SC','Microsoft YaHei',sans-serif";
-  ctx.fillStyle = "rgba(255,250,242,0.8)";
-  ctx.fillText(`✅ ${weeksCompleted} 周 · 🏅 ${badges} 徽章 · 📅 ${state.lastCheckIn || "未开始"}`, 300, 385);
-
-  /* Badge showcase */
-  ctx.fillStyle = "rgba(255,250,242,0.08)";
-  ctx.beginPath();
-  const badgeCount = Math.min(earned.length, 8);
-  roundRect(ctx, 40, 420, 520, badgeCount * 40 + 16, 16);
-  ctx.fill();
-
-  const earned = achievements.filter(a => a.test());
-  ctx.font = "14px 'PingFang SC','Microsoft YaHei',sans-serif";
-  ctx.textAlign = "left";
-  earned.slice(0, 8).forEach((a, i) => {
-    const y = 450 + i * 40;
-    ctx.fillStyle = "#fffaf2";
-    ctx.fillText(`${a.test() ? "🏅" : "⬜"} ${a.title} — ${a.desc}`, 70, y);
-  });
-
-  /* Footer */
-  ctx.fillStyle = "rgba(255,250,242,0.5)";
-  ctx.font = "13px 'PingFang SC','Microsoft YaHei',sans-serif";
-  ctx.textAlign = "center";
-  ctx.fillText("扫码加入 ai.mynaxis.com 一起学 AI", 300, 700);
-
-  /* S2: UTM-tracked URL */
-  const inviteLink = getInviteLink() + "&utm_source=share&utm_medium=image";
-  ctx.fillStyle = "rgba(255,250,242,0.9)";
-  ctx.font = "bold 16px 'PingFang SC','Microsoft YaHei',sans-serif";
-  ctx.fillText("ai.mynaxis.com", 300, 730);
-
-  /* R2: Real QR code via API */
-  try {
-    const qrData = encodeURIComponent(inviteLink);
-    const qrImg = await loadQRCode(qrData, 120);
-    if (qrImg) {
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(240, 740, 120, 120);
-      ctx.drawImage(qrImg, 240, 740, 120, 120);
-    } else {
-      /* Fallback text if QR fails */
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(240, 740, 120, 40);
-      ctx.fillStyle = "#3d2817";
-      ctx.font = "11px 'PingFang SC','Microsoft YaHei',sans-serif";
-      ctx.fillText("扫码访问", 300, 765);
-    }
-  } catch (e) {
-    /* Silent fallback */
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(240, 740, 120, 40);
-    ctx.fillStyle = "#3d2817";
-    ctx.font = "11px 'PingFang SC','Microsoft YaHei',sans-serif";
-    ctx.fillText("扫码访问", 300, 765);
-  }
-
-  /* Convert to image and download */
-  canvas.toBlob(blob => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `ai-learning-${formatReportDate()}.png`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast("📤 分享图已生成！发朋友圈/小红书，让更多人加入", 2500);
-    if (typeof gtag === "function") gtag("event", "share_image", { xp, streak: state.streak, share_url: inviteLink });
-  }, "image/png");
-}
-
-/* R2: QR code image loader */
-function loadQRCode(data, size) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    const timeout = setTimeout(() => { resolve(null); }, 4000);
-    img.onload = () => { clearTimeout(timeout); resolve(img); };
-    img.onerror = () => { clearTimeout(timeout); resolve(null); };
-    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${data}`;
-  });
-}
-
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-  ctx.lineTo(x + r, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-  ctx.lineTo(x, y + r);
-  ctx.quadraticCurveTo(x, y, x + r, y);
-  ctx.closePath();
 }
 
 /* ====== Bootstrap ====== */
@@ -3550,7 +3099,6 @@ async function bootstrap() {
   renderFeedbackCount();
   refreshGame();
   initCloudSync();
-  processInviteParam();
   const initialPage = getRequestedPageId();
   applyCurrentPage(initialPage, { silent: true });
   renderCurrentPageContent(initialPage);

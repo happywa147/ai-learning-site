@@ -8,10 +8,138 @@
       "能做出一个可展示的小应用或分析报告"
     ],
     "modules": [
-      ["认知", "大模型、Token、上下文、多模态、幻觉与验证"],
-      ["学习", "AI 读书、论文精读、知识复盘、资料助教"],
-      ["表达", "结构化写作、PPT、演讲稿、简历与作品集"],
-      ["底线", "隐私、引用、学术诚信、版权与事实核查"]
+      {
+        "title": "认知",
+        "desc": "大模型、Token、上下文、多模态、幻觉与验证",
+        "practice": [
+          {
+            "step": "打开 ChatGPT (chat.openai.com) 或 DeepSeek (chat.deepseek.com)，输入：'请用一句话解释什么是 Token，然后把我这句话拆成 Token 列表给我看'",
+            "expect": "AI 解释 Token 概念并展示切分结果，你直观看到中文被如何切分"
+          },
+          {
+            "step": "继续输入：'请用 200 字解释上下文窗口是什么，以及对话太长会发生什么'",
+            "expect": "AI 解释上下文窗口的 Token 限制，说明超限后早期对话会被截断"
+          },
+          {
+            "step": "输入一个不存在的事件：'请告诉我 2026 年诺贝尔文学奖得主'，然后用搜索引擎核实",
+            "expect": "观察 AI 是否编造了信息——这大概率是'幻觉'现象"
+          },
+          {
+            "step": "上传一张日常照片到支持多模态的模型（ChatGPT/通义千问），输入：'请描述这张图片并数出物体数量'",
+            "expect": "预期结果：理解 Token、上下文窗口、幻觉、多模态四个核心概念"
+          }
+        ],
+        "difficulty": "beginner",
+        "commonErrors": [
+          {
+            "error": "AI 回复太长看不懂",
+            "fix": "在提示词末尾加一句「请用通俗易懂的语言解释，避免专业术语」"
+          },
+          {
+            "error": "不知道 AI 能做什么",
+            "fix": "试试问「你能帮我做哪些事情？举 10 个例子」"
+          }
+        ]
+      },
+      {
+        "title": "学习",
+        "desc": "AI 读书、论文精读、知识复盘、资料助教",
+        "practice": [
+          {
+            "step": "打开 Claude (claude.ai)，粘贴一段你最近读的文章或笔记（500字以上），输入：'请用三层结构整理：核心观点、支撑论据、我可以行动的点'",
+            "expect": "AI 输出结构化三层摘要"
+          },
+          {
+            "step": "继续输入：'请出 5 道自测题：3 道选择 + 2 道简答，附答案'",
+            "expect": "收到带答案的 5 道检测题"
+          },
+          {
+            "step": "打开通义千问，粘贴同样内容，输入：'用费曼技巧讲给 12 岁的孩子听，用一个类比'",
+            "expect": "AI 用简单类比重新解释，帮你发现理解盲区"
+          },
+          {
+            "step": "把两个 AI 的输出对比，标记它们理解不同或遗漏的地方",
+            "expect": "预期结果：你获得了'结构化笔记 + 自测题 + 费曼讲解'三步学习闭环"
+          }
+        ],
+        "difficulty": "beginner",
+        "commonErrors": [
+          {
+            "error": "一次性写太长提示词导致 AI 跑偏",
+            "fix": "把任务拆成 2-3 轮对话，每轮只聚焦一个问题"
+          },
+          {
+            "error": "忘记告诉 AI 输出格式",
+            "fix": "加上「请用 Markdown 表格输出」或「请用 bullet points 列出」"
+          }
+        ]
+      },
+      {
+        "title": "表达",
+        "desc": "结构化写作、PPT、演讲稿、简历与作品集",
+        "practice": [
+          {
+            "step": "打开 ChatGPT，输入：'我要写一篇关于'为什么要学 AI'的短文，受众是大学生，给我三层结构提纲，每层一个关键句'",
+            "expect": "AI 输出三层提纲，每层有明确的论点句"
+          },
+          {
+            "step": "继续输入：'把第二层展开成 150 字段落，开头用提问钩子，结尾给行动建议'",
+            "expect": "AI 生成带钩子和 CTA 的完整段落"
+          },
+          {
+            "step": "打开通义千问，输入：'把以下段落改写成 60 秒口播稿：[粘贴上一步段落]'",
+            "expect": "AI 输出口语化演讲稿，约 60 秒"
+          },
+          {
+            "step": "打开 Gamma (gamma.app)，粘贴你的提纲，选择 AI 生成 PPT",
+            "expect": "预期结果：你获得了一份可直接用于展示的 PPT"
+          }
+        ],
+        "difficulty": "intermediate",
+        "commonErrors": [
+          {
+            "error": "不知道选哪个 AI 工具",
+            "fix": "Coding 用 Claude/DeepSeek，写作用 DeepSeek/通义千问，长文档用 Gemini/Kimi"
+          },
+          {
+            "error": "register 后无法登录",
+            "fix": "检查邮箱验证链接是否过期，重新发送验证邮件"
+          }
+        ]
+      },
+      {
+        "title": "底线",
+        "desc": "隐私、引用、学术诚信、版权与事实核查",
+        "practice": [
+          {
+            "step": "打开 ChatGPT，输入：'请列出学术写作中使用 AI 的 5 条伦理红线，各举一个违规例子'",
+            "expect": "AI 输出 5 条规范和反面案例"
+          },
+          {
+            "step": "向 DeepSeek 问一个需要核实的问题，如'维生素 C 能预防感冒吗'，复制回答",
+            "expect": "AI 给出一段看似权威的回答，可能包含具体数据"
+          },
+          {
+            "step": "用百度/Google 搜索 AI 回答中的关键数据，核对原始来源是否存在",
+            "expect": "你可能发现 AI 的引用找不到原始来源"
+          },
+          {
+            "step": "整理一份'事实核查记录'：原始问题、AI 回答、核查结果",
+            "expect": "预期结果：你掌握了'提问→获取→核查→记录'的底线流程"
+          }
+        ],
+        "difficulty": "intermediate",
+        "commonErrors": [
+          {
+            "error": "接入 API 时报 401 错误",
+            "fix": "确认 API Key 格式正确（通常以 sk- 开头），检查是否在后台开启了 API 权限"
+          },
+          {
+            "error": "Python 环境报 ModuleNotFoundError",
+            "fix": "运行 pip install openai（或 pip3），确认 Python 版本 ≥ 3.8"
+          }
+        ]
+      }
     ],
     "prereq": [
       "我会使用浏览器和基本的电脑操作",
@@ -40,10 +168,138 @@
       "能把知识查询转化为可复用输出模板"
     ],
     "modules": [
-      ["数据", "知识源接入、清洗与字段标准化"],
-      ["索引", "向量化、切片策略与更新策略"],
-      ["问答", "检索增强问答、来源引用与反例检查"],
-      ["复核", "结果校验、证据闭环与风险记录"]
+      {
+        "title": "数据",
+        "desc": "知识源接入、清洗与字段标准化",
+        "practice": [
+          {
+            "step": "准备一份你自己的学习笔记或工作文档（至少 1000 字），保存为 .txt 文件",
+            "expect": "你有一份真实文本作为练习素材"
+          },
+          {
+            "step": "用 Python 写一段清洗脚本，去除多余空白和特殊字符，按段落切分成片段",
+            "expect": "你得到一份干净的文本片段列表"
+          },
+          {
+            "step": "用正则或简单规则给每个片段打标签（如 #概念 #案例 #操作步骤）",
+            "expect": "片段有了结构化标签"
+          },
+          {
+            "step": "统计片段数量、平均长度、标签分布",
+            "expect": "预期结果：一份清洗好、打好标签、了解全貌的文档片段集"
+          }
+        ],
+        "difficulty": "intermediate",
+        "commonErrors": [
+          {
+            "error": "ChromaDB 报版本冲突",
+            "fix": "运行 pip install chromadb==0.4.24，确保与 langchain 版本兼容"
+          },
+          {
+            "error": "向量化后搜索不到结果",
+            "fix": "检查 chunk_size 是否太大（500-1000 字符），embedding 模型是否与查询时一致"
+          }
+        ]
+      },
+      {
+        "title": "索引",
+        "desc": "向量化、切片策略与更新策略",
+        "practice": [
+          {
+            "step": "打开 OpenAI/DeepSeek 的 embedding API 文档，阅读接口说明",
+            "expect": "理解 embedding 接口的输入输出格式"
+          },
+          {
+            "step": "编写 Python 脚本，对清洗后的文档片段逐条调用 embedding API",
+            "expect": "每个片段得到一个向量表示"
+          },
+          {
+            "step": "把向量和原文片段保存到本地 JSON 文件，建立映射关系",
+            "expect": "你有一个可查询的向量索引"
+          },
+          {
+            "step": "写一个简单的检索函数：输入查询字符串 → 生成 query embedding → 用余弦相似度找最相关的 top 3 片段",
+            "expect": "预期结果：一个本地可运行的检索系统"
+          }
+        ],
+        "difficulty": "intermediate",
+        "commonErrors": [
+          {
+            "error": "文档切分后上下文断裂",
+            "fix": "设置 chunk_overlap=200 让相邻 chunk 有重叠"
+          },
+          {
+            "error": "检索到了不相关的文档片段",
+            "fix": "用 Reranker 做二次排序，过滤低相关性结果"
+          }
+        ]
+      },
+      {
+        "title": "问答",
+        "desc": "检索增强问答、来源引用与反例检查",
+        "practice": [
+          {
+            "step": "设计一个 RAG 问答 prompt 模板（含检索到的资料、用户问题、回答格式要求）",
+            "expect": "你有一个可复用的 prompt 模板"
+          },
+          {
+            "step": "选一个问题，先检索相关片段，再组装 prompt 发给模型",
+            "expect": "AI 基于你的资料给出带来源引用的回答"
+          },
+          {
+            "step": "造一个'资料库没有答案'的问题测试——确认 AI 会回答'未提及'而非编造",
+            "expect": "AI 正确承认不知道"
+          },
+          {
+            "step": "对比纯 prompt（不检索）vs RAG 的回答质量差异",
+            "expect": "预期结果：你体验到了 RAG 减少幻觉、增强可信度的价值"
+          }
+        ],
+        "difficulty": "advanced",
+        "commonErrors": [
+          {
+            "error": "本地 RAG 查询很慢",
+            "fix": "检查 GPU 加速（pip install faiss-gpu），减少文档数做测试"
+          },
+          {
+            "error": "中文文本被错误切分",
+            "fix": "使用 RecursiveCharacterTextSplitter 并设置中文分隔符"
+          }
+        ]
+      },
+      {
+        "title": "复核",
+        "desc": "结果校验、证据闭环与风险记录",
+        "practice": [
+          {
+            "step": "把 RAG 回答中的每个事实性声明标注出来，逐条去原文验证",
+            "expect": "你看到哪些有依据、哪些被 AI 添油加醋"
+          },
+          {
+            "step": "设计一个'置信度打分'规则：高（原文明确支持）/ 中（原文暗示）/ 低（无原文依据）",
+            "expect": "应答有了可信度标签"
+          },
+          {
+            "step": "对 3 个不同问题的 RAG 回答执行同样的复核流程，记录通过率",
+            "expect": "看到不同问题的准确率差异"
+          },
+          {
+            "step": "写一份一页纸的'RAG 质量报告'：准确率、常见错误类型、改进建议",
+            "expect": "预期结果：你掌握了一套 RAG 质检流程"
+          }
+        ],
+        "difficulty": "intermediate",
+        "commonErrors": [
+          {
+            "error": "RAG 回答不够准确",
+            "fix": "增加 top_k 参数到 5-8，使用混合检索（BM25+向量）"
+          },
+          {
+            "error": "Embedding 模型选择不当",
+            "fix": "中文推荐 text2vec-large-chinese 或 bge-large-zh"
+          }
+        ]
+      }
     ],
     "prereq": [
       "我有 Python 或其他编程语言的基础",
@@ -72,10 +328,138 @@
       "能理解平台内容风格差异"
     ],
     "modules": [
-      ["选题", "人群、痛点、热点、标题、封面钩子"],
-      ["脚本", "口播、剧情、知识科普、带货与直播切片"],
-      ["画面", "即梦、可灵、通义万相、剪映等工具流"],
-      ["复盘", "完播率、互动率、转粉率、评论洞察"]
+      {
+        "title": "选题",
+        "desc": "人群、痛点、热点、标题、封面钩子",
+        "practice": [
+          {
+            "step": "确定你的目标人群（如大学生/职场新人/宝妈），打开 DeepSeek，输入：'你是短视频策划师，针对[目标人群]，在[抖音/小红书]平台，生成 10 个选题，每个含标题和痛点'",
+            "expect": "AI 输出 10 个带钩子的选题方案"
+          },
+          {
+            "step": "从 10 个选题中筛选 3 个最有爆款潜力的（考量：是否有争议性、是否有情绪共鸣、是否可操作）",
+            "expect": "你筛选出 3 个候选选题"
+          },
+          {
+            "step": "对每个选题搜索平台同类内容，评估竞争激烈度和差异化空间",
+            "expect": "了解每个选题的竞争格局"
+          },
+          {
+            "step": "最终选定 1 个选题，写出标题（A/B 两个版本）和 30 字简介",
+            "expect": "预期结果：一个经过验证、有差异化的选题"
+          }
+        ],
+        "difficulty": "beginner",
+        "commonErrors": [
+          {
+            "error": "AI 生成图片构图差、细节失真",
+            "fix": "使用构图关键词如 center composition, rule of thirds，并指定 negative prompts"
+          },
+          {
+            "error": "生成的图片不符合国内审核要求",
+            "fix": "避免敏感词汇，选择国内合规的生图工具如通义万相"
+          }
+        ]
+      },
+      {
+        "title": "脚本",
+        "desc": "口播、剧情、知识科普、带货与直播切片",
+        "practice": [
+          {
+            "step": "打开 ChatGPT，输入你的选题和口播脚本模板 prompt：'你是短视频编剧。主题：[X]，时长 60 秒。0-5s 钩子，5-30s 要点，30-55s 案例，55-60s CTA'",
+            "expect": "AI 生成完整的 60 秒脚本"
+          },
+          {
+            "step": "自己朗读一遍脚本，计时——如果超时或节奏太慢，让 AI 精简",
+            "expect": "脚本时长卡在 60 秒附近"
+          },
+          {
+            "step": "标注字幕需要加重的关键词（每 10 秒至少 1 个），添加表情符号提示",
+            "expect": "脚本有了字幕标注"
+          },
+          {
+            "step": "把同一脚本改写成小红书图文版（5-8 张图 + 每图 1 句文案）",
+            "expect": "预期结果：一个平台的两个内容版本"
+          }
+        ],
+        "difficulty": "intermediate",
+        "commonErrors": [
+          {
+            "error": "AI 生成视频出现闪烁/抖动",
+            "fix": "增加帧间一致性参数，降低 motion 强度到 30-50%"
+          },
+          {
+            "error": "视频生成时间太长",
+            "fix": "先用低分辨率预览（360p），确认效果后再生成高清版"
+          }
+        ]
+      },
+      {
+        "title": "画面",
+        "desc": "即梦、可灵、通义万相、剪映等工具流",
+        "practice": [
+          {
+            "step": "打开即梦 (jimeng.jianying.com)，用提示词：'科技感扁平插画，年轻人在电脑前学习，暖色调枣红色为主，竖版 9:16' 生成封面",
+            "expect": "AI 生成一张短视频封面图"
+          },
+          {
+            "step": "打开可灵 (klingai.com)，用图文转视频功能，上传你的脚本截图生成口播背景",
+            "expect": "获得一段可用的画面素材"
+          },
+          {
+            "step": "打开剪映，导入 AI 生成的素材 + 录制的口播音频，用'智能字幕'功能自动添加字幕",
+            "expect": "剪映自动生成字幕"
+          },
+          {
+            "step": "导出视频，检查画面是否清晰、字幕是否对位、声音是否清楚",
+            "expect": "预期结果：5 分钟内产出一条带 AI 画面的短视频"
+          }
+        ],
+        "difficulty": "advanced",
+        "commonErrors": [
+          {
+            "error": "多模态内容排期混乱",
+            "fix": "用 Notion 或飞书表格管理内容日历，标注 AI 工具和生成时间"
+          },
+          {
+            "error": "AI 生成文案风格不统一",
+            "fix": "先定义品牌 tone of voice 文档，每次创作时粘贴到 Prompt 中"
+          }
+        ]
+      },
+      {
+        "title": "复盘",
+        "desc": "完播率、互动率、转粉率、评论洞察",
+        "practice": [
+          {
+            "step": "发布你的视频后 24 小时，记录播放量、完播率、互动率、转粉率四个核心数据",
+            "expect": "你有一份基础数据"
+          },
+          {
+            "step": "打开评论区，用 AI 总结评论中的主要情绪和反馈（正面/负面/建议）",
+            "expect": "了解观众的关注点"
+          },
+          {
+            "step": "对比数据与选题时的预期，标记出最大偏差（如预期完播 60% 实际 35%）",
+            "expect": "找到最需要改进的环节"
+          },
+          {
+            "step": "写一份 300 字复盘：做对了什么、哪里可以更好、下一条的三个具体改进",
+            "expect": "预期结果：形成数据驱动的迭代习惯"
+          }
+        ],
+        "difficulty": "advanced",
+        "commonErrors": [
+          {
+            "error": "视频上传后平台压缩画质",
+            "fix": "导出时用 H.265 编码 + 高码率（20Mbps+），避开平台二次压缩"
+          },
+          {
+            "error": "AI 视频声音与画面不同步",
+            "fix": "音频单独用 AI 生成后，在剪辑软件中手动对齐，不要依赖 AI 自动合成"
+          }
+        ]
+      }
     ],
     "prereq": [
       "我在抖音/小红书/B站中至少有一个账号",
@@ -104,10 +488,138 @@
       "能把 Skill 固化成可复用能力"
     ],
     "modules": [
-      ["编程", "Python 脚本、网页前端、数据处理、API 调用"],
-      ["RAG", "文档切分、向量检索、引用来源、知识库问答"],
-      ["Agent", "任务拆解、工具调用、浏览器/代码/搜索协作"],
-      ["部署", "本地原型、云端服务、成本估算、日志监控"]
+      {
+        "title": "编程",
+        "desc": "Python 脚本、网页前端、数据处理、API 调用",
+        "practice": [
+          {
+            "step": "在终端用 curl 或 Python requests 调用一次 DeepSeek/OpenAI API，确认能收到回复",
+            "expect": "API 返回 JSON 响应"
+          },
+          {
+            "step": "写一个 20 行的 Python 脚本：读取 local 文本文件，调用 API 生成摘要，保存结果",
+            "expect": "一个可运行的最小 AI 工具"
+          },
+          {
+            "step": "加上错误处理：API 超时、返回错误、文件不存在三种情况",
+            "expect": "工具更健壮"
+          },
+          {
+            "step": "给脚本加命令行参数支持（argparse）：输入文件路径、输出文件名、模型选择",
+            "expect": "预期结果：一个健壮、可配置的命令行 AI 工具"
+          }
+        ],
+        "difficulty": "intermediate",
+        "commonErrors": [
+          {
+            "error": "pip install 报依赖冲突",
+            "fix": "使用虚拟环境 python -m venv venv && source venv/bin/activate，再安装依赖"
+          },
+          {
+            "error": "不知道从哪里开始搭建应用",
+            "fix": "先画流程图明确每步输入输出，再用 AI 生成每步的 Prompt 模板"
+          }
+        ]
+      },
+      {
+        "title": "RAG",
+        "desc": "文档切分、向量检索、引用来源、知识库问答",
+        "practice": [
+          {
+            "step": "安装 chromadb：pip install chromadb，创建 Client 和 Collection",
+            "expect": "chromadb 初始化成功"
+          },
+          {
+            "step": "把你之前的学习笔记导入 chromadb，逐条添加文档和 metadata",
+            "expect": "笔记在向量数据库中可查询"
+          },
+          {
+            "step": "写一个查询函数：输入问题 → 检索 top 3 → 拼接到 prompt → 发给 LLM → 返回带来源的回答",
+            "expect": "一个可工作的端到端 RAG 流程"
+          },
+          {
+            "step": "人工测试 5 个问题，记录召回率和回答准确性",
+            "expect": "预期结果：一个经过验证的本地 RAG 问答系统"
+          }
+        ],
+        "difficulty": "advanced",
+        "commonErrors": [
+          {
+            "error": "API 调用 401/403 错误",
+            "fix": "确认 API Key 格式正确（以 sk- 开头），在后台开启 API 权限"
+          },
+          {
+            "error": "本地运行正常但部署后报错",
+            "fix": "检查环境变量是否配置（API_KEY 等），运行时打印详细日志定位问题"
+          }
+        ]
+      },
+      {
+        "title": "Agent",
+        "desc": "任务拆解、工具调用、浏览器/代码/搜索协作",
+        "practice": [
+          {
+            "step": "用 prompt 设计一个简单 Agent：给定任务 → 拆解步骤 → 选择工具 → 执行",
+            "expect": "Agent 的逻辑框架就绪"
+          },
+          {
+            "step": "实现两个工具函数：search(query) 和 calculate(expr)，Agent 能选择正确的工具并调用",
+            "expect": "Agent 能自主选择工具执行任务"
+          },
+          {
+            "step": "给 Agent 加上执行记录——每一步的工具调用、输入、输出都打印出来",
+            "expect": "Agent 的执行过程可追踪"
+          },
+          {
+            "step": "设计一个多步骤任务（如'搜索某股票价格并计算 3 天涨幅'），观察 Agent 是否能正确串联工具",
+            "expect": "预期结果：一个能自主拆解任务、调用工具、汇报结果的 Agent"
+          }
+        ],
+        "difficulty": "advanced",
+        "commonErrors": [
+          {
+            "error": "数据库连接失败",
+            "fix": "检查 connection string 格式，确认 IP 白名单设置，先 telnet 测试端口可达性"
+          },
+          {
+            "error": "前端调用后端接口跨域报错",
+            "fix": "后端添加 CORS 头 Access-Control-Allow-Origin，或使用反向代理统一域名"
+          }
+        ]
+      },
+      {
+        "title": "部署",
+        "desc": "本地原型、云端服务、成本估算、日志监控",
+        "practice": [
+          {
+            "step": "用 Flask/FastAPI 把 AI 工具包装成 REST API：/api/chat 端点接收 POST 请求",
+            "expect": "你的工具可以通过 HTTP 调用"
+          },
+          {
+            "step": "配置环境变量（.env 文件 + python-dotenv），API Key 不硬编码在代码里",
+            "expect": "API Key 安全隔离"
+          },
+          {
+            "step": "写 Dockerfile，构建镜像并本地运行：docker build -t my-ai-app . && docker run -p 5000:5000 my-ai-app",
+            "expect": "工具在 Docker 容器中运行"
+          },
+          {
+            "step": "用 curl 或 Postman 测试 /api/chat 接口，确认跨机器能访问",
+            "expect": "预期结果：你的 AI 工具可以被任何人通过网络使用"
+          }
+        ],
+        "difficulty": "advanced",
+        "commonErrors": [
+          {
+            "error": "生产环境 API 调用费用暴增",
+            "fix": "加缓存层（Redis），对重复查询返回缓存结果，设置每用户每日调用上限"
+          },
+          {
+            "error": "多用户并发时数据混乱",
+            "fix": "用 session_id / user_id 严格隔离，数据库查询始终加 WHERE user_id=?"
+          }
+        ]
+      }
     ],
     "prereq": [
       "我有 Python 或 JavaScript 的基础编程能力",
@@ -136,10 +648,138 @@
       "能给作品补齐安全和可交付说明"
     ],
     "modules": [
-      ["交付", "项目结构、版本管理与发布检查清单"],
-      ["部署", "本地部署、云部署与环境变量管理"],
-      ["稳定性", "日志、告警、限流与故障回退"],
-      ["迭代", "更新节奏、回滚演练与用户反馈闭环"]
+      {
+        "title": "交付",
+        "desc": "项目结构、版本管理与发布检查清单",
+        "practice": [
+          {
+            "step": "检查你的项目：README 是否能在 5 分钟内让新人跑起来？依赖是否锁定？License 是否存在？",
+            "expect": "列出项目交付的 gap 清单"
+          },
+          {
+            "step": "补充 README 的'快速开始'部分：安装依赖 → 配置环境 → 运行 → 示例输出",
+            "expect": "新人能照着操作跑通"
+          },
+          {
+            "step": "给项目打语义化版本号（如 v1.0.0），写 CHANGELOG.md 记录变更",
+            "expect": "项目版本可追溯"
+          },
+          {
+            "step": "创建 GitHub Release，上传安装包/可执行文件",
+            "expect": "预期结果：一个专业的项目发布"
+          }
+        ],
+        "difficulty": "advanced",
+        "commonErrors": [
+          {
+            "error": "Docker 构建失败 Missing Dockerfile",
+            "fix": "确认 Dockerfile 在项目根目录，运行 docker build -t app . 前先 ls 确认文件存在"
+          },
+          {
+            "error": "容器启动后立刻退出",
+            "fix": "检查 ENTRYPOINT/CMD 命令是否正确，运行 docker logs <container> 查看错误信息"
+          }
+        ]
+      },
+      {
+        "title": "部署",
+        "desc": "本地部署、云部署与环境变量管理",
+        "practice": [
+          {
+            "step": "把你的项目部署到免费云平台（如 Railway/Render/Zeabur），获取公网 URL",
+            "expect": "你的项目有一个公网访问地址"
+          },
+          {
+            "step": "配置环境变量（API Key 等）在云平台的面板而非代码中",
+            "expect": "敏感信息不入仓库"
+          },
+          {
+            "step": "设置自定义域名（如果有），配置 HTTPS",
+            "expect": "HTTPS 证书自动签发"
+          },
+          {
+            "step": "从手机/另一台电脑访问你的服务，确认可用",
+            "expect": "预期结果：你的 AI 工具在生产环境中运行"
+          }
+        ],
+        "difficulty": "advanced",
+        "commonErrors": [
+          {
+            "error": "GitHub Actions 部署 403",
+            "fix": "检查 Secrets 中 DEPLOY_TOKEN 是否过期，重新生成并更新"
+          },
+          {
+            "error": "环境变量未生效",
+            "fix": "确认 docker run -e 或 docker-compose.yml 中 environment 配置正确，进入容器 echo $VAR 验证"
+          }
+        ]
+      },
+      {
+        "title": "稳定性",
+        "desc": "日志、告警、限流与故障回退",
+        "practice": [
+          {
+            "step": "给你的服务加一条简单的健康检查端点 /health，返回 {\"status\":\"ok\"}",
+            "expect": "监控系统能 ping 这个端点"
+          },
+          {
+            "step": "配置日志：记录每次 API 调用的时间、耗时、状态码、错误信息",
+            "expect": "出问题时有据可查"
+          },
+          {
+            "step": "设置简单的告警：连续 5 次 500 错误 → 发一条提醒（可用 Webhook/钉钉/企微机器人）",
+            "expect": "你不会在用户都跑了才发现挂了"
+          },
+          {
+            "step": "模拟一次故障（如关掉数据库），观测告警是否触发、日志是否记录",
+            "expect": "预期结果：验证了监控和告警链路的有效性"
+          }
+        ],
+        "difficulty": "advanced",
+        "commonErrors": [
+          {
+            "error": "CDN 缓存导致更新不可见",
+            "fix": "在构建脚本中添加 version hash 到文件名，或手动清除 CDN 缓存"
+          },
+          {
+            "error": "HTTPS 证书过期导致用户无法访问",
+            "fix": "使用 Let's Encrypt 自动续期，配置 certbot renew cron job"
+          }
+        ]
+      },
+      {
+        "title": "迭代",
+        "desc": "更新节奏、回滚演练与用户反馈闭环",
+        "practice": [
+          {
+            "step": "统计你的服务一周的数据：调用量、平均延迟、错误率、用户活跃度",
+            "expect": "有数据支撑迭代决策"
+          },
+          {
+            "step": "收集 3-5 个用户反馈，用 AI 分析出 top 2 最急需的功能",
+            "expect": "迭代方向有用户依据"
+          },
+          {
+            "step": "制定下一个版本的发布计划：功能列表、验收标准、时间节点",
+            "expect": "版本规划文档化"
+          },
+          {
+            "step": "执行一次回滚演练：切到上一个版本 → 运行测试 → 再切回来",
+            "expect": "预期结果：你掌握了持续交付+安全回滚的完整流程"
+          }
+        ],
+        "difficulty": "advanced",
+        "commonErrors": [
+          {
+            "error": "日志量太大磁盘爆满",
+            "fix": "配置 logrotate 每天轮转 + 保留 7 天，或接入云日志服务（如阿里云 SLS）"
+          },
+          {
+            "error": "性能监控缺失，出问题不知道",
+            "fix": "接入 Prometheus + Grafana，至少监控 CPU/内存/QPS/响应时间 4 个核心指标"
+          }
+        ]
+      }
     ],
     "prereq": [
       "我已完成至少一个 AI 应用开发项目",

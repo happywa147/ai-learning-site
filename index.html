@@ -321,6 +321,7 @@
               </div>
               <div class="section-actions">
                 <button id="exportReport" class="ghost-btn" type="button">导出学习周报</button>
+                <button id="shareImageBtn" class="ghost-btn" type="button" onclick="generateShareImage()">📤 生成分享图</button>
               <button id="checkInButton" class="primary-btn" type="button">记录今日进度 +20 XP</button>
             </div>
             <div id="streakBanner" class="streak-banner" style="display:none;"></div>
@@ -351,6 +352,15 @@
               </article>
             </div>
             <div id="badgeWall" class="badge-wall" aria-label="徽章墙"></div>
+            <div id="inviteSection"></div>
+            <div id="xpShopSection"></div>
+          </section>
+    <!-- Admin Dashboard -->
+    <section class="section" id="admin" hidden aria-hidden="true">
+            <div class="section-head">
+              <div><p class="eyebrow">Admin</p><h2>管理仪表盘</h2></div>
+            </div>
+            <div id="adminContent" style="padding:20px;"></div>
           </section>
     <section id="models" class="section">
             <div class="section-head">

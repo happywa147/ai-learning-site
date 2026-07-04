@@ -1,6 +1,9 @@
 const CACHE_NAME = "ai-learning-v1";
 
-const PRECACHE_ASSETS = ["/", "/index.html", "/styles.css", "/app.js", "/manifest.json"];
+const PRECACHE_ASSETS = ["/", "/index.html", "/styles.css", "/manifest.json"];
+
+/* Runtime cache patterns — JS/CSS with content hash are cached on first fetch */
+const RUNTIME_CACHE_PATTERNS = [/\.(js|css|json|html|jpg|png|svg)$/];
 
 /* Install: pre-cache key assets */
 self.addEventListener("install", (event) => {
@@ -18,11 +21,7 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames
-          .filter((name) => name !== CACHE_NAME)
-          .map((name) => caches.delete(name))
-      );
+      return Promise.all(cacheNames.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name)));
     })
   );
   self.clients.claim();

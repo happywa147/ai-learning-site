@@ -73,11 +73,17 @@ body {
   line-height: 1.75;
   background:
     linear-gradient(180deg, rgba(143, 47, 42, 0.1), transparent 430px),
-    linear-gradient(120deg, rgba(95, 127, 82, 0.08), transparent 560px),
-    var(--paper);
+    linear-gradient(120deg, rgba(95, 127, 82, 0.08), transparent 560px), var(--paper);
   font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "PingFang SC", "Microsoft YaHei", sans-serif;
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "PingFang SC",
+    "Microsoft YaHei",
+    sans-serif;
 }
 
 a {
@@ -725,9 +731,7 @@ li:last-child {
   margin-bottom: 18px;
   padding: var(--control-card-pad-xl);
   color: #4f433c;
-  background:
-    linear-gradient(135deg, rgba(216, 163, 74, 0.16), rgba(95, 127, 82, 0.12)),
-    rgba(255, 255, 255, 0.82);
+  background: linear-gradient(135deg, rgba(216, 163, 74, 0.16), rgba(95, 127, 82, 0.12)), rgba(255, 255, 255, 0.82);
   border: 1px solid var(--line);
   border-radius: 8px;
   font-size: var(--text-body-lg);
@@ -835,12 +839,23 @@ li:last-child {
   border-radius: 4px;
   margin-bottom: 6px;
 }
-.module-diff-beginner { background: rgba(95,127,82,0.1); color: #5f7f52; }
-.module-diff-intermediate { background: rgba(184,130,30,0.1); color: #b8821e; }
-.module-diff-advanced { background: rgba(143,47,42,0.1); color: #8f2f2a; }
+.module-diff-beginner {
+  background: rgba(95, 127, 82, 0.1);
+  color: #5f7f52;
+}
+.module-diff-intermediate {
+  background: rgba(184, 130, 30, 0.1);
+  color: #b8821e;
+}
+.module-diff-advanced {
+  background: rgba(143, 47, 42, 0.1);
+  color: #8f2f2a;
+}
 
 /* R3: Common errors in modules */
-.module-errors summary { color: #b8821e !important; }
+.module-errors summary {
+  color: #b8821e !important;
+}
 
 .module,
 .model-card,
@@ -1254,9 +1269,7 @@ li:last-child {
   align-items: center;
   padding: var(--control-card-pad-xl);
   margin-bottom: 16px;
-  background:
-    linear-gradient(135deg, rgba(143, 47, 42, 0.1), rgba(95, 127, 82, 0.12)),
-    rgba(255, 255, 255, 0.9);
+  background: linear-gradient(135deg, rgba(143, 47, 42, 0.1), rgba(95, 127, 82, 0.12)), rgba(255, 255, 255, 0.9);
 }
 
 .monthly-hero h3 {
@@ -1555,9 +1568,7 @@ li:last-child {
   align-items: center;
   margin-top: 18px;
   padding: var(--control-card-pad-md);
-  background:
-    linear-gradient(135deg, rgba(143, 47, 42, 0.12), rgba(95, 127, 82, 0.13)),
-    rgba(255, 250, 242, 0.88);
+  background: linear-gradient(135deg, rgba(143, 47, 42, 0.12), rgba(95, 127, 82, 0.13)), rgba(255, 250, 242, 0.88);
   border: 1px solid rgba(143, 47, 42, 0.18);
   border-radius: 8px;
 }
@@ -2366,6 +2377,12 @@ select:focus {
   padding: 26px var(--section-pad-inline);
   color: var(--muted);
   border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.footer .version {
+  opacity: 0.6;
 }
 
 @media (max-width: 920px) {
@@ -2640,7 +2657,9 @@ select:focus {
   height: 2px;
   background: var(--ink, #3d2817);
   border-radius: 2px;
-  transition: transform 0.25s, opacity 0.25s;
+  transition:
+    transform 0.25s,
+    opacity 0.25s;
 }
 
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
@@ -2678,7 +2697,9 @@ select:focus {
   color: var(--muted, #8a7f72);
   text-decoration: none;
   border-radius: 8px;
-  transition: color 0.2s, background 0.2s;
+  transition:
+    color 0.2s,
+    background 0.2s;
 }
 
 .tabbar-item[aria-current="page"],
@@ -2697,21 +2718,23 @@ select:focus {
   }
 
   .nav {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  flex-direction: column;
-  gap: 0;
-  padding: 8px 16px 16px;
-  background: rgba(246, 239, 227, 0.98);
-  border-bottom: 1px solid rgba(223, 210, 192, 0.86);
-  backdrop-filter: blur(16px);
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.3s ease, opacity 0.2s ease;
-  pointer-events: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 16px 16px;
+    background: rgba(246, 239, 227, 0.98);
+    border-bottom: 1px solid rgba(223, 210, 192, 0.86);
+    backdrop-filter: blur(16px);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      max-height 0.3s ease,
+      opacity 0.2s ease;
+    pointer-events: none;
   }
 
   .nav.nav-open {
@@ -2761,7 +2784,9 @@ select:focus {
   border-radius: 8px;
   cursor: pointer;
   color: var(--ink, #3d2817);
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
 }
 
 .search-toggle-always {
@@ -2910,10 +2935,18 @@ select:focus {
   transform: scale(1.2);
 }
 
-.heatmap-cell.level-1 { background: rgba(143, 47, 42, 0.25); }
-.heatmap-cell.level-2 { background: rgba(143, 47, 42, 0.45); }
-.heatmap-cell.level-3 { background: rgba(143, 47, 42, 0.65); }
-.heatmap-cell.level-4 { background: rgba(143, 47, 42, 0.85); }
+.heatmap-cell.level-1 {
+  background: rgba(143, 47, 42, 0.25);
+}
+.heatmap-cell.level-2 {
+  background: rgba(143, 47, 42, 0.45);
+}
+.heatmap-cell.level-3 {
+  background: rgba(143, 47, 42, 0.65);
+}
+.heatmap-cell.level-4 {
+  background: rgba(143, 47, 42, 0.85);
+}
 
 .report-chart {
   padding: 16px 0;
@@ -3098,13 +3131,27 @@ select:focus {
   margin-bottom: 16px;
 }
 
-.skeleton-card .skeleton { width: 60%; height: 1.4em; margin-bottom: 12px; }
-.skeleton-card .skeleton-line { width: 100%; height: 0.8em; margin-bottom: 8px; }
-.skeleton-card .skeleton-line:last-child { width: 80%; }
+.skeleton-card .skeleton {
+  width: 60%;
+  height: 1.4em;
+  margin-bottom: 12px;
+}
+.skeleton-card .skeleton-line {
+  width: 100%;
+  height: 0.8em;
+  margin-bottom: 8px;
+}
+.skeleton-card .skeleton-line:last-child {
+  width: 80%;
+}
 
 @keyframes skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* Min touch target 44x44 (Park Min-ho) */
@@ -3136,8 +3183,8 @@ button,
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  background: linear-gradient(135deg, rgba(216,163,74,0.15), rgba(184,117,70,0.15));
-  border: 1px solid rgba(216,163,74,0.3);
+  background: linear-gradient(135deg, rgba(216, 163, 74, 0.15), rgba(184, 117, 70, 0.15));
+  border: 1px solid rgba(216, 163, 74, 0.3);
   border-radius: 100px;
   font-size: 0.85rem;
   margin: 12px 0;
@@ -3148,13 +3195,26 @@ button,
   animation: streak-pulse 1.5s ease-in-out infinite;
 }
 
-.streak-banner.streak-7 { border-color: var(--ochre); }
-.streak-banner.streak-30 { border-color: var(--earth); background: linear-gradient(135deg, rgba(184,117,70,0.2), rgba(143,47,42,0.1)); }
-.streak-banner.streak-100 { border-color: var(--jujube); background: linear-gradient(135deg, rgba(143,47,42,0.15), rgba(216,163,74,0.15)); }
+.streak-banner.streak-7 {
+  border-color: var(--ochre);
+}
+.streak-banner.streak-30 {
+  border-color: var(--earth);
+  background: linear-gradient(135deg, rgba(184, 117, 70, 0.2), rgba(143, 47, 42, 0.1));
+}
+.streak-banner.streak-100 {
+  border-color: var(--jujube);
+  background: linear-gradient(135deg, rgba(143, 47, 42, 0.15), rgba(216, 163, 74, 0.15));
+}
 
 @keyframes streak-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
 }
 
 .streak-multiplier {
@@ -3167,9 +3227,16 @@ button,
 }
 
 /* Badge tier system (Alex Park) */
-.badge-tier-bronze { filter: sepia(0.4) saturate(1.2) brightness(0.9); }
-.badge-tier-silver { filter: grayscale(0.2) brightness(1.05); }
-.badge-tier-gold { filter: sepia(0.3) saturate(1.5) hue-rotate(-10deg) brightness(1.1); box-shadow: 0 0 12px rgba(216,163,74,0.4); }
+.badge-tier-bronze {
+  filter: sepia(0.4) saturate(1.2) brightness(0.9);
+}
+.badge-tier-silver {
+  filter: grayscale(0.2) brightness(1.05);
+}
+.badge-tier-gold {
+  filter: sepia(0.3) saturate(1.5) hue-rotate(-10deg) brightness(1.1);
+  box-shadow: 0 0 12px rgba(216, 163, 74, 0.4);
+}
 
 .badge-tier-label {
   font-size: 0.65rem;
@@ -3178,9 +3245,18 @@ button,
   font-weight: 700;
   margin-left: 4px;
 }
-.badge-tier-label.bronze { background: rgba(184,117,70,0.2); color: #8B4513; }
-.badge-tier-label.silver { background: rgba(160,160,160,0.2); color: #666; }
-.badge-tier-label.gold { background: rgba(216,163,74,0.25); color: #9a6b00; }
+.badge-tier-label.bronze {
+  background: rgba(184, 117, 70, 0.2);
+  color: #8b4513;
+}
+.badge-tier-label.silver {
+  background: rgba(160, 160, 160, 0.2);
+  color: #666;
+}
+.badge-tier-label.gold {
+  background: rgba(216, 163, 74, 0.25);
+  color: #9a6b00;
+}
 
 /* Model expiry indicator (Dr. 李修远) */
 .model-card .expiry-warning {
@@ -3193,8 +3269,14 @@ button,
   font-weight: 600;
   margin-left: 8px;
 }
-.expiry-warning.stale { background: rgba(216,163,74,0.15); color: var(--earth); }
-.expiry-warning.expired { background: rgba(143,47,42,0.12); color: var(--jujube); }
+.expiry-warning.stale {
+  background: rgba(216, 163, 74, 0.15);
+  color: var(--earth);
+}
+.expiry-warning.expired {
+  background: rgba(143, 47, 42, 0.12);
+  color: var(--jujube);
+}
 
 /* Agent card quality grade (Dr. 李修远) */
 .agent-quality {
@@ -3205,9 +3287,18 @@ button,
   font-weight: 700;
   margin-right: 6px;
 }
-.agent-quality.basic { background: rgba(160,160,160,0.15); color: #777; }
-.agent-quality.advanced { background: rgba(95,127,82,0.15); color: var(--plant); }
-.agent-quality.expert { background: rgba(143,47,42,0.12); color: var(--jujube); }
+.agent-quality.basic {
+  background: rgba(160, 160, 160, 0.15);
+  color: #777;
+}
+.agent-quality.advanced {
+  background: rgba(95, 127, 82, 0.15);
+  color: var(--plant);
+}
+.agent-quality.expert {
+  background: rgba(143, 47, 42, 0.12);
+  color: var(--jujube);
+}
 
 /* Agent card usage scenario (苏晓) */
 .agent-scenario {
@@ -3289,8 +3380,8 @@ button,
 
 /* Self-check checklist (Dr. 王敏华) */
 .self-check {
-  background: linear-gradient(135deg, rgba(95,127,82,0.08), rgba(143,47,42,0.05));
-  border: 1px solid rgba(95,127,82,0.2);
+  background: linear-gradient(135deg, rgba(95, 127, 82, 0.08), rgba(143, 47, 42, 0.05));
+  border: 1px solid rgba(95, 127, 82, 0.2);
   border-radius: 12px;
   padding: 20px;
   margin-top: 20px;
@@ -3383,7 +3474,7 @@ button,
   align-items: center;
   gap: 4px;
   padding: 2px 10px;
-  background: rgba(95,127,82,0.15);
+  background: rgba(95, 127, 82, 0.15);
   border-radius: 100px;
   font-size: 0.7rem;
   color: var(--plant);
@@ -3399,8 +3490,13 @@ button,
 }
 
 @keyframes live-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 /* XP spending / unlock hints */
@@ -3409,8 +3505,8 @@ button,
   align-items: center;
   gap: 4px;
   padding: 4px 10px;
-  background: rgba(216,163,74,0.12);
-  border: 1px solid rgba(216,163,74,0.3);
+  background: rgba(216, 163, 74, 0.12);
+  border: 1px solid rgba(216, 163, 74, 0.3);
   border-radius: 100px;
   font-size: 0.72rem;
   color: var(--earth);
@@ -3421,9 +3517,21 @@ button,
   animation: xpPurchaseFlash 0.8s ease-out;
 }
 @keyframes xpPurchaseFlash {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(216,163,74,0.6); background: rgba(216,163,74,0.15); }
-  30% { transform: scale(1.05); box-shadow: 0 0 20px 6px rgba(216,163,74,0.4); background: rgba(216,163,74,0.2); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(216,163,74,0); background: rgba(95,127,82,0.08); }
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(216, 163, 74, 0.6);
+    background: rgba(216, 163, 74, 0.15);
+  }
+  30% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 6px rgba(216, 163, 74, 0.4);
+    background: rgba(216, 163, 74, 0.2);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(216, 163, 74, 0);
+    background: rgba(95, 127, 82, 0.08);
+  }
 }
 
 /* Model decision tree (Dr. 李修远) */
@@ -3462,7 +3570,7 @@ button,
 
 .decision-result {
   padding: 12px 16px;
-  background: rgba(143,47,42,0.06);
+  background: rgba(143, 47, 42, 0.06);
   border-left: 3px solid var(--jujube);
   border-radius: 0 8px 8px 0;
   margin: 8px 0;
@@ -3471,8 +3579,8 @@ button,
 
 /* Flexible week plan indicator (Dr. 王敏华) */
 .review-week {
-  background: linear-gradient(135deg, rgba(95,127,82,0.1), rgba(143,47,42,0.05));
-  border: 2px solid rgba(95,127,82,0.3);
+  background: linear-gradient(135deg, rgba(95, 127, 82, 0.1), rgba(143, 47, 42, 0.05));
+  border: 2px solid rgba(95, 127, 82, 0.3);
   border-radius: 12px;
   padding: 16px;
   margin: 8px 0;

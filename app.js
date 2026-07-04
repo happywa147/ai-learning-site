@@ -10,6 +10,17 @@ const tracks = {
       ["底线", "隐私、引用、学术诚信、版权与事实核查"]
     ]
   },
+  rag: {
+    title: "RAG 赋能路线",
+    summary: "从个人资料到企业内容库，学会把检索与生成结合起来，打造稳定的信息处理能力。",
+    outcomes: ["能搭建基础文档索引流程", "能设计可复用的检索提示与复核步骤", "能把知识查询转化为可复用输出模板"],
+    modules: [
+      ["数据", "知识源接入、清洗与字段标准化"],
+      ["索引", "向量化、切片策略与更新策略"],
+      ["问答", "检索增强问答、来源引用与反例检查"],
+      ["复核", "结果校验、证据闭环与风险记录"]
+    ]
+  },
   creator: {
     title: "短视频创作者路线",
     summary: "把 AI 用在选题、脚本、分镜、配音、画面、剪辑和复盘，服务抖音、快手、小红书、B 站等内容生态。",
@@ -30,6 +41,17 @@ const tracks = {
       ["RAG", "文档切分、向量检索、引用来源、知识库问答"],
       ["Agent", "任务拆解、工具调用、浏览器/代码/搜索协作"],
       ["部署", "本地原型、云端服务、成本估算、日志监控"]
+    ]
+  },
+  deploy: {
+    title: "AI 部署交付路线",
+    summary: "把练习产出变成可以被真实使用的服务：可复现、可回滚、可维护。",
+    outcomes: ["能做最小可运行版本（MVP）", "能配置发布链路与监控", "能给作品补齐安全和可交付说明"],
+    modules: [
+      ["交付", "项目结构、版本管理与发布检查清单"],
+      ["部署", "本地部署、云部署与环境变量管理"],
+      ["稳定性", "日志、告警、限流与故障回退"],
+      ["迭代", "更新节奏、回滚演练与用户反馈闭环"]
     ]
   }
 };
@@ -82,7 +104,7 @@ const weeks = [
 const starterSteps = [
   {
     title: "选一条路线",
-    text: "从零基础、内容创作或应用开发里选一个入口，并选定本月主线。",
+    text: "从「零基础入门、短视频创作者、RAG、AI 应用开发、AI 部署交付」中选一个入口，并选定本月主线。",
     action: "查看路线",
     href: "index.html?page=map"
   },
@@ -2381,7 +2403,7 @@ function renderProjects() {
         <ul>${safeList(project.tasks)}</ul>
         <div class="project-actions">
           <button class="ghost-btn small copy-project-challenge" type="button" data-project-copy="${index}">复制挑战模板</button>
-          <button class="${done ? "primary-btn" : "ghost-btn"} small project-toggle" ${locked ? "disabled" : ""} data-project="${index}">
+          <button type="button" class="${done ? "primary-btn" : "ghost-btn"} small project-toggle" ${locked ? "disabled" : ""} data-project="${index}">
             ${done ? "已点亮 +80 XP" : "点亮作品 +80 XP"}
           </button>
         </div>
@@ -2478,7 +2500,7 @@ function renderAgentRoles() {
   document.querySelector("#agentRoleTabs").innerHTML = agentRoleCategories
     .map(([key, label]) => {
       const count = key === "all" ? agentRoles.length : agentRoles.filter((role) => role.category === key).length;
-      return `<button class="${state.agentCategory === key ? "active" : ""}" data-agent-category="${safeText(key)}">${safeText(label)} <span>${count}</span></button>`;
+      return `<button type="button" class="${state.agentCategory === key ? "active" : ""}" data-agent-category="${safeText(key)}">${safeText(label)} <span>${count}</span></button>`;
     })
     .join("");
 

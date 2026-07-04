@@ -82,7 +82,7 @@
                 "name": "零基础怎么开始学 AI？",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                "text": "你可以先从 60 秒上手、三条学习路线和今日挑战开始，用一个小任务建立手感，再进入 12 周节奏。"
+                "text": "你可以先从 60 秒上手、四条学习路径和今日挑战开始，用一个小任务建立手感，再进入 12 周节奏。"
                 }
               },
               {
@@ -160,7 +160,7 @@
                 </div>
                 <div class="trust-strip" aria-label="站点可信信息">
                   <span>已接入月更机制</span>
-                  <span>3 条学习路线</span>
+                  <span>4 条学习路径</span>
                   <span>6 个作品任务</span>
                   <span>纯静态开源</span>
                   <span>数据默认保存在本机</span>
@@ -222,12 +222,14 @@
             <div class="section-head">
               <div>
                 <p class="eyebrow">Learning Map</p>
-                <h2>三条学习路线</h2>
+                <h2>四条学习路径</h2>
               </div>
               <div class="segmented" role="tablist" aria-label="学习路线选择">
-                <button class="active" data-track="freshman">零基础入门</button>
-                <button data-track="creator">短视频创作者</button>
-                <button data-track="builder">AI 应用开发</button>
+                <button class="active" type="button" data-track="freshman">零基础入门</button>
+                <button type="button" data-track="creator">短视频创作者</button>
+                <button type="button" data-track="rag">RAG</button>
+                <button type="button" data-track="builder">AI 应用开发</button>
+                <button type="button" data-track="deploy">AI 部署交付</button>
               </div>
             </div>
             <div id="trackDetail" class="track-detail"></div>
@@ -268,8 +270,8 @@
                 <h2>像打游戏一样学 AI</h2>
               </div>
               <div class="section-actions">
-                <button id="exportReport" class="ghost-btn">导出学习周报</button>
-                <button id="checkInButton" class="primary-btn">记录今日进度 +20 XP</button>
+                <button id="exportReport" class="ghost-btn" type="button">导出学习周报</button>
+                <button id="checkInButton" class="primary-btn" type="button">记录今日进度 +20 XP</button>
               </div>
             </div>
             <div class="game-grid">
@@ -285,7 +287,7 @@
                 <span class="badge">今日挑战</span>
                 <h3 id="dailyTitle"></h3>
                 <p id="dailyDesc" class="muted"></p>
-                <button id="dailyButton" class="ghost-btn">记录今日练习 +35 XP</button>
+                <button id="dailyButton" class="ghost-btn" type="button">记录今日练习 +35 XP</button>
               </article>
               <article class="rules-card">
                 <span class="badge">网站规则</span>
@@ -374,10 +376,10 @@
                 <input id="projectSearch" type="search" placeholder="例如：RAG、短视频、隐私、Agent" />
               </label>
               <div class="segmented compact" role="tablist" aria-label="项目挑战难度筛选">
-                <button class="active" data-project-level="all">全部</button>
-                <button data-project-level="入门">入门</button>
-                <button data-project-level="进阶">进阶</button>
-                <button data-project-level="高阶">高阶</button>
+                <button class="active" type="button" data-project-level="all">全部</button>
+                <button type="button" data-project-level="入门">入门</button>
+                <button type="button" data-project-level="进阶">进阶</button>
+                <button type="button" data-project-level="高阶">高阶</button>
               </div>
             </div>
             <p id="projectCount" class="muted project-count"></p>
@@ -455,12 +457,12 @@
             </div>
             <div class="template-panel">
               <div class="tabs" role="tablist" aria-label="模板类型">
-                <button class="active" data-template="prompt">Prompt</button>
-                <button data-template="agent">Agent</button>
-                <button data-template="skill">Skill</button>
+                <button class="active" type="button" data-template="prompt">Prompt</button>
+                <button type="button" data-template="agent">Agent</button>
+                <button type="button" data-template="skill">Skill</button>
               </div>
               <pre id="templateText"></pre>
-              <button id="copyTemplate" class="primary-btn small">复制模板</button>
+              <button id="copyTemplate" class="primary-btn small" type="button">复制模板</button>
             </div>
           </section>
     <section id="opensource" class="section open-source-section">
@@ -507,7 +509,7 @@
             <div class="faq-grid">
               <article>
                 <h3>零基础怎么开始学 AI？</h3>
-                <p>可以先从 60 秒上手、三条学习路线和今日挑战开始，用一个小任务建立手感，再进入 12 周节奏。</p>
+                <p>可以先从 60 秒上手、四条学习路径和今日挑战开始，用一个小任务建立手感，再进入 12 周节奏。</p>
               </article>
               <article>
                 <h3>Prompt、Agent、Skill 有什么区别？</h3>
@@ -579,7 +581,7 @@
                 <h2>注册学习，与我联系</h2>
               </div>
               <div class="register-actions">
-                <button id="exportLeads" class="ghost-btn">导出报名 CSV</button>
+                <button id="exportLeads" class="ghost-btn" type="button">导出报名 CSV</button>
                 <button id="clearLeads" class="ghost-btn" type="button">清空报名数据</button>
                 <button id="exportAllData" class="ghost-btn" type="button">导出全部本机数据</button>
                 <button id="clearAllData" class="ghost-btn" type="button">清空全部本机数据</button>

@@ -785,7 +785,7 @@ li:last-child {
 }
 
 .segmented.compact button {
-  min-height: 40px;
+  min-height: 44px;
   padding: 0 12px;
   font-size: var(--text-sm);
 }
@@ -1570,7 +1570,7 @@ li:last-child {
   display: inline-flex;
   gap: 6px;
   align-items: center;
-  min-height: 36px;
+  min-height: 44px;
   padding: 8px 12px;
   color: #5c4f47;
   font-weight: 800;

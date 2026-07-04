@@ -1,0 +1,19 @@
+{
+  "name": "AI 原生能力自学站",
+  "short_name": "AI 自学站",
+  "description": "面向中文学习者的 AI 学习任务系统，覆盖 Prompt、Agent、RAG、AI 编程和短视频工作流",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6efe3",
+  "theme_color": "#8f2f2a",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%238f2f2a'/%3E%3Ctext x='256' y='320' text-anchor='middle' font-family='Arial,sans-serif' font-size='192' font-weight='700' fill='%23fff7ed'%3EAI%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"]
+}

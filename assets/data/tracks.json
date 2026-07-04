@@ -13,6 +13,17 @@
       ["表达", "结构化写作、PPT、演讲稿、简历与作品集"],
       ["底线", "隐私、引用、学术诚信、版权与事实核查"]
     ],
+    "prereq": [
+      "我会使用浏览器和基本的电脑操作",
+      "我有一个 AI 工具的账号（如 ChatGPT、DeepSeek、通义千问等）",
+      "我想花时间系统地学习 AI，而不只是随便玩玩"
+    ],
+    "selfCheck": [
+      "我能用自己的话解释什么是 Token、上下文窗口和幻觉",
+      "我能用 AI 辅助完成一次学习资料的整理",
+      "我能识别 AI 回答中可能的错误并做事实核查",
+      "我知道在学术/工作中使用 AI 的伦理边界"
+    ],
     "codeExamples": {
       "认知": "# 用 AI 理解 Token 和上下文窗口\n# 把一段长文本发给模型，观察它如何截断\nprompt = \"请用 100 字解释什么是 Token、上下文窗口和幻觉。\"\nprint(f\"提示词长度：{len(prompt)} 字符\")\n# 练习：把这段提示词发给 2 个不同模型，对比回答质量",
       "学习": "# AI 辅助论文精读：结构化提示词\nprompt = \"\"\"你是论文精读助教。\n论文标题：[填入论文标题]\n请输出：\n1. 核心问题（1句话）\n2. 方法创新点（3条）\n3. 实验结果（关键数据）\n4. 局限性（2条）\n5. 可复述题（3道选择题）\"\"\"",
@@ -33,6 +44,17 @@
       ["索引", "向量化、切片策略与更新策略"],
       ["问答", "检索增强问答、来源引用与反例检查"],
       ["复核", "结果校验、证据闭环与风险记录"]
+    ],
+    "prereq": [
+      "我有 Python 或其他编程语言的基础",
+      "我了解基本的文件操作和数据处理",
+      "我有一个想要构建知识库的真实场景（如学习笔记、工作文档）"
+    ],
+    "selfCheck": [
+      "我能把一份文档清洗并切成合理的片段",
+      "我能用 embedding API 做向量索引",
+      "我能设计一个带来源引用的 RAG 问答 prompt",
+      "我能校验 RAG 回答的准确性"
     ],
     "codeExamples": {
       "数据": "# 文档清洗：把 PDF 文本切成结构化片段\nimport re\n\ndef clean_and_chunk(text, chunk_size=500):\n    # 去除多余空白\n    text = re.sub(r'\\s+', ' ', text).strip()\n    # 按段落切分\n    paragraphs = text.split('。')\n    chunks = []\n    current = ''\n    for p in paragraphs:\n        if len(current) + len(p) < chunk_size:\n            current += p + '。'\n        else:\n            if current: chunks.append(current)\n            current = p + '。'\n    if current: chunks.append(current)\n    return chunks\n\n# 练习：用你的学习笔记测试切片效果",
@@ -55,6 +77,17 @@
       ["画面", "即梦、可灵、通义万相、剪映等工具流"],
       ["复盘", "完播率、互动率、转粉率、评论洞察"]
     ],
+    "prereq": [
+      "我在抖音/小红书/B站中至少有一个账号",
+      "我了解短视频的基本结构（钩子→正文→结尾）",
+      "我想用 AI 提升内容生产效率，而不只是靠人工"
+    ],
+    "selfCheck": [
+      "我能用 AI 批量生成 10 个选题方案",
+      "我能用 AI 写出完整的 60 秒口播脚本",
+      "我能用 AI 工具生成封面或画面素材",
+      "我能用数据指标复盘一条视频的表现"
+    ],
     "codeExamples": {
       "选题": "# 短视频选题批量生成提示词\nprompt = \"\"\"你是短视频选题策划师。\n目标人群：[填入人群]\n平台：[抖音/小红书/B站]\n\n请生成 10 个选题，每个选题包含：\n1. 标题（不超过 20 字，带钩子）\n2. 痛点（1 句话）\n3. 预估完播率（高/中/低）\n4. 适合时长（15s/30s/60s）\"\"\"",
       "脚本": "# 60 秒口播脚本模板\nprompt = \"\"\"你是短视频脚本编剧。\n主题：[填入主题]\n时长：60 秒\n\n输出格式：\n- 0-5s 钩子（用问题或冲突开场）\n- 5-30s 正文（3 个要点）\n- 30-50s 案例（1 个真实例子）\n- 50-60s CTA（引导关注/评论）\n- 字幕重点词标注\"\"\"",
@@ -76,6 +109,17 @@
       ["Agent", "任务拆解、工具调用、浏览器/代码/搜索协作"],
       ["部署", "本地原型、云端服务、成本估算、日志监控"]
     ],
+    "prereq": [
+      "我有 Python 或 JavaScript 的基础编程能力",
+      "我了解基本的 API 调用概念（HTTP 请求、JSON）",
+      "我想把 AI 能力嵌入到一个可运行的工具中"
+    ],
+    "selfCheck": [
+      "我能调用一个模型 API 并处理返回结果",
+      "我能搭建一个最小的 RAG 知识库问答流程",
+      "我能设计一个包含工具调用的 Agent 工作流",
+      "我能把 AI 工具部署到本地或云端让别人访问"
+    ],
     "codeExamples": {
       "编程": "# 调用 DeepSeek API 生成学习笔记摘要\nimport requests\n\nresponse = requests.post(\n    'https://api.deepseek.com/v1/chat/completions',\n    headers={'Authorization': 'Bearer YOUR_API_KEY'},\n    json={\n        'model': 'deepseek-chat',\n        'messages': [\n            {'role': 'system', 'content': '你是学习笔记整理助手'},\n            {'role': 'user', 'content': '请总结以下笔记的 3 个关键点：...'}\n        ]\n    }\n)\nprint(response.json()['choices'][0]['message']['content'])\n# 练习：改成调用通义千问 API，对比输出",
       "RAG": "# 最小 RAG 实现：用 chromadb 做本地知识库\nimport chromadb\n\nclient = chromadb.Client()\ncollection = client.create_collection('my_notes')\n\n# 添加文档\ncollection.add(\n    documents=['笔记内容1', '笔记内容2'],\n    ids=['1', '2']\n)\n\n# 检索\nresults = collection.query(query_texts=['关键词'], n_results=2)\nprint(results['documents'])",
@@ -96,6 +140,17 @@
       ["部署", "本地部署、云部署与环境变量管理"],
       ["稳定性", "日志、告警、限流与故障回退"],
       ["迭代", "更新节奏、回滚演练与用户反馈闭环"]
+    ],
+    "prereq": [
+      "我已完成至少一个 AI 应用开发项目",
+      "我了解 Git 版本管理和基本命令",
+      "我想让我的项目可以被真实用户使用"
+    ],
+    "selfCheck": [
+      "我的项目有完整的 README 和部署说明",
+      "我能用 Docker 或云服务部署我的 AI 工具",
+      "我设置了基本的日志和错误监控",
+      "我有一个回滚和迭代计划"
     ],
     "codeExamples": {
       "交付": "# 项目发布检查清单\nchecklist = {\n    'README 可运行': '新人照着文档 10 分钟内跑起来',\n    '环境变量隔离': 'API KEY 不硬编码，用 .env',\n    '版本号': '有语义化版本号（如 v1.0.0）',\n    'License': '有开源协议文件',\n    '依赖锁定': '有 requirements.txt 或 package-lock.json',\n}\nfor item, desc in checklist.items():\n    print(f'[ ] {item}: {desc}')",

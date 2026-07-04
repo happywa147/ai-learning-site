@@ -408,12 +408,16 @@ function getProjectUnlockXp(project) {
 }
 
 const achievements = [
-  { id: "firstWeek", title: "点火", desc: "拿到任意 1 周学习里程碑", test: () => state.doneWeeks.size >= 1 },
-  { id: "threeWeeks", title: "进入节奏", desc: "有 3 周里程碑记录", test: () => state.doneWeeks.size >= 3 },
-  { id: "halfWay", title: "半程推进", desc: "有 6 周里程碑记录", test: () => state.doneWeeks.size >= 6 },
-  { id: "projectOne", title: "第一件作品", desc: "点亮 1 个作品项目", test: () => state.doneProjects.size >= 1 },
-  { id: "creator", title: "作品集雏形", desc: "点亮 3 个作品项目", test: () => state.doneProjects.size >= 3 },
-  { id: "streak", title: "连续手感", desc: "连续记录 3 天", test: () => state.streak >= 3 },
+  { id: "firstWeek", title: "点火", desc: "拿到任意 1 周学习里程碑", tier: "bronze", test: () => state.doneWeeks.size >= 1 },
+  { id: "threeWeeks", title: "进入节奏", desc: "有 3 周里程碑记录", tier: "bronze", test: () => state.doneWeeks.size >= 3 },
+  { id: "halfWay", title: "半程推进", desc: "有 6 周里程碑记录", tier: "silver", test: () => state.doneWeeks.size >= 6 },
+  { id: "projectOne", title: "第一件作品", desc: "点亮 1 个作品项目", tier: "bronze", test: () => state.doneProjects.size >= 1 },
+  { id: "creator", title: "作品集雏形", desc: "点亮 3 个作品项目", tier: "silver", test: () => state.doneProjects.size >= 3 },
+  { id: "streak", title: "连续手感", desc: "连续记录 3 天", tier: "bronze", test: () => state.streak >= 3 },
+  { id: "streak7", title: "一周不断", desc: "连续记录 7 天", tier: "silver", test: () => state.streak >= 7 },
+  { id: "streak30", title: "月度坚持", desc: "连续记录 30 天", tier: "gold", test: () => state.streak >= 30 },
+  { id: "allProjects", title: "全点亮", desc: "点亮全部 12 个作品项目", tier: "gold", test: () => state.doneProjects.size >= 12 },
+  { id: "feedbackGiver", title: "反馈贡献者", desc: "提交 1 条反馈", tier: "bronze", test: () => state.feedback.length >= 1 },
 ];
 
 let templates = {};
@@ -422,6 +426,8 @@ const state = {
   track: "freshman",
   template: "prompt",
   agentCategory: "all",
+  agentPage: 0,
+  _lastAgentCategory: "all",
   projectLevel: "all",
   projectSearch: "",
   resourceAction: "all",
@@ -517,6 +523,7 @@ function applyCurrentPage(pageId, options = {}) {
   setActiveNavItem(targetPage);
   document.body.setAttribute("data-page", targetPage);
   updateDocumentMeta(targetPage);
+  trackPageView(targetPage);
 
   if (!options.silent) {
     syncPageUrl(targetPage, { replace: options.replace });
@@ -776,6 +783,30 @@ function renderTrack() {
   const track = tracks[state.track];
   const detail = document.querySelector("#trackDetail");
   const codeExamples = track.codeExamples || {};
+  const prereqHTML = track.prereq ? `
+    <div class="prereq-check">
+      <h4>开始前的自检</h4>
+      <p class="muted" style="margin-bottom:10px;">勾选你已具备的条件，确认你准备好开始这条路线。</p>
+      ${track.prereq.map((q, i) => `
+        <label class="prereq-question">
+          <input type="checkbox" />
+          <span>${safeText(q)}</span>
+        </label>
+      `).join("")}
+    </div>
+  ` : "";
+  const selfCheckHTML = track.selfCheck ? `
+    <div class="self-check">
+      <h4>学完后的自我检查</h4>
+      <p class="muted" style="margin-bottom:10px;">确认你能做到以下事项，再进入下一条路线。</p>
+      ${track.selfCheck.map((item, i) => `
+        <label class="self-check-item">
+          <input type="checkbox" />
+          <span>${safeText(item)}</span>
+        </label>
+      `).join("")}
+    </div>
+  ` : "";
   detail.innerHTML = `
     <article class="track-card">
       <h3>${safeText(track.title)}</h3>
@@ -783,6 +814,7 @@ function renderTrack() {
       <ul>${safeList(track.outcomes)}</ul>
       <button type="button" class="ai-tutor-btn" onclick="openAiTutor({title: '${safeText(track.title)}', desc: '${safeText(track.summary)}'})">问 AI 辅导</button>
     </article>
+    ${prereqHTML}
     <div class="track-modules">
       ${track.modules
         .map(
@@ -799,6 +831,7 @@ function renderTrack() {
         )
         .join("")}
     </div>
+    ${selfCheckHTML}
   `;
 }
 
@@ -871,11 +904,23 @@ function renderModels(keyword = "") {
       '<div class="empty-state">未找到匹配模型，建议尝试关键词：编程、短视频、长文本、国内、国际。</div>';
     return;
   }
+  const now = new Date();
   grid.innerHTML = filtered
     .map(
-      (model) => `
+      (model) => {
+        let expiryHTML = "";
+        if (model.lastVerified) {
+          const verified = new Date(model.lastVerified);
+          const daysSince = Math.floor((now - verified) / 86400000);
+          if (daysSince > 60) {
+            expiryHTML = `<span class="expiry-warning expired">数据已过期 ${daysSince} 天，请核实</span>`;
+          } else if (daysSince > 30) {
+            expiryHTML = `<span class="expiry-warning stale">数据 ${daysSince} 天前验证，建议复核</span>`;
+          }
+        }
+        return `
       <article class="model-card">
-        <h3>${safeText(model.name)}</h3>
+        <h3>${safeText(model.name)}${expiryHTML}</h3>
         <p>${safeText(model.desc)}</p>
         <p class="muted">${safeText(model.scenario || "")}</p>
         ${model.contextWindow || model.inputPrice || model.outputPrice ? `
@@ -889,12 +934,18 @@ function renderModels(keyword = "") {
         <p><strong>优势：</strong>${safeText(Array.isArray(model.strengths) ? model.strengths.join("；") : "")}</p>
         <p><strong>适用边界：</strong>${safeText(Array.isArray(model.limits) ? model.limits.join("；") : "")}</p>
         ${model.lastVerified ? `<p class="muted" style="font-size:11px;">数据验证：${safeText(model.lastVerified)}</p>` : ""}
+        ${model.benchmark ? `<div class="model-specs" style="display:flex;gap:12px;flex-wrap:wrap;margin:8px 0;font-size:13px;">
+          ${model.benchmark.humanEval && model.benchmark.humanEval !== "—" ? `<span><strong>HumanEval：</strong>${safeText(model.benchmark.humanEval)}</span>` : ""}
+          ${model.benchmark.cEval && model.benchmark.cEval !== "—" ? `<span><strong>C-Eval：</strong>${safeText(model.benchmark.cEval)}</span>` : ""}
+          ${model.benchmark.mbpp && model.benchmark.mbpp !== "—" ? `<span><strong>MBPP：</strong>${safeText(model.benchmark.mbpp)}</span>` : ""}
+        </div>` : ""}
         <footer>${(model.tags || [])
           .map((tag) => `<span class="tag">${safeText(tag)}</span>`)
           .join("")}</footer>
         <button type="button" class="ai-tutor-btn" onclick="openAiTutor({title: '模型对比 - ${safeText(model.name)}', desc: '${safeText(model.desc)}'})">问 AI</button>
       </article>
-    `
+    `;
+      }
     )
     .join("");
 }
@@ -1024,6 +1075,15 @@ async function copyAgentRoleByName(name, button) {
   });
 }
 
+function getAgentQualityTier(role) {
+  const promptLen = (role.prompt || role.input || "").length;
+  if (promptLen > 500) return { tier: "expert", label: "专家版" };
+  if (promptLen > 200) return { tier: "advanced", label: "进阶版" };
+  return { tier: "basic", label: "基础版" };
+}
+
+const AGENT_PAGE_SIZE = 12;
+
 function renderAgentRoles() {
   const visibleRoles =
     state.agentCategory === "all"
@@ -1041,16 +1101,31 @@ function renderAgentRoles() {
 
   document.querySelector("#agentRoleCount").textContent = `${categoryName} · ${visibleRoles.length} / ${agentRoles.length} 个角色`;
 
-  document.querySelector("#agentRoleGrid").innerHTML = visibleRoles
+  if (state.agentCategory !== (state._lastAgentCategory || "all")) {
+    state.agentPage = 0;
+    state._lastAgentCategory = state.agentCategory;
+  }
+
+  const totalPages = Math.ceil(visibleRoles.length / AGENT_PAGE_SIZE);
+  if (state.agentPage >= totalPages) state.agentPage = 0;
+  const pageStart = state.agentPage * AGENT_PAGE_SIZE;
+  const pageRoles = visibleRoles.slice(pageStart, pageStart + AGENT_PAGE_SIZE);
+
+  document.querySelector("#agentRoleGrid").innerHTML = pageRoles
     .map(
-      (role) => `
+      (role) => {
+        const quality = getAgentQualityTier(role);
+        const scenario = role.useFor || role.output || "";
+        return `
       <article class="agent-role-card">
         <div class="agent-role-top">
           <span class="badge">${safeText(role.level)}</span>
+          <span class="agent-quality ${quality.tier}">${quality.label}</span>
           <small>${safeText(role.source)}</small>
         </div>
         <h3>${safeText(role.name)}</h3>
         <p>${safeText(role.useFor)}</p>
+        ${scenario ? `<div class="agent-scenario"><strong>使用场景：</strong>${safeText(scenario.substring(0, 100))}</div>` : ""}
         <dl>
           <div><dt>输入</dt><dd>${safeText(role.input)}</dd></div>
           <div><dt>产出</dt><dd>${safeText(role.output)}</dd></div>
@@ -1059,11 +1134,35 @@ function renderAgentRoles() {
         <footer>
           <strong>练习：</strong>${safeText(role.practice)}
         </footer>
-        <button class="ghost-btn small copy-agent-role" type="button" data-agent-name="${safeText(role.name)}">复制角色卡</button>
+        <button class="ghost-btn small copy-agent-role" type="button" data-agent-name="${safeText(role.name)}" aria-label="复制角色卡：${safeText(role.name)}">复制角色卡</button>
       </article>
-    `
+    `;
+      }
     )
     .join("");
+
+  const paginationContainer = document.querySelector("#agentPagination");
+  if (paginationContainer) {
+    if (totalPages <= 1) {
+      paginationContainer.innerHTML = "";
+    } else {
+      let html = `<button type="button" ${state.agentPage === 0 ? "disabled" : ""} data-agent-page="prev">上一页</button>`;
+      for (let i = 0; i < totalPages; i++) {
+        html += `<button type="button" class="${i === state.agentPage ? "active" : ""}" data-agent-page="${i}">${i + 1}</button>`;
+      }
+      html += `<button type="button" ${state.agentPage >= totalPages - 1 ? "disabled" : ""} data-agent-page="next">下一页</button>`;
+      paginationContainer.innerHTML = html;
+      paginationContainer.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const action = btn.dataset.agentPage;
+          if (action === "prev") state.agentPage = Math.max(0, state.agentPage - 1);
+          else if (action === "next") state.agentPage = Math.min(totalPages - 1, state.agentPage + 1);
+          else state.agentPage = parseInt(action, 10);
+          renderAgentRoles();
+        });
+      });
+    }
+  }
 }
 
 function renderTemplate() {
@@ -1644,6 +1743,23 @@ function updateGameHud() {
   document.querySelector("#xpBar").style.width = `${percent}%`;
   document.querySelector("#nextRankText").textContent =
     nextRank.min === rank.min ? "已到达当前版本最高等级，继续打磨作品集。" : `距离「${nextRank.name}」还差 ${nextRank.min - xp} XP。`;
+
+  const streakBanner = document.querySelector("#streakBanner");
+  if (streakBanner) {
+    const multiplier = state.streak >= 100 ? 3 : state.streak >= 30 ? 2 : state.streak >= 7 ? 1.5 : 1;
+    if (state.streak >= 3 && multiplier > 1) {
+      const tier = state.streak >= 100 ? "streak-100" : state.streak >= 30 ? "streak-30" : "streak-7";
+      streakBanner.className = `streak-banner ${tier}`;
+      streakBanner.innerHTML = `<span class="streak-fire">🔥</span> 连续 ${state.streak} 天 <span class="streak-multiplier">×${multiplier} XP</span>`;
+      streakBanner.style.display = "flex";
+    } else if (state.streak >= 3) {
+      streakBanner.className = "streak-banner";
+      streakBanner.innerHTML = `<span class="streak-fire">🔥</span> 连续 ${state.streak} 天`;
+      streakBanner.style.display = "flex";
+    } else {
+      streakBanner.style.display = "none";
+    }
+  }
 }
 
 function renderDailyChallenge() {
@@ -1663,9 +1779,11 @@ function renderBadges() {
   document.querySelector("#badgeWall").innerHTML = achievements
     .map((badge) => {
       const unlocked = badge.test();
+      const tier = badge.tier || "bronze";
+      const tierLabel = tier === "gold" ? "🥇金" : tier === "silver" ? "🥈银" : "🥉铜";
       return `
-        <article class="achievement ${unlocked ? "unlocked" : ""}">
-          <strong>${safeText(unlocked ? badge.title : "未解锁")}</strong>
+        <article class="achievement ${unlocked ? "unlocked badge-tier-${tier}" : ""}">
+          <strong>${safeText(unlocked ? badge.title : "未解锁")} <span class="badge-tier-label ${tier}">${tierLabel}</span></strong>
           <span>${safeText(badge.desc)}</span>
         </article>
       `;
@@ -2102,10 +2220,16 @@ document.querySelector("#checkInButton").addEventListener("click", () => {
   const yesterday = yesterdayLocalKey();
   state.streak = state.lastCheckIn === yesterday ? state.streak + 1 : 1;
   state.lastCheckIn = todayKey;
-  state.bonusXp += 20;
+  const multiplier = state.streak >= 100 ? 3 : state.streak >= 30 ? 2 : state.streak >= 7 ? 1.5 : 1;
+  const earnedXp = Math.round(20 * multiplier);
+  state.bonusXp += earnedXp;
   persistGameState();
   refreshGame();
-  showToast("今日进度已记录，获得 20 XP。");
+  const streakMsg = multiplier > 1
+    ? `今日进度已记录，获得 ${earnedXp} XP（连击 ${state.streak} 天 ×${multiplier}）！`
+    : `今日进度已记录，获得 ${earnedXp} XP。`;
+  showToast(streakMsg);
+  if (typeof gtag === "function") gtag("event", "check_in", { streak: state.streak, xp: earnedXp });
 });
 
 document.querySelector("#dailyButton").addEventListener("click", () => {
@@ -2497,6 +2621,8 @@ function closeSearch() {
 
 const searchToggleBtn = document.querySelector("#searchToggle");
 if (searchToggleBtn) searchToggleBtn.addEventListener("click", openSearch);
+const searchToggleNavBtn = document.querySelector("#searchToggleNav");
+if (searchToggleNavBtn) searchToggleNavBtn.addEventListener("click", openSearch);
 const searchCloseBtn = document.querySelector("#searchClose");
 if (searchCloseBtn) searchCloseBtn.addEventListener("click", closeSearch);
 const searchInputEl = document.querySelector("#searchInput");
@@ -2828,10 +2954,128 @@ async function autoSync() {
   }
 }
 
+/* ====== Loading Skeleton ====== */
+function showLoadingSkeleton() {
+  const grids = ["#agentRoleGrid", "#modelGrid", "#projectGrid", "#weekList", "#badgeWall"];
+  grids.forEach((sel) => {
+    const el = document.querySelector(sel);
+    if (!el) return;
+    const count = sel === "#agentRoleGrid" ? 6 : sel === "#modelGrid" ? 4 : 3;
+    let html = "";
+    for (let i = 0; i < count; i++) {
+      html += `<div class="skeleton-card"><div class="skeleton"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line"></div></div>`;
+    }
+    el.innerHTML = html;
+  });
+}
+
+function hideLoadingSkeleton() {
+  const grids = ["#agentRoleGrid", "#modelGrid", "#projectGrid", "#weekList", "#badgeWall"];
+  grids.forEach((sel) => {
+    const el = document.querySelector(sel);
+    if (el && el.querySelector(".skeleton-card")) el.innerHTML = "";
+  });
+}
+
+/* ====== GA4 Event Tracking ====== */
+function trackEvent(eventName, params = {}) {
+  if (typeof gtag === "function") {
+    gtag("event", eventName, params);
+  }
+}
+
+function trackPageView(pageId) {
+  trackEvent("page_view", { page_path: `/?page=${pageId}`, page_title: PAGE_META[pageId] || pageId });
+}
+
+/* ====== Feedback XP Awarding ====== */
+function awardFeedbackXp() {
+  if (state.feedback.length > 0 && !state._feedbackXpAwarded) {
+    state.bonusXp += 10;
+    state._feedbackXpAwarded = true;
+    persistGameState();
+    showToast("感谢反馈！获得 10 XP 奖励。");
+    trackEvent("feedback_submit", { xp: 10 });
+  }
+}
+
+/* ====== Model Decision Tree ====== */
+function renderModelDecisionTree() {
+  const container = document.querySelector("#modelDecisionTree");
+  if (!container) return;
+  container.innerHTML = `
+    <div class="model-decision-tree">
+      <h4>不知道选哪个模型？告诉我你的需求</h4>
+      <button class="decision-option" data-need="coding">我要写代码 / 编程</button>
+      <button class="decision-option" data-need="longtext">我要处理长文档 / 长文本</button>
+      <button class="decision-option" data-need="video">我要生成视频</button>
+      <button class="decision-option" data-need="chinese">我要中文创作 / 写作</button>
+      <button class="decision-option" data-need="agent">我要搭建 Agent 工作流</button>
+      <div id="decisionResult"></div>
+    </div>
+  `;
+  const recommendations = {
+    coding: "推荐 <strong>Claude 3.5 Sonnet</strong>（编程能力最强）或 <strong>DeepSeek Coder</strong>（国内免费可用）。两者都支持长上下文编程任务。",
+    longtext: "推荐 <strong>Gemini 1.5 Pro</strong>（200 万 token 上下文窗口）或 <strong>Claude 3.5 Sonnet</strong>（20 万 token）。国内可选 <strong>Kimi</strong>（长文本处理优秀）。",
+    video: "推荐 <strong>可灵 / 即梦 / 通义万相</strong>（国内视频生成）。国际可选 <strong>Runway Gen-3</strong> 或 <strong>Sora</strong>（如有访问权限）。",
+    chinese: "推荐 <strong>DeepSeek</strong>（中文理解优秀且免费）或 <strong>通义千问</strong>（阿里生态集成好）。国际模型中 <strong>Claude</strong> 中文表现也不错。",
+    agent: "推荐 <strong>GPT-4o</strong>（Agent 生态最成熟）或 <strong>Claude 3.5 Sonnet</strong>（工具调用能力强）。国内可选 <strong>DeepSeek</strong>（性价比高）。"
+  };
+  container.querySelectorAll(".decision-option").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const need = btn.dataset.need;
+      const result = document.querySelector("#decisionResult");
+      if (result) {
+        result.className = "decision-result";
+        result.innerHTML = recommendations[need] || "请选择一个选项。";
+      }
+      trackEvent("model_decision", { need });
+    });
+  });
+}
+
+/* ====== Prerequisite Check ====== */
+function renderPrereqCheck(trackId) {
+  const track = tracks[trackId];
+  if (!track || !track.prereq) return "";
+  return `
+    <div class="prereq-check">
+      <h4>开始前的自检</h4>
+      <p class="muted" style="margin-bottom:10px;">勾选你已具备的条件，确认你准备好开始这条路线。</p>
+      ${track.prereq.map((q, i) => `
+        <label class="prereq-question">
+          <input type="checkbox" id="prereq-${trackId}-${i}" />
+          <span>${safeText(q)}</span>
+        </label>
+      `).join("")}
+    </div>
+  `;
+}
+
+/* ====== Self-check Checklist ====== */
+function renderSelfCheck(trackId) {
+  const track = tracks[trackId];
+  if (!track || !track.selfCheck) return "";
+  return `
+    <div class="self-check">
+      <h4>学完后的自我检查</h4>
+      <p class="muted" style="margin-bottom:10px;">确认你能做到以下事项，再进入下一个模块。</p>
+      ${track.selfCheck.map((item, i) => `
+        <label class="self-check-item">
+          <input type="checkbox" id="selfcheck-${trackId}-${i}" />
+          <span>${safeText(item)}</span>
+        </label>
+      `).join("")}
+    </div>
+  `;
+}
+
 /* ====== Bootstrap ====== */
 async function bootstrap() {
+  showLoadingSkeleton();
   await loadAllData();
   await loadMonthlyUpdates();
+  hideLoadingSkeleton();
   if (!state.month || !monthlyUpdates.length) {
     state.month = "2026-07";
   }
@@ -2845,6 +3089,7 @@ async function bootstrap() {
   renderResourceRadar();
   renderWeeks();
   renderModels();
+  renderModelDecisionTree();
   renderProjects();
   renderShowcase();
   renderAgentDailyChallenge();

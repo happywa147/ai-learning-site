@@ -1,6 +1,6 @@
 :root {
   --ink: #2c211d;
-  --muted: #76695f;
+  --muted: #5f524a;
   --line: #dfd2c0;
   --paper: #f6efe3;
   --surface: #fffaf2;
@@ -2748,6 +2748,10 @@ select:focus {
   transition: background 0.2s, border-color 0.2s;
 }
 
+.search-toggle-always {
+  display: flex !important;
+}
+
 .search-toggle:hover {
   background: rgba(143, 47, 42, 0.08);
   border-color: var(--jujube, #8f2f2a);
@@ -3050,4 +3054,477 @@ select:focus {
 
 .code-editor-toggle:hover {
   opacity: 0.88;
+}
+
+/* ====== Expert Review Fixes ====== */
+
+/* Focus-visible for keyboard accessibility (Emma Zhang) */
+*:focus-visible {
+  outline: 2px solid var(--jujube);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Loading skeleton (张维) */
+.skeleton {
+  background: linear-gradient(90deg, var(--paper) 25%, var(--surface) 50%, var(--paper) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: 8px;
+  display: inline-block;
+  min-height: 1em;
+}
+
+.skeleton-card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  margin-bottom: 16px;
+}
+
+.skeleton-card .skeleton { width: 60%; height: 1.4em; margin-bottom: 12px; }
+.skeleton-card .skeleton-line { width: 100%; height: 0.8em; margin-bottom: 8px; }
+.skeleton-card .skeleton-line:last-child { width: 80%; }
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Min touch target 44x44 (Park Min-ho) */
+button,
+.nav-link,
+.tabbar-item,
+.nav-button,
+.copy-agent-role,
+.copy-project-challenge,
+.project-toggle,
+.search-toggle,
+.nav-toggle {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Touch target padding for small icon buttons */
+.copy-agent-role,
+.copy-project-challenge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+}
+
+/* Streak system styles (Alex Park) */
+.streak-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, rgba(216,163,74,0.15), rgba(184,117,70,0.15));
+  border: 1px solid rgba(216,163,74,0.3);
+  border-radius: 100px;
+  font-size: 0.85rem;
+  margin: 12px 0;
+}
+
+.streak-banner .streak-fire {
+  font-size: 1.3rem;
+  animation: streak-pulse 1.5s ease-in-out infinite;
+}
+
+.streak-banner.streak-7 { border-color: var(--ochre); }
+.streak-banner.streak-30 { border-color: var(--earth); background: linear-gradient(135deg, rgba(184,117,70,0.2), rgba(143,47,42,0.1)); }
+.streak-banner.streak-100 { border-color: var(--jujube); background: linear-gradient(135deg, rgba(143,47,42,0.15), rgba(216,163,74,0.15)); }
+
+@keyframes streak-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.streak-multiplier {
+  padding: 2px 8px;
+  background: var(--jujube);
+  color: #fff;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* Badge tier system (Alex Park) */
+.badge-tier-bronze { filter: sepia(0.4) saturate(1.2) brightness(0.9); }
+.badge-tier-silver { filter: grayscale(0.2) brightness(1.05); }
+.badge-tier-gold { filter: sepia(0.3) saturate(1.5) hue-rotate(-10deg) brightness(1.1); box-shadow: 0 0 12px rgba(216,163,74,0.4); }
+
+.badge-tier-label {
+  font-size: 0.65rem;
+  padding: 1px 6px;
+  border-radius: 100px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+.badge-tier-label.bronze { background: rgba(184,117,70,0.2); color: #8B4513; }
+.badge-tier-label.silver { background: rgba(160,160,160,0.2); color: #666; }
+.badge-tier-label.gold { background: rgba(216,163,74,0.25); color: #9a6b00; }
+
+/* Model expiry indicator (Dr. 李修远) */
+.model-card .expiry-warning {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-left: 8px;
+}
+.expiry-warning.stale { background: rgba(216,163,74,0.15); color: var(--earth); }
+.expiry-warning.expired { background: rgba(143,47,42,0.12); color: var(--jujube); }
+
+/* Agent card quality grade (Dr. 李修远) */
+.agent-quality {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  margin-right: 6px;
+}
+.agent-quality.basic { background: rgba(160,160,160,0.15); color: #777; }
+.agent-quality.advanced { background: rgba(95,127,82,0.15); color: var(--plant); }
+.agent-quality.expert { background: rgba(143,47,42,0.12); color: var(--jujube); }
+
+/* Agent card usage scenario (苏晓) */
+.agent-scenario {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: var(--paper);
+  border-radius: 6px;
+  border-left: 3px solid var(--ochre);
+}
+
+/* Agent card pagination (陈雨桐 / Park Min-ho) */
+.agent-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.agent-pagination button {
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.agent-pagination button:hover {
+  background: var(--paper);
+  border-color: var(--jujube);
+}
+
+.agent-pagination button.active {
+  background: var(--jujube);
+  color: #fff;
+  border-color: var(--jujube);
+}
+
+.agent-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Prerequisite check (Dr. 王敏华) */
+.prereq-check {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.prereq-check h4 {
+  color: var(--jujube);
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.prereq-question {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 0.9rem;
+}
+
+.prereq-question input[type="checkbox"] {
+  min-width: 18px;
+  margin-top: 3px;
+}
+
+/* Self-check checklist (Dr. 王敏华) */
+.self-check {
+  background: linear-gradient(135deg, rgba(95,127,82,0.08), rgba(143,47,42,0.05));
+  border: 1px solid rgba(95,127,82,0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.self-check h4 {
+  color: var(--leaf-dark);
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.self-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 0.88rem;
+}
+
+.self-check-item input[type="checkbox"] {
+  min-width: 18px;
+  margin-top: 3px;
+}
+
+.self-check-item.checked {
+  color: var(--plant);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* Share image generation (Leo Chen) */
+.share-preview {
+  background: linear-gradient(135deg, var(--jujube-dark), var(--jujube));
+  color: #fffaf2;
+  padding: 32px;
+  border-radius: 16px;
+  text-align: center;
+  margin: 16px 0;
+}
+
+.share-preview .share-level {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.share-preview .share-xp {
+  font-size: 1.2rem;
+  color: var(--ochre);
+  margin: 8px 0;
+}
+
+.share-preview .share-badges {
+  font-size: 1.5rem;
+  margin: 8px 0;
+}
+
+.share-preview .share-qr {
+  margin-top: 16px;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+/* Social proof stats (Leo Chen) */
+.social-proof {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.social-proof-item {
+  text-align: center;
+}
+
+.social-proof-item .num {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--jujube);
+}
+
+.social-proof-item .label {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* Real-time stats badge */
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  background: rgba(95,127,82,0.15);
+  border-radius: 100px;
+  font-size: 0.7rem;
+  color: var(--plant);
+}
+
+.live-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: var(--plant);
+  border-radius: 50%;
+  animation: live-pulse 2s infinite;
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* XP spending / unlock hints */
+.xp-shop-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(216,163,74,0.12);
+  border: 1px solid rgba(216,163,74,0.3);
+  border-radius: 100px;
+  font-size: 0.72rem;
+  color: var(--earth);
+}
+
+/* Model decision tree (Dr. 李修远) */
+.model-decision-tree {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.model-decision-tree h4 {
+  color: var(--jujube);
+  margin-bottom: 12px;
+}
+
+.decision-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin: 6px 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  min-height: 44px;
+}
+
+.decision-option:hover {
+  border-color: var(--jujube);
+  background: var(--paper);
+}
+
+.decision-result {
+  padding: 12px 16px;
+  background: rgba(143,47,42,0.06);
+  border-left: 3px solid var(--jujube);
+  border-radius: 0 8px 8px 0;
+  margin: 8px 0;
+  font-size: 0.88rem;
+}
+
+/* Flexible week plan indicator (Dr. 王敏华) */
+.review-week {
+  background: linear-gradient(135deg, rgba(95,127,82,0.1), rgba(143,47,42,0.05));
+  border: 2px solid rgba(95,127,82,0.3);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px 0;
+}
+
+.review-week .review-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  background: var(--plant);
+  color: #fff;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* Navigation grouping hint (林默) */
+.nav-group-label {
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 0 4px;
+  font-weight: 700;
+}
+
+/* Monthly subscribe input (Leo Chen) */
+.subscribe-monthly {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+  flex-wrap: wrap;
+}
+
+.subscribe-monthly input[type="email"] {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: var(--surface);
+  min-height: 44px;
+}
+
+.subscribe-monthly button {
+  padding: 10px 20px;
+  background: var(--jujube);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  min-height: 44px;
+}
+
+/* Form label fixes (Emma Zhang) */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.form-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: var(--surface);
+  min-height: 44px;
 }

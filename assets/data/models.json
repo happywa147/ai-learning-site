@@ -1,254 +1,223 @@
 [
   {
-    "name": "ChatGPT / OpenAI",
+    "name": "ChatGPT / GPT-4o",
     "desc": "适合通用推理、编程协作、多模态任务和产品原型。适合拿来当国际基准模型观察。",
-    "tags": [
-      "国际",
-      "编程",
-      "多模态",
-      "Agent"
-    ],
+    "tags": ["国际", "编程", "多模态", "Agent"],
     "scenario": "英文和复杂任务优先，适合做国际基准与代码协作。",
     "pricing": "按 token 计费，试错成本相对可控，API 接口生态成熟。",
-    "strengths": [
-      "稳定的推理与长链路规划",
-      "生态集成完善",
-      "插件/工具联动成熟"
-    ],
-    "limits": [
-      "对中文细节有时偏保守",
-      "任务链越长成本越高"
-    ],
+    "strengths": ["稳定的推理与长链路规划", "生态集成完善", "插件/工具联动成熟"],
+    "limits": ["对中文细节有时偏保守", "任务链越长成本越高"],
     "vendor": "OpenAI",
     "region": "international",
     "contextWindow": "128K",
     "inputPrice": "$2.50/1M",
     "outputPrice": "$10/1M",
     "lastVerified": "2026-07-02",
-    "source": "https://openai.com/api/pricing/"
+    "source": "https://openai.com/api/pricing/",
+    "benchmark": { "humanEval": "90.2%", "cEval": "69.3%", "mbpp": "83.5%" }
   },
   {
-    "name": "Claude",
+    "name": "Claude 3.5 Sonnet",
     "desc": "长文档阅读、写作润色、代码解释和复杂任务分解表现突出，适合深度学习与文本工作。",
-    "tags": [
-      "国际",
-      "长文本",
-      "写作",
-      "代码"
-    ],
+    "tags": ["国际", "长文本", "写作", "代码"],
     "scenario": "中文长文阅读、论文拆解、复杂文档写作反馈。",
     "pricing": "API + 平台体验并行，超长上下文能力更强。",
-    "strengths": [
-      "长文理解与结构化输出",
-      "任务分解清晰",
-      "写作质量稳定"
-    ],
-    "limits": [
-      "对代码执行链路仍需人工校验",
-      "偏研究/写作流程，不适合每个场景高频工具调用"
-    ],
+    "strengths": ["长文理解与结构化输出", "任务分解清晰", "写作质量稳定"],
+    "limits": ["对代码执行链路仍需人工校验", "偏研究/写作流程，不适合每个场景高频工具调用"],
     "vendor": "Anthropic",
     "region": "international",
     "contextWindow": "200K",
     "inputPrice": "$3/1M",
     "outputPrice": "$15/1M",
     "lastVerified": "2026-07-02",
-    "source": "https://www.anthropic.com/pricing"
+    "source": "https://www.anthropic.com/pricing",
+    "benchmark": { "humanEval": "92.0%", "cEval": "71.1%", "mbpp": "84.0%" }
   },
   {
-    "name": "Gemini",
+    "name": "Gemini 1.5 Pro",
     "desc": "与搜索、文档、视频理解和 Google 生态结合紧密，适合做多模态学习参考。",
-    "tags": [
-      "国际",
-      "多模态",
-      "搜索",
-      "视频"
-    ],
+    "tags": ["国际", "多模态", "搜索", "视频"],
     "scenario": "多模态学习、资料检索和短内容学习链路补全。",
     "pricing": "分版本与渠道差异较大，注意调用限额与模型版本切换。",
-    "strengths": [
-      "搜索与多模态联动",
-      "学习场景融合能力",
-      "适合做内容分析"
-    ],
-    "limits": [
-      "跨版本行为不一致",
-      "某些场景结构化落地仍需后处理"
-    ],
+    "strengths": ["搜索与多模态联动", "学习场景融合能力", "适合做内容分析"],
+    "limits": ["跨版本行为不一致", "某些场景结构化落地仍需后处理"],
     "vendor": "Google",
     "region": "international",
     "contextWindow": "1M",
     "inputPrice": "$1.25/1M",
     "outputPrice": "$5/1M",
     "lastVerified": "2026-07-02",
-    "source": "https://ai.google.dev/pricing"
+    "source": "https://ai.google.dev/pricing",
+    "benchmark": { "humanEval": "84.1%", "cEval": "68.9%", "mbpp": "79.0%" }
   },
   {
-    "name": "DeepSeek",
+    "name": "DeepSeek V3",
     "desc": "在中文、推理、代码和开源生态中影响力强，适合学习推理模型与低成本应用开发。",
-    "tags": [
-      "国内",
-      "推理",
-      "编程",
-      "开源"
-    ],
+    "tags": ["国内", "推理", "编程", "开源"],
     "scenario": "中文推理、编程小工具和低成本应用实验。",
     "pricing": "开源与托管路线并存，低门槛试验与私有化思路可行。",
-    "strengths": [
-      "中文任务友好",
-      "性价比高",
-      "适合模型对比与实验"
-    ],
-    "limits": [
-      "部分版本更新节奏快",
-      "接口和实例差异需要验参"
-    ],
+    "strengths": ["中文任务友好", "性价比高", "适合模型对比与实验"],
+    "limits": ["部分版本更新节奏快", "接口和实例差异需要验参"],
     "vendor": "DeepSeek",
     "region": "domestic",
     "contextWindow": "128K",
     "inputPrice": "¥1/1M",
     "outputPrice": "¥2/1M",
     "lastVerified": "2026-07-02",
-    "source": "https://www.deepseek.com/"
+    "source": "https://www.deepseek.com/",
+    "benchmark": { "humanEval": "82.6%", "cEval": "75.9%", "mbpp": "78.5%" }
   },
   {
     "name": "通义千问 / Qwen",
     "desc": "阿里生态覆盖广，开源模型、云服务、多模态和企业应用都值得关注。",
-    "tags": [
-      "国内",
-      "开源",
-      "云服务",
-      "多模态"
-    ],
-    "scenario": "企业场景与本地化服务对接，适合做“落地第一层”。",
+    "tags": ["国内", "开源", "云服务", "多模态"],
+    "scenario": "企业场景与本地化服务对接，适合做\"落地第一层\"。",
     "pricing": "云服务与开源权重并存，按调用与部署模式定。",
-    "strengths": [
-      "生态链完整",
-      "国内业务兼容性好",
-      "多模态起步快"
-    ],
-    "limits": [
-      "模型规模与配置影响体验",
-      "同类竞品更新密集需持续复测"
-    ],
+    "strengths": ["生态链完整", "国内业务兼容性好", "多模态起步快"],
+    "limits": ["模型规模与配置影响体验", "同类竞品更新密集需持续复测"],
     "vendor": "Alibaba",
     "region": "domestic",
     "contextWindow": "128K",
     "inputPrice": "¥0.8/1M",
     "outputPrice": "¥2/1M",
     "lastVerified": "2026-07-02",
-    "source": "https://help.aliyun.com/zh/model-studio/getting-started/models"
+    "source": "https://help.aliyun.com/zh/model-studio/getting-started/models",
+    "benchmark": { "humanEval": "82.0%", "cEval": "73.5%", "mbpp": "76.0%" }
   },
   {
     "name": "Kimi",
     "desc": "长文本、资料阅读和中文信息处理是学习场景常用方向，适合做论文与资料助手。",
-    "tags": [
-      "国内",
-      "长文本",
-      "学习",
-      "资料整理"
-    ],
+    "tags": ["国内", "长文本", "学习", "资料整理"],
     "scenario": "学习资料总结、课程复盘、长文本问答。",
     "pricing": "多以套餐或 token 计费形式出现，需留意上下文长度溢出策略。",
-    "strengths": [
-      "长文本信息抓取",
-      "中文语境表现稳定",
-      "适合做知识提炼"
-    ],
-    "limits": [
-      "任务复杂度升高时，输出结构仍需二次校验",
-      "与外部工具联动仍需模板约束"
-    ],
+    "strengths": ["长文本信息抓取", "中文语境表现稳定", "适合做知识提炼"],
+    "limits": ["任务复杂度升高时，输出结构仍需二次校验", "与外部工具联动仍需模板约束"],
     "vendor": "Moonshot",
     "region": "domestic",
     "contextWindow": "200K",
     "inputPrice": "¥12/1M",
     "outputPrice": "¥12/1M",
     "lastVerified": "2026-07-02",
-    "source": "https://platform.moonshot.cn/docs/intro"
+    "source": "https://platform.moonshot.cn/docs/intro",
+    "benchmark": { "humanEval": "—", "cEval": "70.2%", "mbpp": "—" }
   },
   {
     "name": "豆包 / 火山引擎",
     "desc": "贴近内容生态和国内消费级应用，适合观察短视频、图像、语音和创作工具链。",
-    "tags": [
-      "国内",
-      "短视频",
-      "创作",
-      "语音"
-    ],
+    "tags": ["国内", "短视频", "创作", "语音"],
     "scenario": "选题、脚本、配音与素材生成的内容生产链。",
     "pricing": "偏内容生产平台化服务，按调用和素材资源分层。",
-    "strengths": [
-      "短视频生态融合度高",
-      "对内容素材链条友好",
-      "快速产出闭环"
-    ],
-    "limits": [
-      "深度业务决策支持较弱",
-      "商业化报表与流程化复用能力有限"
-    ],
+    "strengths": ["短视频生态融合度高", "对内容素材链条友好", "快速产出闭环"],
+    "limits": ["深度业务决策支持较弱", "商业化报表与流程化复用能力有限"],
     "vendor": "ByteDance",
     "region": "domestic",
     "contextWindow": "128K",
     "inputPrice": "¥0.8/1M",
     "outputPrice": "¥2/1M",
     "lastVerified": "2026-07-02",
-    "source": "https://www.volcengine.com/product/doubao"
+    "source": "https://www.volcengine.com/product/doubao",
+    "benchmark": { "humanEval": "75.0%", "cEval": "72.1%", "mbpp": "70.0%" }
   },
   {
-    "name": "文心 / 腾讯混元 / 智谱 GLM",
-    "desc": "适合观察国内企业级、办公、搜索、政务和行业应用落地，对理解中国市场很有帮助。",
-    "tags": [
-      "国内",
-      "企业应用",
-      "办公",
-      "行业"
-    ],
-    "scenario": "企业办公协作、政府/行业场景知识问答、流程化资料处理。",
-    "pricing": "多供应商定价差异明显，项目化选型更常见。",
-    "strengths": [
-      "行业适配能力",
-      "中文知识工作流支持",
-      "企业接入路径清晰"
-    ],
-    "limits": [
-      "体验一致性受版本影响",
-      "通用任务上不一定领先"
-    ],
-    "vendor": "Baidu/Tencent/Zhipu",
+    "name": "文心一言",
+    "desc": "百度旗下大模型，擅长搜索增强、中文知识问答和企业办公场景，生态覆盖百度系产品。",
+    "tags": ["国内", "企业应用", "办公", "搜索"],
+    "scenario": "搜索增强问答、企业办公协作、政务/行业知识处理。",
+    "pricing": "按调用量计费，企业版有定制化方案。",
+    "strengths": ["搜索生态联动", "中文知识图谱丰富", "企业接入路径清晰"],
+    "limits": ["编程能力不如头部模型", "通用推理有差距"],
+    "vendor": "Baidu",
     "region": "domestic",
     "contextWindow": "128K",
     "inputPrice": "¥4/1M",
     "outputPrice": "¥12/1M",
     "lastVerified": "2026-07-02",
-    "source": "https://open.bigmodel.cn/pricing"
+    "source": "https://cloud.baidu.com/product/wenxinworkshop/",
+    "benchmark": { "humanEval": "72.0%", "cEval": "71.0%", "mbpp": "68.0%" }
   },
   {
-    "name": "可灵 / 即梦 / 通义万相",
-    "desc": "偏视频与图像生成工具，适合短视频、广告、电商素材和创意表达训练。",
-    "tags": [
-      "国内",
-      "视频",
-      "图像",
-      "内容生产"
-    ],
-    "scenario": "内容创作环节的素材生产与创意实验。",
-    "pricing": "多按图像/视频产出与算力计费，素材预算需前置定义。",
-    "strengths": [
-      "创作速度快",
-      "视觉表现多样",
-      "适合内容矩阵规模化试验"
-    ],
-    "limits": [
-      "版权与发布合规要求高",
-      "结果稳定性波动"
-    ],
-    "vendor": "Kuaishou/ByteDance/Alibaba",
+    "name": "腾讯混元",
+    "desc": "腾讯旗下大模型，与微信、企业微信、腾讯文档生态深度集成，适合社交/办公场景。",
+    "tags": ["国内", "企业应用", "社交", "办公"],
+    "scenario": "微信生态应用、企业办公协作、客服与营销自动化。",
+    "pricing": "按调用量计费，腾讯云客户提供套餐方案。",
+    "strengths": ["微信/企业微信生态集成", "社交场景适配好", "多模态能力在提升"],
+    "limits": ["开源生态不如 DeepSeek/Qwen", "独立开发者门槛较高"],
+    "vendor": "Tencent",
+    "region": "domestic",
+    "contextWindow": "256K",
+    "inputPrice": "¥5/1M",
+    "outputPrice": "¥15/1M",
+    "lastVerified": "2026-07-02",
+    "source": "https://cloud.tencent.com/product/hunyuan",
+    "benchmark": { "humanEval": "70.0%", "cEval": "69.5%", "mbpp": "66.0%" }
+  },
+  {
+    "name": "智谱 GLM-4",
+    "desc": "智谱 AI 旗下大模型，开源生态活跃，学术研究友好，适合做 Agent 和工具调用实验。",
+    "tags": ["国内", "开源", "Agent", "学术"],
+    "scenario": "Agent 工作流搭建、学术研究、工具调用实验。",
+    "pricing": "开源权重免费可用，API 按调用量计费。",
+    "strengths": ["开源生态活跃", "Agent/工具调用能力好", "学术社区支持"],
+    "limits": ["中文创作质量不如 DeepSeek", "商业支持不如大厂产品"],
+    "vendor": "Zhipu",
+    "region": "domestic",
+    "contextWindow": "128K",
+    "inputPrice": "¥2/1M",
+    "outputPrice": "¥10/1M",
+    "lastVerified": "2026-07-02",
+    "source": "https://open.bigmodel.cn/pricing",
+    "benchmark": { "humanEval": "78.0%", "cEval": "72.3%", "mbpp": "74.0%" }
+  },
+  {
+    "name": "可灵 AI（视频生成）",
+    "desc": "快手旗下视频生成模型，支持文生视频和图生视频，适合短视频创作和广告素材生产。",
+    "tags": ["国内", "视频生成", "短视频", "创作"],
+    "scenario": "短视频内容创作、广告素材生成、创意视频实验。",
+    "pricing": "按生成时长计费，会员制可降低单次成本。",
+    "strengths": ["视频生成质量国内领先", "与短视频生态结合紧密", "操作门槛低"],
+    "limits": ["视频时长有限制", "版权与发布合规需注意"],
+    "vendor": "Kuaishou",
     "region": "domestic",
     "contextWindow": "—",
     "inputPrice": "按生成计费",
     "outputPrice": "按生成计费",
     "lastVerified": "2026-07-02",
-    "source": "https://klingai.com/"
+    "source": "https://klingai.com/",
+    "benchmark": { "humanEval": "—", "cEval": "—", "mbpp": "—" }
+  },
+  {
+    "name": "即梦 AI（图像/视频生成）",
+    "desc": "字节跳动旗下 AI 创作工具，覆盖图像和视频生成，与抖音/剪映生态联动。",
+    "tags": ["国内", "视频生成", "图像生成", "创作"],
+    "scenario": "电商素材生成、社交媒体内容创作、创意表达实验。",
+    "pricing": "按生成次数计费，抖音创作者有专属额度。",
+    "strengths": ["与抖音/剪映生态打通", "图像生成速度快", "模板丰富"],
+    "limits": ["视频生成时长有限", "精细控制能力待提升"],
+    "vendor": "ByteDance",
+    "region": "domestic",
+    "contextWindow": "—",
+    "inputPrice": "按生成计费",
+    "outputPrice": "按生成计费",
+    "lastVerified": "2026-07-02",
+    "source": "https://jimeng.jianying.com/",
+    "benchmark": { "humanEval": "—", "cEval": "—", "mbpp": "—" }
+  },
+  {
+    "name": "通义万相（图像生成）",
+    "desc": "阿里旗下图像生成模型，支持文生图和风格迁移，适合电商和品牌设计场景。",
+    "tags": ["国内", "图像生成", "电商", "设计"],
+    "scenario": "电商商品图生成、品牌设计素材、营销海报创作。",
+    "pricing": "按生成次数计费，阿里云客户提供套餐。",
+    "strengths": ["电商场景适配好", "中文 prompt 理解准确", "与阿里云生态集成"],
+    "limits": ["艺术风格多样性有限", "复杂构图能力待提升"],
+    "vendor": "Alibaba",
+    "region": "domestic",
+    "contextWindow": "—",
+    "inputPrice": "按生成计费",
+    "outputPrice": "按生成计费",
+    "lastVerified": "2026-07-02",
+    "source": "https://tongyi.aliyun.com/wanxiang/",
+    "benchmark": { "humanEval": "—", "cEval": "—", "mbpp": "—" }
   }
 ]

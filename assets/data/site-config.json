@@ -1,0 +1,28 @@
+{
+  "owner": {
+    "name": "舰理 Lonny",
+    "emailParts": [
+      "happywa147",
+      "gmail",
+      "com"
+    ],
+    "qrImage": "./assets/wechat-qr.jpg",
+    "items": [
+      [
+        "微信",
+        "扫码添加"
+      ],
+      [
+        "邮箱",
+        "点击复制"
+      ],
+      [
+        "地区",
+        "江苏 无锡"
+      ]
+    ]
+  },
+  "repo": {
+    "newIssue": "https://github.com/happywa147/ai-learning-site/issues/new"
+  }
+}

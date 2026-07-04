@@ -112,25 +112,43 @@ function validateKeyFiles() {
 
 function validateResourceRadar() {
   const app = readText("app.js");
-  const match = app.match(/const resourceRadarItems = \[([\s\S]*?)\n\];\n\nconst agentRoleCategories/);
-  if (!match) {
+  const dataPath = "assets/data/resource-radar.json";
+  if (fs.existsSync(path.join(root, dataPath))) {
+    const items = parseJson(dataPath);
+    if (!Array.isArray(items)) {
+      fail(`${dataPath} 顶层必须是数组`);
+      return;
+    }
+    if (items.length < 10) fail("resource-radar 至少应包含 10 个资源");
+    items.forEach((item, index) => {
+      const prefix = `resource-radar[${index}]`;
+      ["name", "url", "type", "license", "licenseSpdx", "lastVerified", "source", "action", "useFor", "adapt"].forEach((field) => {
+        if (!item[field]) fail(`${prefix}.${field} 缺失`);
+      });
+      if (!isValidUrl(item.url)) fail(`${prefix}.url 必须是 http/https URL`);
+      if (!isValidDate(item.lastVerified)) fail(`${prefix}.lastVerified 必须是 YYYY-MM-DD`);
+    });
+  } else {
+    const match = app.match(/const resourceRadarItems = \[([\s\S]*?)\n\];\n\nconst agentRoleCategories/);
+    if (!match) {
     fail("app.js 缺少 resourceRadarItems 数据");
     return;
-  }
+    }
 
-  const body = match[1];
-  const itemBlocks = body.split(/\n  \{/).slice(1);
-  if (itemBlocks.length < 10) fail("resourceRadarItems 至少应包含 10 个资源");
-  itemBlocks.forEach((block, index) => {
-    const prefix = `resourceRadarItems[${index}]`;
-    ["name", "url", "type", "license", "licenseSpdx", "lastVerified", "source", "action", "useFor", "adapt"].forEach((field) => {
-      if (!new RegExp(`${field}:\\s*\"[^\"]+\"`).test(block)) fail(`${prefix}.${field} 缺失`);
+    const body = match[1];
+    const itemBlocks = body.split(/\n  \{/).slice(1);
+    if (itemBlocks.length < 10) fail("resourceRadarItems 至少应包含 10 个资源");
+    itemBlocks.forEach((block, index) => {
+      const prefix = `resourceRadarItems[${index}]`;
+      ["name", "url", "type", "license", "licenseSpdx", "lastVerified", "source", "action", "useFor", "adapt"].forEach((field) => {
+        if (!new RegExp(`${field}:\\s*\"[^\"]+\"`).test(block)) fail(`${prefix}.${field} 缺失`);
+      });
+      const url = block.match(/url:\s*"([^"]+)"/)?.[1];
+      if (!isValidUrl(url)) fail(`${prefix}.url 必须是 http/https URL`);
+      const verified = block.match(/lastVerified:\s*"([^"]+)"/)?.[1];
+      if (!isValidDate(verified)) fail(`${prefix}.lastVerified 必须是 YYYY-MM-DD`);
     });
-    const url = block.match(/url:\s*"([^"]+)"/)?.[1];
-    if (!isValidUrl(url)) fail(`${prefix}.url 必须是 http/https URL`);
-    const verified = block.match(/lastVerified:\s*"([^"]+)"/)?.[1];
-    if (!isValidDate(verified)) fail(`${prefix}.lastVerified 必须是 YYYY-MM-DD`);
-  });
+  }
 
   const html = readText("index.html");
   [
@@ -157,23 +175,42 @@ function validateCopywritingBoundaries() {
 function validateProjectChallenges() {
   const app = readText("app.js");
   const html = readText("index.html");
-  const match = app.match(/const projects = \[([\s\S]*?)\n\];\n\nconst ranks/);
-  if (!match) {
+  const dataPath = "assets/data/projects.json";
+  if (fs.existsSync(path.join(root, dataPath))) {
+    const projects = parseJson(dataPath);
+    if (!Array.isArray(projects)) {
+      fail(`${dataPath} 顶层必须是数组`);
+      return;
+    }
+    if (projects.length < 12) fail("projects 至少应包含 12 个项目挑战");
+    projects.forEach((project, index) => {
+      const prefix = `projects[${index}]`;
+      ["title", "level", "time", "desc", "check"].forEach((field) => {
+        if (!project[field]) fail(`${prefix}.${field} 缺失`);
+      });
+      ["tools", "tasks", "deliverables"].forEach((field) => {
+        if (!Array.isArray(project[field]) || project[field].length === 0) fail(`${prefix}.${field} 必须是非空数组`);
+      });
+    });
+  } else {
+    const match = app.match(/const projects = \[([\s\S]*?)\n\];\n\nconst ranks/);
+    if (!match) {
     fail("app.js 缺少 projects 挑战数据");
     return;
-  }
+    }
 
-  const blocks = match[1].split(/\n  \{/).slice(1);
-  if (blocks.length < 12) fail("projects 至少应包含 12 个项目挑战");
-  blocks.forEach((block, index) => {
-    const prefix = `projects[${index}]`;
-    ["title", "level", "time", "desc", "check"].forEach((field) => {
-      if (!new RegExp(`${field}:\\s*\"[^\"]+\"`).test(block)) fail(`${prefix}.${field} 缺失`);
+    const blocks = match[1].split(/\n  \{/).slice(1);
+    if (blocks.length < 12) fail("projects 至少应包含 12 个项目挑战");
+    blocks.forEach((block, index) => {
+      const prefix = `projects[${index}]`;
+      ["title", "level", "time", "desc", "check"].forEach((field) => {
+        if (!new RegExp(`${field}:\\s*\"[^\"]+\"`).test(block)) fail(`${prefix}.${field} 缺失`);
+      });
+      ["tools", "tasks", "deliverables"].forEach((field) => {
+        if (!new RegExp(`${field}:\\s*\\[[^\\]]+\\]`).test(block)) fail(`${prefix}.${field} 必须是非空数组`);
+      });
     });
-    ["tools", "tasks", "deliverables"].forEach((field) => {
-      if (!new RegExp(`${field}:\\s*\\[[^\\]]+\\]`).test(block)) fail(`${prefix}.${field} 必须是非空数组`);
-    });
-  });
+  }
 
   ["projectSearch", "data-project-level", "copy-project-challenge", "buildProjectChallengeText"].forEach((needle) => {
     if (!html.includes(needle) && !app.includes(needle)) fail(`项目挑战库缺少交互入口或逻辑：${needle}`);

@@ -82,7 +82,7 @@
                 "name": "零基础怎么开始学 AI？",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                "text": "你可以先从 60 秒上手、四条学习路径和今日挑战开始，用一个小任务建立手感，再进入 12 周节奏。"
+                "text": "你可以先从 60 秒上手、五条学习路径和今日挑战开始，用一个小任务建立手感，再进入 12 周节奏。"
                 }
               },
               {
@@ -122,7 +122,12 @@
         <span class="brand-mark">AI</span>
         <span>AI 原生能力自学站</span>
       </a>
-      <nav class="nav" aria-label="主导航">
+      <button id="navToggle" class="nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav class="nav" id="mainNav" aria-label="主导航">
         <a href="index.html?page=home" data-page="home" class="nav-link">首页</a>
         <a href="index.html?page=starter" data-page="starter" class="nav-link">新手</a>
         <a href="index.html?page=map" data-page="map" class="nav-link">路线</a>
@@ -160,7 +165,7 @@
                 </div>
                 <div class="trust-strip" aria-label="站点可信信息">
                   <span>已接入月更机制</span>
-                  <span>4 条学习路径</span>
+                  <span>5 条学习路径</span>
                   <span>6 个作品任务</span>
                   <span>纯静态开源</span>
                   <span>数据默认保存在本机</span>
@@ -222,7 +227,7 @@
             <div class="section-head">
               <div>
                 <p class="eyebrow">Learning Map</p>
-                <h2>四条学习路径</h2>
+                <h2>五条学习路径</h2>
               </div>
               <div class="segmented" role="tablist" aria-label="学习路线选择">
                 <button class="active" type="button" data-track="freshman">零基础入门</button>
@@ -509,7 +514,7 @@
             <div class="faq-grid">
               <article>
                 <h3>零基础怎么开始学 AI？</h3>
-                <p>可以先从 60 秒上手、四条学习路径和今日挑战开始，用一个小任务建立手感，再进入 12 周节奏。</p>
+                <p>可以先从 60 秒上手、五条学习路径和今日挑战开始，用一个小任务建立手感，再进入 12 周节奏。</p>
               </article>
               <article>
                 <h3>Prompt、Agent、Skill 有什么区别？</h3>
@@ -660,6 +665,29 @@
 
     </main>
 
+    <nav class="mobile-tabbar" aria-label="移动端快捷导航">
+      <a href="index.html?page=home" data-page="home" class="tabbar-item">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+        <span>首页</span>
+      </a>
+      <a href="index.html?page=map" data-page="map" class="tabbar-item">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-6-3V4l6 3m0 13l6-3M9 20V7m6 10l6 3V7l-6-3m0 13V4"/></svg>
+        <span>路线</span>
+      </a>
+      <a href="index.html?page=projects" data-page="projects" class="tabbar-item">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <span>项目</span>
+      </a>
+      <a href="index.html?page=agents" data-page="agents" class="tabbar-item">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="12" rx="2"/><circle cx="12" cy="14" r="2"/><path d="M12 8V4M8 4h8"/></svg>
+        <span>Agents</span>
+      </a>
+      <a href="index.html?page=game" data-page="game" class="tabbar-item">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span>进度</span>
+      </a>
+    </nav>
+
     <footer class="footer">
       <span>AI 原生能力自学站</span>
       <span>建议每月更新一次模型清单和工具清单</span>
@@ -688,6 +716,18 @@
           <button id="sponsorCopyEmail" class="ghost-btn small" type="button">复制邮箱联系</button>
         </div>
       </section>
+    </div>
+
+    <button id="searchToggle" class="search-toggle" type="button" aria-label="搜索">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </button>
+
+    <div id="searchOverlay" class="search-overlay" aria-hidden="true">
+      <div class="search-panel">
+        <input id="searchInput" type="search" placeholder="搜索路线、项目、角色卡、资源…" autocomplete="off" />
+        <button id="searchClose" class="search-close" type="button" aria-label="关闭搜索">×</button>
+        <div id="searchResults" class="search-results"></div>
+      </div>
     </div>
 
     <script src="./app.js"></script>

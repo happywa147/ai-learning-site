@@ -1,0 +1,107 @@
+{
+  "freshman": {
+    "title": "零基础入门路线",
+    "summary": "把 AI 素养作为底座，再把 AI 用到学习、写作、资料整理、编程入门和个人作品集中。",
+    "outcomes": [
+      "能独立判断一个 AI 工具是否适合自己",
+      "能用 AI 辅助推进学习、研究与资料整理",
+      "能做出一个可展示的小应用或分析报告"
+    ],
+    "modules": [
+      ["认知", "大模型、Token、上下文、多模态、幻觉与验证"],
+      ["学习", "AI 读书、论文精读、知识复盘、资料助教"],
+      ["表达", "结构化写作、PPT、演讲稿、简历与作品集"],
+      ["底线", "隐私、引用、学术诚信、版权与事实核查"]
+    ],
+    "codeExamples": {
+      "认知": "# 用 AI 理解 Token 和上下文窗口\n# 把一段长文本发给模型，观察它如何截断\nprompt = \"请用 100 字解释什么是 Token、上下文窗口和幻觉。\"\nprint(f\"提示词长度：{len(prompt)} 字符\")\n# 练习：把这段提示词发给 2 个不同模型，对比回答质量",
+      "学习": "# AI 辅助论文精读：结构化提示词\nprompt = \"\"\"你是论文精读助教。\n论文标题：[填入论文标题]\n请输出：\n1. 核心问题（1句话）\n2. 方法创新点（3条）\n3. 实验结果（关键数据）\n4. 局限性（2条）\n5. 可复述题（3道选择题）\"\"\"",
+      "表达": "# 结构化写作提示词模板\nprompt = \"\"\"你是中文写作教练。\n主题：[填入主题]\n受众：[填入受众]\n要求：\n- 开头用一个问题钩子\n- 正文分 3 个层次\n- 结尾给一个行动建议\n- 全文不超过 500 字\"\"\"",
+      "底线": "# 事实核查清单提示词\nprompt = \"\"\"你是事实核查员。\n请检查以下 AI 输出的可信度：\n[粘贴 AI 回答]\n\n输出格式：\n- 事实性声明：逐条列出，标注 [可信/需核实/错误]\n- 来源建议：每条需核实的声明给出查找方向\n- 风险提醒：可能存在的偏见或遗漏\"\"\""
+    }
+  },
+  "rag": {
+    "title": "RAG 赋能路线",
+    "summary": "从个人资料到企业内容库，学会把检索与生成结合起来，打造稳定的信息处理能力。",
+    "outcomes": [
+      "能搭建基础文档索引流程",
+      "能设计可复用的检索提示与复核步骤",
+      "能把知识查询转化为可复用输出模板"
+    ],
+    "modules": [
+      ["数据", "知识源接入、清洗与字段标准化"],
+      ["索引", "向量化、切片策略与更新策略"],
+      ["问答", "检索增强问答、来源引用与反例检查"],
+      ["复核", "结果校验、证据闭环与风险记录"]
+    ],
+    "codeExamples": {
+      "数据": "# 文档清洗：把 PDF 文本切成结构化片段\nimport re\n\ndef clean_and_chunk(text, chunk_size=500):\n    # 去除多余空白\n    text = re.sub(r'\\s+', ' ', text).strip()\n    # 按段落切分\n    paragraphs = text.split('。')\n    chunks = []\n    current = ''\n    for p in paragraphs:\n        if len(current) + len(p) < chunk_size:\n            current += p + '。'\n        else:\n            if current: chunks.append(current)\n            current = p + '。'\n    if current: chunks.append(current)\n    return chunks\n\n# 练习：用你的学习笔记测试切片效果",
+      "索引": "# 用 OpenAI Embedding 做向量索引（可用 DeepSeek 替代）\nimport json\n\n# 假设已有文档片段\nchunks = ['片段1内容...', '片段2内容...', '片段3内容...']\n\n# 伪代码：调用 embedding API\n# embeddings = [get_embedding(chunk) for chunk in chunks]\n# 保存到本地 JSON 或向量数据库\n\n# 练习：把 5 篇课程笔记做成向量索引",
+      "问答": "# RAG 问答流程：检索 + 生成\nprompt = \"\"\"基于以下资料回答问题。如果资料中没有答案，请说\"资料中未提及\"。\n\n资料：\n{retrieved_chunks}\n\n问题：{user_question}\n\n回答格式：\n1. 直接回答\n2. 引用来源（片段编号）\n3. 置信度（高/中/低）\"\"\"",
+      "复核": "# RAG 结果校验清单\ndef validate_rag_answer(answer, sources):\n    checks = {\n        '有引用来源': any(s in answer for s in sources),\n        '承认未知': '未提及' in answer or '不知道' in answer,\n        '无编造': not any(w in answer for w in ['可能', '也许', '猜测']),\n    }\n    return {k: ('通过' if v else '不通过') for k, v in checks.items()}\n\n# 练习：用你自己的 RAG 回答跑一遍校验"
+    }
+  },
+  "creator": {
+    "title": "短视频创作者路线",
+    "summary": "把 AI 用在选题、脚本、分镜、配音、画面、剪辑和复盘，服务抖音、快手、小红书、B 站等内容生态。",
+    "outcomes": [
+      "能搭建稳定的短视频生产流程",
+      "能用 AI 做选题测试和脚本迭代",
+      "能理解平台内容风格差异"
+    ],
+    "modules": [
+      ["选题", "人群、痛点、热点、标题、封面钩子"],
+      ["脚本", "口播、剧情、知识科普、带货与直播切片"],
+      ["画面", "即梦、可灵、通义万相、剪映等工具流"],
+      ["复盘", "完播率、互动率、转粉率、评论洞察"]
+    ],
+    "codeExamples": {
+      "选题": "# 短视频选题批量生成提示词\nprompt = \"\"\"你是短视频选题策划师。\n目标人群：[填入人群]\n平台：[抖音/小红书/B站]\n\n请生成 10 个选题，每个选题包含：\n1. 标题（不超过 20 字，带钩子）\n2. 痛点（1 句话）\n3. 预估完播率（高/中/低）\n4. 适合时长（15s/30s/60s）\"\"\"",
+      "脚本": "# 60 秒口播脚本模板\nprompt = \"\"\"你是短视频脚本编剧。\n主题：[填入主题]\n时长：60 秒\n\n输出格式：\n- 0-5s 钩子（用问题或冲突开场）\n- 5-30s 正文（3 个要点）\n- 30-50s 案例（1 个真实例子）\n- 50-60s CTA（引导关注/评论）\n- 字幕重点词标注\"\"\"",
+      "画面": "# AI 画面生成提示词（适配即梦/可灵）\nimg_prompt = \"\"\"风格：科技感扁平插画\n主体：一个年轻人对着电脑屏幕学习\n色调：暖色调，枣红色为主\n构图：三分法，左侧留文字空间\n用途：短视频封面\"\"\"\n# 练习：把这段提示词改成适合小红书封面的竖版构图",
+      "复盘": "# 短视频复盘数据模板\nmetrics = {\n    '完播率': 0.45,      # 目标 > 30%\n    '互动率': 0.08,      # 目标 > 5%\n    '转粉率': 0.02,      # 目标 > 1%\n    '评论数': 156,\n}\nfor k, v in metrics.items():\n    status = '达标' if v > 0.05 else '待提升'\n    print(f'{k}: {v} ({status})')"
+    }
+  },
+  "builder": {
+    "title": "AI 应用开发路线",
+    "summary": "从 Python/JavaScript 入门，理解 API、RAG、Agent、MCP 与自动化，把想法做成可运行工具。",
+    "outcomes": [
+      "能调用模型 API 做小工具",
+      "能设计一个 Agent 工作流",
+      "能把 Skill 固化成可复用能力"
+    ],
+    "modules": [
+      ["编程", "Python 脚本、网页前端、数据处理、API 调用"],
+      ["RAG", "文档切分、向量检索、引用来源、知识库问答"],
+      ["Agent", "任务拆解、工具调用、浏览器/代码/搜索协作"],
+      ["部署", "本地原型、云端服务、成本估算、日志监控"]
+    ],
+    "codeExamples": {
+      "编程": "# 调用 DeepSeek API 生成学习笔记摘要\nimport requests\n\nresponse = requests.post(\n    'https://api.deepseek.com/v1/chat/completions',\n    headers={'Authorization': 'Bearer YOUR_API_KEY'},\n    json={\n        'model': 'deepseek-chat',\n        'messages': [\n            {'role': 'system', 'content': '你是学习笔记整理助手'},\n            {'role': 'user', 'content': '请总结以下笔记的 3 个关键点：...'}\n        ]\n    }\n)\nprint(response.json()['choices'][0]['message']['content'])\n# 练习：改成调用通义千问 API，对比输出",
+      "RAG": "# 最小 RAG 实现：用 chromadb 做本地知识库\nimport chromadb\n\nclient = chromadb.Client()\ncollection = client.create_collection('my_notes')\n\n# 添加文档\ncollection.add(\n    documents=['笔记内容1', '笔记内容2'],\n    ids=['1', '2']\n)\n\n# 检索\nresults = collection.query(query_texts=['关键词'], n_results=2)\nprint(results['documents'])",
+      "Agent": "# 简单 Agent 工作流：任务拆解 + 工具调用\nagent_prompt = \"\"\"你是一个任务执行 Agent。\n任务：帮用户整理一周学习记录\n\n可用工具：\n1. search(text) - 搜索网络\n2. read_file(path) - 读取文件\n3. write_file(path, content) - 写入文件\n\n请按步骤执行：\n1. 读取学习记录文件\n2. 提取关键知识点\n3. 生成周报\n4. 保存到文件\n\n每步输出：工具名称 + 参数 + 预期结果\"\"\"",
+      "部署": "# 用 Flask 部署一个简单的 AI 工具\nfrom flask import Flask, request, jsonify\napp = Flask(__name__)\n\n@app.route('/api/summarize', methods=['POST'])\ndef summarize():\n    text = request.json.get('text', '')\n    # 调用模型 API 生成摘要\n    summary = call_model_api(text)\n    return jsonify({'summary': summary})\n\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port=5000)"
+    }
+  },
+  "deploy": {
+    "title": "AI 部署交付路线",
+    "summary": "把练习产出变成可以被真实使用的服务：可复现、可回滚、可维护。",
+    "outcomes": [
+      "能做最小可运行版本（MVP）",
+      "能配置发布链路与监控",
+      "能给作品补齐安全和可交付说明"
+    ],
+    "modules": [
+      ["交付", "项目结构、版本管理与发布检查清单"],
+      ["部署", "本地部署、云部署与环境变量管理"],
+      ["稳定性", "日志、告警、限流与故障回退"],
+      ["迭代", "更新节奏、回滚演练与用户反馈闭环"]
+    ],
+    "codeExamples": {
+      "交付": "# 项目发布检查清单\nchecklist = {\n    'README 可运行': '新人照着文档 10 分钟内跑起来',\n    '环境变量隔离': 'API KEY 不硬编码，用 .env',\n    '版本号': '有语义化版本号（如 v1.0.0）',\n    'License': '有开源协议文件',\n    '依赖锁定': '有 requirements.txt 或 package-lock.json',\n}\nfor item, desc in checklist.items():\n    print(f'[ ] {item}: {desc}')",
+      "部署": "# Docker 部署配置示例\n# Dockerfile\nFROM python:3.11-slim\nWORKDIR /app\nCOPY requirements.txt .\nRUN pip install -r requirements.txt\nCOPY . .\nEXPOSE 5000\nCMD [\"python\", \"app.py\"]\n\n# 练习：给你的 AI 工具写一个 Dockerfile",
+      "稳定性": "# 简单的限流和错误处理\nfrom functools import wraps\nimport time\n\ndef rate_limit(max_calls=10, window=60):\n    calls = []\n    def decorator(fn):\n        @wraps(fn)\n        def wrapper(*args, **kwargs):\n            now = time.time()\n            calls[:] = [t for t in calls if now - t < window]\n            if len(calls) >= max_calls:\n                raise Exception('请求过于频繁，请稍后重试')\n            calls.append(now)\n            try:\n                return fn(*args, **kwargs)\n            except Exception as e:\n                log_error(e)\n                return {'error': str(e)}\n        return wrapper\n    return decorator",
+      "迭代": "# 回滚演练脚本\nimport subprocess\n\ndef rollback(current_version, target_version):\n    steps = [\n        f'git stash',\n        f'git checkout {target_version}',\n        f'pip install -r requirements.txt',\n        f'python -m pytest tests/',\n        f'python app.py',\n    ]\n    for step in steps:\n        result = subprocess.run(step, shell=True, capture_output=True)\n        if result.returncode != 0:\n            print(f'回滚失败：{step}')\n            print(result.stderr.decode())\n            return False\n    print(f'已回滚到 {target_version}')\n    return True"
+    }
+  }
+}

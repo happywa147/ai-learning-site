@@ -1,0 +1,20 @@
+[
+  {
+    "title": "选一条路线",
+    "text": "从「零基础入门、短视频创作者、RAG、AI 应用开发、AI 部署交付」中选一个入口，并选定本月主线。",
+    "action": "查看路线",
+    "href": "index.html?page=map"
+  },
+  {
+    "title": "开启今日挑战",
+    "text": "用 10 分钟做一次模型侦察、Prompt 打磨或事实核查，先建立一组学习手感。",
+    "action": "进入任务板",
+    "href": "index.html?page=game"
+  },
+  {
+    "title": "点亮一个作品",
+    "text": "从样例里挑一个方向，把学习结果变成能展示、能复盘的产出。",
+    "action": "看作品任务",
+    "href": "index.html?page=projects"
+  }
+]

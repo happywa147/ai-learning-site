@@ -1,0 +1,254 @@
+[
+  {
+    "name": "ChatGPT / OpenAI",
+    "desc": "适合通用推理、编程协作、多模态任务和产品原型。适合拿来当国际基准模型观察。",
+    "tags": [
+      "国际",
+      "编程",
+      "多模态",
+      "Agent"
+    ],
+    "scenario": "英文和复杂任务优先，适合做国际基准与代码协作。",
+    "pricing": "按 token 计费，试错成本相对可控，API 接口生态成熟。",
+    "strengths": [
+      "稳定的推理与长链路规划",
+      "生态集成完善",
+      "插件/工具联动成熟"
+    ],
+    "limits": [
+      "对中文细节有时偏保守",
+      "任务链越长成本越高"
+    ],
+    "vendor": "OpenAI",
+    "region": "international",
+    "contextWindow": "128K",
+    "inputPrice": "$2.50/1M",
+    "outputPrice": "$10/1M",
+    "lastVerified": "2026-07-02",
+    "source": "https://openai.com/api/pricing/"
+  },
+  {
+    "name": "Claude",
+    "desc": "长文档阅读、写作润色、代码解释和复杂任务分解表现突出，适合深度学习与文本工作。",
+    "tags": [
+      "国际",
+      "长文本",
+      "写作",
+      "代码"
+    ],
+    "scenario": "中文长文阅读、论文拆解、复杂文档写作反馈。",
+    "pricing": "API + 平台体验并行，超长上下文能力更强。",
+    "strengths": [
+      "长文理解与结构化输出",
+      "任务分解清晰",
+      "写作质量稳定"
+    ],
+    "limits": [
+      "对代码执行链路仍需人工校验",
+      "偏研究/写作流程，不适合每个场景高频工具调用"
+    ],
+    "vendor": "Anthropic",
+    "region": "international",
+    "contextWindow": "200K",
+    "inputPrice": "$3/1M",
+    "outputPrice": "$15/1M",
+    "lastVerified": "2026-07-02",
+    "source": "https://www.anthropic.com/pricing"
+  },
+  {
+    "name": "Gemini",
+    "desc": "与搜索、文档、视频理解和 Google 生态结合紧密，适合做多模态学习参考。",
+    "tags": [
+      "国际",
+      "多模态",
+      "搜索",
+      "视频"
+    ],
+    "scenario": "多模态学习、资料检索和短内容学习链路补全。",
+    "pricing": "分版本与渠道差异较大，注意调用限额与模型版本切换。",
+    "strengths": [
+      "搜索与多模态联动",
+      "学习场景融合能力",
+      "适合做内容分析"
+    ],
+    "limits": [
+      "跨版本行为不一致",
+      "某些场景结构化落地仍需后处理"
+    ],
+    "vendor": "Google",
+    "region": "international",
+    "contextWindow": "1M",
+    "inputPrice": "$1.25/1M",
+    "outputPrice": "$5/1M",
+    "lastVerified": "2026-07-02",
+    "source": "https://ai.google.dev/pricing"
+  },
+  {
+    "name": "DeepSeek",
+    "desc": "在中文、推理、代码和开源生态中影响力强，适合学习推理模型与低成本应用开发。",
+    "tags": [
+      "国内",
+      "推理",
+      "编程",
+      "开源"
+    ],
+    "scenario": "中文推理、编程小工具和低成本应用实验。",
+    "pricing": "开源与托管路线并存，低门槛试验与私有化思路可行。",
+    "strengths": [
+      "中文任务友好",
+      "性价比高",
+      "适合模型对比与实验"
+    ],
+    "limits": [
+      "部分版本更新节奏快",
+      "接口和实例差异需要验参"
+    ],
+    "vendor": "DeepSeek",
+    "region": "domestic",
+    "contextWindow": "128K",
+    "inputPrice": "¥1/1M",
+    "outputPrice": "¥2/1M",
+    "lastVerified": "2026-07-02",
+    "source": "https://www.deepseek.com/"
+  },
+  {
+    "name": "通义千问 / Qwen",
+    "desc": "阿里生态覆盖广，开源模型、云服务、多模态和企业应用都值得关注。",
+    "tags": [
+      "国内",
+      "开源",
+      "云服务",
+      "多模态"
+    ],
+    "scenario": "企业场景与本地化服务对接，适合做“落地第一层”。",
+    "pricing": "云服务与开源权重并存，按调用与部署模式定。",
+    "strengths": [
+      "生态链完整",
+      "国内业务兼容性好",
+      "多模态起步快"
+    ],
+    "limits": [
+      "模型规模与配置影响体验",
+      "同类竞品更新密集需持续复测"
+    ],
+    "vendor": "Alibaba",
+    "region": "domestic",
+    "contextWindow": "128K",
+    "inputPrice": "¥0.8/1M",
+    "outputPrice": "¥2/1M",
+    "lastVerified": "2026-07-02",
+    "source": "https://help.aliyun.com/zh/model-studio/getting-started/models"
+  },
+  {
+    "name": "Kimi",
+    "desc": "长文本、资料阅读和中文信息处理是学习场景常用方向，适合做论文与资料助手。",
+    "tags": [
+      "国内",
+      "长文本",
+      "学习",
+      "资料整理"
+    ],
+    "scenario": "学习资料总结、课程复盘、长文本问答。",
+    "pricing": "多以套餐或 token 计费形式出现，需留意上下文长度溢出策略。",
+    "strengths": [
+      "长文本信息抓取",
+      "中文语境表现稳定",
+      "适合做知识提炼"
+    ],
+    "limits": [
+      "任务复杂度升高时，输出结构仍需二次校验",
+      "与外部工具联动仍需模板约束"
+    ],
+    "vendor": "Moonshot",
+    "region": "domestic",
+    "contextWindow": "200K",
+    "inputPrice": "¥12/1M",
+    "outputPrice": "¥12/1M",
+    "lastVerified": "2026-07-02",
+    "source": "https://platform.moonshot.cn/docs/intro"
+  },
+  {
+    "name": "豆包 / 火山引擎",
+    "desc": "贴近内容生态和国内消费级应用，适合观察短视频、图像、语音和创作工具链。",
+    "tags": [
+      "国内",
+      "短视频",
+      "创作",
+      "语音"
+    ],
+    "scenario": "选题、脚本、配音与素材生成的内容生产链。",
+    "pricing": "偏内容生产平台化服务，按调用和素材资源分层。",
+    "strengths": [
+      "短视频生态融合度高",
+      "对内容素材链条友好",
+      "快速产出闭环"
+    ],
+    "limits": [
+      "深度业务决策支持较弱",
+      "商业化报表与流程化复用能力有限"
+    ],
+    "vendor": "ByteDance",
+    "region": "domestic",
+    "contextWindow": "128K",
+    "inputPrice": "¥0.8/1M",
+    "outputPrice": "¥2/1M",
+    "lastVerified": "2026-07-02",
+    "source": "https://www.volcengine.com/product/doubao"
+  },
+  {
+    "name": "文心 / 腾讯混元 / 智谱 GLM",
+    "desc": "适合观察国内企业级、办公、搜索、政务和行业应用落地，对理解中国市场很有帮助。",
+    "tags": [
+      "国内",
+      "企业应用",
+      "办公",
+      "行业"
+    ],
+    "scenario": "企业办公协作、政府/行业场景知识问答、流程化资料处理。",
+    "pricing": "多供应商定价差异明显，项目化选型更常见。",
+    "strengths": [
+      "行业适配能力",
+      "中文知识工作流支持",
+      "企业接入路径清晰"
+    ],
+    "limits": [
+      "体验一致性受版本影响",
+      "通用任务上不一定领先"
+    ],
+    "vendor": "Baidu/Tencent/Zhipu",
+    "region": "domestic",
+    "contextWindow": "128K",
+    "inputPrice": "¥4/1M",
+    "outputPrice": "¥12/1M",
+    "lastVerified": "2026-07-02",
+    "source": "https://open.bigmodel.cn/pricing"
+  },
+  {
+    "name": "可灵 / 即梦 / 通义万相",
+    "desc": "偏视频与图像生成工具，适合短视频、广告、电商素材和创意表达训练。",
+    "tags": [
+      "国内",
+      "视频",
+      "图像",
+      "内容生产"
+    ],
+    "scenario": "内容创作环节的素材生产与创意实验。",
+    "pricing": "多按图像/视频产出与算力计费，素材预算需前置定义。",
+    "strengths": [
+      "创作速度快",
+      "视觉表现多样",
+      "适合内容矩阵规模化试验"
+    ],
+    "limits": [
+      "版权与发布合规要求高",
+      "结果稳定性波动"
+    ],
+    "vendor": "Kuaishou/ByteDance/Alibaba",
+    "region": "domestic",
+    "contextWindow": "—",
+    "inputPrice": "按生成计费",
+    "outputPrice": "按生成计费",
+    "lastVerified": "2026-07-02",
+    "source": "https://klingai.com/"
+  }
+]

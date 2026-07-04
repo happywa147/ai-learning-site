@@ -6,9 +6,9 @@
 
 [![Deploy GitHub Pages](https://github.com/happywa147/ai-learning-site/actions/workflows/pages.yml/badge.svg)](https://github.com/happywa147/ai-learning-site/actions/workflows/pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
-[![GitHub Pages](https://img.shields.io/badge/demo-GitHub%20Pages-8f2f2a.svg)](https://happywa147.github.io/ai-learning-site/)
+[![正式站点](https://img.shields.io/badge/site-ai.mynaxis.com-8f2f2a.svg)](https://ai.mynaxis.com/)
 
-[在线访问](https://happywa147.github.io/ai-learning-site/) · [路线图](./ROADMAP.md) · [贡献指南](./CONTRIBUTING.md) · [截图与传播素材](./docs/SCREENSHOTS.md) · [MIT License](./LICENSE)
+[正式站点](https://ai.mynaxis.com/) · [GitHub Pages 备份](https://happywa147.github.io/ai-learning-site/) · [路线图](./ROADMAP.md) · [贡献指南](./CONTRIBUTING.md) · [截图与传播素材](./docs/SCREENSHOTS.md) · [MIT License](./LICENSE)
 
 如果你也想共建一份持续月更的中文 AI 学习地图，欢迎 Star 跟进更新，也欢迎通过 Issue 提交模型实测、作品样例和学习任务建议。
 

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://happywa147.github.io/ai-learning-site/sitemap.xml
+Sitemap: https://ai.mynaxis.com/sitemap.xml

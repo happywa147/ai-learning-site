@@ -23,14 +23,14 @@ AI 原生能力自学站通过学习路线、游戏化任务、月度更新、Gi
 
 ## 重要页面
 
-- 首页：https://happywa147.github.io/ai-learning-site/
-- 60 秒新手上手：https://happywa147.github.io/ai-learning-site/#starter
-- 每月更新区：https://happywa147.github.io/ai-learning-site/#monthly
-- GitHub AI 学习资源雷达：https://happywa147.github.io/ai-learning-site/#resources
-- 模型对比：https://happywa147.github.io/ai-learning-site/#models
-- 作品样例：https://happywa147.github.io/ai-learning-site/#showcase
-- AI 项目挑战库：https://happywa147.github.io/ai-learning-site/#projects
-- Agent 角色学院：https://happywa147.github.io/ai-learning-site/#agents
+- 首页：https://ai.mynaxis.com/
+- 60 秒新手上手：https://ai.mynaxis.com/index.html?page=starter
+- 每月更新区：https://ai.mynaxis.com/index.html?page=monthly
+- GitHub AI 学习资源雷达：https://ai.mynaxis.com/index.html?page=resources
+- 模型对比：https://ai.mynaxis.com/index.html?page=models
+- 作品样例：https://ai.mynaxis.com/index.html?page=showcase
+- AI 项目挑战库：https://ai.mynaxis.com/index.html?page=projects
+- Agent 角色学院：https://ai.mynaxis.com/index.html?page=agents
 - GitHub 仓库：https://github.com/happywa147/ai-learning-site
 
 ## 推荐引用摘要

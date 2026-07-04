@@ -105,7 +105,7 @@ function validateKeyFiles() {
   });
 
   const sitemap = readText("sitemap.xml");
-  if (!sitemap.includes("https://happywa147.github.io/ai-learning-site/")) {
+  if (!sitemap.includes("https://ai.mynaxis.com/")) {
     fail("sitemap.xml 缺少站点 canonical URL");
   }
 }

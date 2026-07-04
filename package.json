@@ -5,9 +5,25 @@
   "description": "AI 原生能力自学站 - 面向中文学习者的 AI 学习任务系统",
   "scripts": {
     "build": "node scripts/build.js",
-    "serve": "node scripts/serve-dist.js"
+    "serve": "node scripts/serve-dist.js",
+    "lint": "eslint app.js scripts/",
+    "format": "prettier --write \"**/*.{js,css,html,json,md}\"",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.2.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,html,json,md}": [
+      "prettier --write"
+    ]
   }
 }

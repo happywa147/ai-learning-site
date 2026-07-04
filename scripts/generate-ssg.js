@@ -6,26 +6,31 @@
  */
 const fs = require("fs");
 const path = require("path");
-const dist = path.join(__dirname, "..", "dist");
-const ssgDir = path.join(dist, "ssg");
+
+const ROOT = path.resolve(__dirname, "..");
+const DIST = path.join(ROOT, "dist");
+const ssgDir = path.join(DIST, "ssg");
 fs.mkdirSync(ssgDir, { recursive: true });
 
-const tracks = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "dist", "data.17f56def.json"), "utf8"));
-// The merged JSON has all 18 files as top-level keys
-// Find the tracks data
-let tracksData = tracks["assets/data/tracks.json"];
-if (!tracksData) {
-  // Try alternate key format
-  const keys = Object.keys(tracks);
-  const tracksKey = keys.find(k => k.includes("tracks"));
-  if (tracksKey) tracksData = tracks[tracksKey];
+// Dynamically find the data.*.json file
+const dataFiles = fs.readdirSync(DIST).filter(f => f.startsWith("data.") && f.endsWith(".json"));
+if (dataFiles.length === 0) {
+  console.error("❌ No data.*.json file found in dist/");
+  console.error("   Make sure to run build.js first.");
+  process.exit(1);
 }
+const dataFile = path.join(DIST, dataFiles[0]);
+console.log(`  📖 Reading ${dataFiles[0]}...`);
+
+const allData = JSON.parse(fs.readFileSync(dataFile, "utf8"));
+
+// Get tracks data
+const tracksData = allData.tracks;
 if (!tracksData) {
-  // Fallback: read from source
-  console.log("⚠️  Reading tracks from source file");
-  tracksData = fs.readFileSync(path.join(__dirname, "..", "assets", "data", "tracks.json"), "utf8");
+  console.error("❌ No tracks data found in merged JSON");
+  process.exit(1);
 }
-const parsed = typeof tracksData === "string" ? JSON.parse(tracksData) : tracksData;
+const parsed = tracksData;
 
 /* HTML template */
 const wrap = (title, body, metaDesc) => `<!DOCTYPE html>

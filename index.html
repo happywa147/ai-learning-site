@@ -283,6 +283,7 @@
               </div>
             </div>
             <div id="trackDetail" class="track-detail"></div>
+            <div id="knowledgeGraph"></div>
           </section>
     <section id="worldview" class="section worldview-section">
             <div class="section-head">
@@ -352,6 +353,7 @@
               </article>
             </div>
             <div id="badgeWall" class="badge-wall" aria-label="徽章墙"></div>
+            <div id="dailyTasksSection"></div>
             <div id="inviteSection"></div>
             <div id="xpShopSection"></div>
           </section>
@@ -788,6 +790,28 @@
       </div>
     </div>
 
-    <script src="./app.js"></script>
+        <script src="./src/modules/00-config.js"></script>
+    <script src="./src/modules/01-gamelogic.js"></script>
+    <script src="./src/modules/02-admin.js"></script>
+    <script src="./src/modules/03-events.js"></script>
+    <script src="./src/modules/04-search.js"></script>
+    <script src="./src/modules/05-report.js"></script>
+    <script src="./src/modules/06-ai-tutor.js"></script>
+    <script src="./src/modules/07-misc.js"></script>
+    <script src="./src/modules/08-init.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("./sw.js").then(
+            function (registration) {
+              console.log("[SW] Registered with scope:", registration.scope);
+            },
+            function (error) {
+              console.log("[SW] Registration failed:", error);
+            }
+          );
+        });
+      }
+    </script>
   </body>
 </html>

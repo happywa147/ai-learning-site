@@ -1,0 +1,333 @@
+/* pages/profile/profile.wxss - 个人中心样式 */
+
+/* ========== 用户信息卡片 ========== */
+.profile-header {
+  text-align: center;
+}
+
+.avatar-area {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid var(--jujube);
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--jujube), var(--jujube-dark));
+  flex-shrink: 0;
+}
+
+.avatar-text {
+  font-size: 44rpx;
+  font-weight: 800;
+  color: #fff;
+}
+
+.user-meta {
+  margin-left: 28rpx;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.user-name {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.rank-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--jujube);
+  background: var(--paper);
+  padding: 6rpx 20rpx;
+  border-radius: 20rpx;
+  align-self: flex-start;
+}
+
+/* ========== XP 显示 ========== */
+.xp-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin-bottom: 24rpx;
+}
+
+.xp-number {
+  font-size: 80rpx;
+  font-weight: 800;
+  color: var(--jujube-dark);
+  line-height: 1;
+}
+
+.xp-unit {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--muted);
+  margin-left: 8rpx;
+}
+
+/* ========== 等级进度 ========== */
+.level-progress {
+  margin-bottom: 24rpx;
+}
+
+.progress-info {
+  margin-bottom: 10rpx;
+  text-align: center;
+}
+
+.max-level {
+  color: var(--gold);
+  font-weight: 600;
+  font-size: 26rpx;
+}
+
+/* ========== 连续签到 ========== */
+.streak-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 0;
+  border-top: 1rpx solid var(--line);
+}
+
+.streak-label {
+  font-size: 28rpx;
+  color: var(--muted);
+  margin-right: 16rpx;
+}
+
+.streak-count {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--warning);
+}
+
+/* ========== 徽章区 ========== */
+.badge-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+}
+
+.badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 12rpx;
+  background: var(--paper-light);
+  border-radius: 12rpx;
+  border: 1rpx solid var(--line);
+}
+
+.badge-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12rpx;
+}
+
+.badge-emoji {
+  font-size: 40rpx;
+}
+
+.tier-bronze {
+  background: linear-gradient(135deg, #CD7F32, #B87333);
+}
+
+.tier-silver {
+  background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
+}
+
+.tier-gold {
+  background: linear-gradient(135deg, #FFD700, #FFA000);
+}
+
+.badge-icon.locked {
+  background: var(--line);
+  opacity: 0.5;
+}
+
+.badge-name {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 4rpx;
+}
+
+.badge-desc {
+  font-size: 20rpx;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ========== 签到日历 ========== */
+.calendar-title {
+  display: block;
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--brown);
+  margin-bottom: 16rpx;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8rpx;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 22rpx;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 8rpx 0;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4rpx;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  color: var(--ink);
+  border-radius: 8rpx;
+  position: relative;
+}
+
+.calendar-day.empty {
+  visibility: hidden;
+}
+
+.calendar-day.today {
+  background: var(--paper);
+  border: 2rpx solid var(--jujube);
+  font-weight: 700;
+  color: var(--jujube);
+}
+
+.calendar-day.checked-in {
+  background: var(--jujube);
+  color: #fff;
+  font-weight: 600;
+}
+
+.calendar-day.checked-in.today {
+  background: var(--jujube-dark);
+  border-color: var(--jujube-dark);
+}
+
+.check-mark {
+  position: absolute;
+  top: 2rpx;
+  right: 4rpx;
+  font-size: 16rpx;
+  color: var(--gold);
+}
+
+.calendar-day.checked-in .check-mark {
+  color: var(--gold);
+}
+
+/* ========== 邀请码 ========== */
+.invite-content {
+  margin-bottom: 20rpx;
+}
+
+.invite-desc {
+  display: block;
+  font-size: 26rpx;
+  color: var(--muted);
+  margin-bottom: 16rpx;
+}
+
+.invite-code-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 24rpx;
+  background: var(--paper);
+  border-radius: 12rpx;
+  border: 2rpx dashed var(--camel);
+}
+
+.invite-code {
+  font-size: 36rpx;
+  font-weight: 800;
+  color: var(--jujube);
+  letter-spacing: 4rpx;
+}
+
+.share-btn {
+  width: 100%;
+  font-size: 28rpx;
+}
+
+.share-btn::after {
+  border: none;
+}
+
+/* ========== 管理员入口 ========== */
+.admin-section {
+  border: 2rpx solid var(--jujube);
+}
+
+.admin-tag {
+  color: var(--jujube);
+  font-weight: 600;
+}
+
+.admin-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16rpx;
+}
+
+.admin-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx 12rpx;
+  background: var(--paper-light);
+  border-radius: 12rpx;
+  border: 1rpx solid var(--line);
+}
+
+.admin-item:active {
+  background: var(--paper);
+}
+
+.admin-icon {
+  font-size: 44rpx;
+  margin-bottom: 10rpx;
+}
+
+.admin-text {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--jujube);
+}

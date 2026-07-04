@@ -1,0 +1,106 @@
+{
+  "description": "AI 原生能力自学站 - 微信小程序",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "bundle": false,
+    "userConfirmedBundleSwitch": false,
+    "urlCheck": true,
+    "scopeDataCheck": false,
+    "coverView": true,
+    "es6": true,
+    "postcss": true,
+    "compileHotReLoad": false,
+    "lazyloadPlaceholderEnable": false,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "autoAudits": false,
+    "newFeature": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "useIsolateContext": true,
+    "nodeModules": false,
+    "enhance": true,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "showShadowRootInWxmlPanel": true,
+    "packNpmManually": false,
+    "enableEngineNative": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "showES6CompileOption": false,
+    "minifyWXML": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.3.4",
+  "appid": "wx0000000000000000",
+  "projectname": "ai-learning-miniprogram",
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "pages": [
+    "pages/index/index",
+    "pages/tracks/tracks",
+    "pages/models/models",
+    "pages/agent/agent",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#722F37",
+    "navigationBarTitleText": "AI 原生能力自学站",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F5F0E8",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#8B4513",
+    "selectedColor": "#722F37",
+    "backgroundColor": "#FAF6EF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/images/tab-home.png",
+        "selectedIconPath": "assets/images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/tracks/tracks",
+        "text": "路线",
+        "iconPath": "assets/images/tab-tracks.png",
+        "selectedIconPath": "assets/images/tab-tracks-active.png"
+      },
+      {
+        "pagePath": "pages/models/models",
+        "text": "模型",
+        "iconPath": "assets/images/tab-models.png",
+        "selectedIconPath": "assets/images/tab-models-active.png"
+      },
+      {
+        "pagePath": "pages/agent/agent",
+        "text": "Agent",
+        "iconPath": "assets/images/tab-agent.png",
+        "selectedIconPath": "assets/images/tab-agent-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "assets/images/tab-profile.png",
+        "selectedIconPath": "assets/images/tab-profile-active.png"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

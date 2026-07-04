@@ -1,0 +1,356 @@
+[
+  {
+    "id": "track-foundation",
+    "name": "AI 基础认知",
+    "description": "从零开始理解人工智能与大语言模型的核心概念，建立正确的 AI 认知框架。",
+    "difficulty": "初级",
+    "icon": "brain",
+    "color": "#2E7D32",
+    "modules": [
+      {
+        "id": "f1",
+        "title": "什么是大语言模型（LLM）",
+        "difficulty": "初级",
+        "duration": "15 分钟",
+        "summary": "了解 LLM 的基本原理、训练方式与能力边界。",
+        "commonErrors": [
+          "把 LLM 等同于搜索引擎，期望它返回精确链接",
+          "认为 AI 具有真正的意识或理解能力",
+          "混淆训练数据截止日期与实时信息获取"
+        ]
+      },
+      {
+        "id": "f2",
+        "title": "Prompt 入门：如何与 AI 对话",
+        "difficulty": "初级",
+        "duration": "20 分钟",
+        "summary": "掌握基本 Prompt 技巧，学会清晰表达需求。",
+        "commonErrors": [
+          "指令过于模糊，如「帮我写点东西」",
+          "一次提问包含太多不相关的需求",
+          "不给上下文，期望 AI 凭空理解"
+        ]
+      },
+      {
+        "id": "f3",
+        "title": "AI 能做什么与不能做什么",
+        "difficulty": "初级",
+        "duration": "15 分钟",
+        "summary": "建立合理的预期，了解 AI 的能力边界。",
+        "commonErrors": [
+          "信任 AI 生成的所有数据而不做验证",
+          "用 AI 做需要 100% 精确的数学计算",
+          "期望 AI 提供法律/医疗等专业领域最终决策"
+        ]
+      },
+      {
+        "id": "f4",
+        "title": "常用 AI 工具一览",
+        "difficulty": "初级",
+        "duration": "20 分钟",
+        "summary": "了解主流 AI 工具及其适用场景。",
+        "commonErrors": ["只用一个工具应对所有场景", "忽视工具的版本更新与新功能", "不了解免费版与付费版的功能差异"]
+      }
+    ],
+    "quiz": [
+      {
+        "question": "大语言模型的核心工作原理是什么？",
+        "options": [
+          "基于关键词匹配的搜索引擎",
+          "通过预测下一个 Token 生成文本",
+          "从数据库中检索预设答案",
+          "依赖规则引擎进行推理"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "写 Prompt 时最关键的原则是？",
+        "options": ["字数越多越好", "使用专业术语", "清晰、具体地表达需求", "让 AI 自己猜你的意图"],
+        "answer": 2
+      },
+      {
+        "question": "以下哪个是 AI 目前不擅长的任务？",
+        "options": ["翻译文章", "写创意文案", "精确的数学计算", "总结会议纪要"],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": "track-prompt",
+    "name": "Prompt 工程进阶",
+    "description": "系统学习 Prompt 工程方法论，掌握高级技巧以获得更优质的 AI 输出。",
+    "difficulty": "中级",
+    "icon": "edit",
+    "color": "#E65100",
+    "modules": [
+      {
+        "id": "p1",
+        "title": "结构化 Prompt 框架",
+        "difficulty": "中级",
+        "duration": "25 分钟",
+        "summary": "学习角色-任务-背景-格式四要素框架。",
+        "commonErrors": ["只给任务不给角色设定", "不指定输出格式，导致结果难以使用", "忽略背景信息，使 AI 输出偏离预期"]
+      },
+      {
+        "id": "p2",
+        "title": "Few-shot 与 Chain-of-Thought",
+        "difficulty": "中级",
+        "duration": "30 分钟",
+        "summary": "通过示例和思维链引导 AI 推理。",
+        "commonErrors": ["给的示例与任务不一致", "思维链过长导致 Token 浪费", "在简单任务上也强制使用 CoT"]
+      },
+      {
+        "id": "p3",
+        "title": "Prompt 模板与复用策略",
+        "difficulty": "中级",
+        "duration": "20 分钟",
+        "summary": "建立可复用的 Prompt 库，提升效率。",
+        "commonErrors": ["每次都从零开始写 Prompt", "不记录有效 Prompt 的使用效果", "模板过于僵化，不适配具体场景"]
+      },
+      {
+        "id": "p4",
+        "title": "调试与迭代 Prompt",
+        "difficulty": "中级",
+        "duration": "25 分钟",
+        "summary": "系统性调试 Prompt，找到最优表达。",
+        "commonErrors": ["一次改太多变量，无法定位问题", "只看单次输出，不做对比测试", "忽视 Temperature 等参数的影响"]
+      },
+      {
+        "id": "p5",
+        "title": "多模态 Prompt 技巧",
+        "difficulty": "中级",
+        "duration": "20 分钟",
+        "summary": "结合图像、音频的 Prompt 编写方法。",
+        "commonErrors": ["图片描述过于简略", "不利用多模态的交叉验证能力", "忽视不同模态的 Token 消耗差异"]
+      }
+    ],
+    "quiz": [
+      {
+        "question": "结构化 Prompt 的四要素框架是？",
+        "options": ["字数-语气-风格-长度", "角色-任务-背景-格式", "开头-中间-结尾-总结", "问题-分析-方案-结论"],
+        "answer": 1
+      },
+      {
+        "question": "Few-shot learning 的核心思想是？",
+        "options": ["给 AI 看少量示例来引导输出", "用尽量少的 Token", "只问少量问题", "快速完成对话"],
+        "answer": 0
+      },
+      {
+        "question": "调试 Prompt 时的最佳实践是？",
+        "options": ["一次修改多个要素", "每次只改一个变量对比效果", "完全重写 Prompt", "换一个 AI 工具"],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": "track-workflow",
+    "name": "AI 工作流自动化",
+    "description": "将 AI 融入日常工作流程，用自动化工具链提升十倍效率。",
+    "difficulty": "中级",
+    "icon": "workflow",
+    "color": "#E65100",
+    "modules": [
+      {
+        "id": "w1",
+        "title": "AI 工作流设计思维",
+        "difficulty": "中级",
+        "duration": "25 分钟",
+        "summary": "学会拆解任务，识别可被 AI 优化的环节。",
+        "commonErrors": [
+          "试图用一个 Prompt 解决所有问题",
+          "不区分需要 AI 创意和规则处理的环节",
+          "忽视人工审核的关键节点"
+        ]
+      },
+      {
+        "id": "w2",
+        "title": "API 调用与批量处理",
+        "difficulty": "中级",
+        "duration": "30 分钟",
+        "summary": "通过 API 实现批量文本处理。",
+        "commonErrors": ["不做速率限制导致 API 报错", "不处理 API 返回的异常情况", "忽视 Token 用量与成本控制"]
+      },
+      {
+        "id": "w3",
+        "title": "工具链编排：Zapier / n8n + AI",
+        "difficulty": "中级",
+        "duration": "35 分钟",
+        "summary": "使用无代码工具串联 AI 到现有工作流。",
+        "commonErrors": ["过度依赖自动化，缺少异常处理", "不测试就上线完整工作流", "忽视数据隐私和合规问题"]
+      },
+      {
+        "id": "w4",
+        "title": "文档处理与知识管理",
+        "difficulty": "中级",
+        "duration": "25 分钟",
+        "summary": "用 AI 实现文档摘要、分类与知识库构建。",
+        "commonErrors": ["不做数据清洗直接喂给 AI", "知识库不更新，信息过时", "忽视版权和敏感信息泄露"]
+      }
+    ],
+    "quiz": [
+      {
+        "question": "设计 AI 工作流时，首先应该做什么？",
+        "options": ["直接写 Prompt", "拆解任务流程，识别可优化环节", "选择 AI 工具", "购买自动化软件"],
+        "answer": 1
+      },
+      {
+        "question": "使用 AI API 时常见的错误是？",
+        "options": ["设置速率限制", "处理异常情况", "不控制 Token 用量导致超支", "记录调用日志"],
+        "answer": 2
+      },
+      {
+        "question": "AI 自动化工作流中最重要的安全措施是？",
+        "options": ["使用最贵的 AI 模型", "在关键节点保留人工审核", "完全自动化无需人工", "只在工作时间运行"],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": "track-agent",
+    "name": "Agent 开发实战",
+    "description": "从概念到实现，构建能自主规划与执行的 AI Agent。",
+    "difficulty": "高级",
+    "icon": "robot",
+    "color": "#C62828",
+    "modules": [
+      {
+        "id": "a1",
+        "title": "Agent 架构原理",
+        "difficulty": "高级",
+        "duration": "35 分钟",
+        "summary": "理解 ReAct、Plan-and-Execute 等 Agent 范式。",
+        "commonErrors": ["混淆 Agent 与普通对话机器人", "不给 Agent 设定明确的停止条件", "忽视 Agent 的 Token 消耗问题"]
+      },
+      {
+        "id": "a2",
+        "title": "工具调用（Function Calling）",
+        "difficulty": "高级",
+        "duration": "40 分钟",
+        "summary": "为 Agent 接入外部工具与 API。",
+        "commonErrors": [
+          "工具描述不清晰，导致 AI 调用错误",
+          "不处理工具调用的超时和异常",
+          "给 Agent 过多工具，导致选择困难"
+        ]
+      },
+      {
+        "id": "a3",
+        "title": "记忆与上下文管理",
+        "difficulty": "高级",
+        "duration": "35 分钟",
+        "summary": "实现短期记忆、长期记忆与向量检索。",
+        "commonErrors": ["把所有历史都塞进上下文窗口", "不区分重要信息和噪音", "忽视记忆更新与遗忘机制"]
+      },
+      {
+        "id": "a4",
+        "title": "多 Agent 协作",
+        "difficulty": "高级",
+        "duration": "40 分钟",
+        "summary": "设计多个 Agent 协同工作的系统。",
+        "commonErrors": ["Agent 间职责重叠导致冲突", "没有设计合理的通信协议", "忽视系统的可观测性与调试"]
+      },
+      {
+        "id": "a5",
+        "title": "Agent 安全与护栏",
+        "difficulty": "高级",
+        "duration": "30 分钟",
+        "summary": "为 Agent 添加安全限制与防护机制。",
+        "commonErrors": ["不给 Agent 设置操作权限边界", "不审计 Agent 的执行日志", "允许 Agent 直接执行危险操作无确认"]
+      },
+      {
+        "id": "a6",
+        "title": "Agent 部署与监控",
+        "difficulty": "高级",
+        "duration": "35 分钟",
+        "summary": "将 Agent 部署到生产环境并持续监控。",
+        "commonErrors": ["不做灰度发布直接全量上线", "不监控 Agent 的成本和质量指标", "没有回滚机制"]
+      }
+    ],
+    "quiz": [
+      {
+        "question": "ReAct 范式的核心是？",
+        "options": ["只做推理不做行动", "推理与行动交替进行", "先行动再推理", "只行动不推理"],
+        "answer": 1
+      },
+      {
+        "question": "Function Calling 中工具描述的关键是？",
+        "options": ["描述越详细越好", "清晰描述功能、参数和返回值", "用代码实现即可", "靠 AI 自己推断"],
+        "answer": 1
+      },
+      {
+        "question": "多 Agent 系统设计的核心原则是？",
+        "options": [
+          "Agent 越多越好",
+          "每个 Agent 职责明确且不重叠",
+          "所有 Agent 共享一个上下文",
+          "只需要一个强大的 Agent"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Agent 安全护栏最重要的措施是？",
+        "options": ["使用最强的模型", "设置操作权限边界与人工确认", "限制对话轮数", "加密所有数据"],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": "track-finetune",
+    "name": "模型微调与定制",
+    "description": "掌握模型微调技术，打造专属 AI 能力。",
+    "difficulty": "高级",
+    "icon": "wrench",
+    "color": "#C62828",
+    "modules": [
+      {
+        "id": "t1",
+        "title": "微调 vs RAG：何时用什么",
+        "difficulty": "高级",
+        "duration": "30 分钟",
+        "summary": "理解微调与检索增强生成的选择策略。",
+        "commonErrors": ["该用 RAG 的场景去微调，成本高效果差", "数据量不够就强行微调", "不了解微调对知识更新不友好"]
+      },
+      {
+        "id": "t2",
+        "title": "数据准备与清洗",
+        "difficulty": "高级",
+        "duration": "40 分钟",
+        "summary": "构建高质量训练数据集。",
+        "commonErrors": ["训练数据包含噪音和错误标注", "不划分验证集和测试集", "数据格式不符合模型要求"]
+      },
+      {
+        "id": "t3",
+        "title": "LoRA / QLoRA 轻量微调",
+        "difficulty": "高级",
+        "duration": "45 分钟",
+        "summary": "使用参数高效微调技术降低成本。",
+        "commonErrors": ["Rank 设置过高导致过拟合", "学习率不调整导致训练不稳定", "不评估微调前后的效果对比"]
+      },
+      {
+        "id": "t4",
+        "title": "模型评估与部署",
+        "difficulty": "高级",
+        "duration": "35 分钟",
+        "summary": "评估微调效果并部署到生产环境。",
+        "commonErrors": ["只看 Loss 不看实际效果", "不做 A/B 测试就替换原模型", "忽视模型推理延迟的增加"]
+      }
+    ],
+    "quiz": [
+      {
+        "question": "以下场景更适合用 RAG 而非微调的是？",
+        "options": ["改变模型的回复风格", "让模型学习领域术语", "知识库频繁更新的问答系统", "提升模型的推理能力"],
+        "answer": 2
+      },
+      {
+        "question": "LoRA 微调的核心优势是？",
+        "options": ["效果一定比全量微调好", "只训练少量参数，大幅降低成本", "不需要训练数据", "可以在 CPU 上运行"],
+        "answer": 1
+      },
+      {
+        "question": "微调数据准备中最常见的错误是？",
+        "options": ["数据量太大", "数据包含噪音和不一致标注", "数据格式统一", "划分了验证集"],
+        "answer": 1
+      }
+    ]
+  }
+]

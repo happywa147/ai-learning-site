@@ -1,0 +1,128 @@
+<!--pages/profile/profile.wxml - 个人中心-->
+<view class="page-container">
+  <!-- 用户信息卡片 -->
+  <view class="card profile-header">
+    <view class="avatar-area" bindtap="handleGetUserProfile">
+      <image
+        wx:if="{{hasUserInfo}}"
+        class="avatar"
+        src="{{userInfo.avatarUrl}}"
+        mode="aspectFill"
+      ></image>
+      <view wx:else class="avatar avatar-placeholder">
+        <text class="avatar-text">AI</text>
+      </view>
+      <view class="user-meta">
+        <text class="user-name">{{hasUserInfo ? userInfo.nickName : '点击登录'}}</text>
+        <text class="rank-name">{{rankName}}</text>
+      </view>
+    </view>
+
+    <!-- XP 显示 -->
+    <view class="xp-display">
+      <text class="xp-number">{{xp}}</text>
+      <text class="xp-unit">XP</text>
+    </view>
+
+    <!-- 等级进度条 -->
+    <view class="level-progress" wx:if="{{nextRankName}}">
+      <view class="progress-info">
+        <text class="caption">距 {{nextRankName}} 还需 {{xpToNext}} XP</text>
+      </view>
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{progressPercent}}%;"></view>
+      </view>
+    </view>
+    <view class="level-progress" wx:else>
+      <text class="caption max-level">已达到最高等级 🎉</text>
+    </view>
+
+    <!-- 连续签到 -->
+    <view class="streak-row">
+      <text class="streak-label">连续签到</text>
+      <text class="streak-count">{{streak}} 天 🔥</text>
+    </view>
+  </view>
+
+  <!-- 徽章区 -->
+  <view class="card">
+    <view class="card-header">
+      <text class="h3">我的徽章</text>
+      <text class="caption">{{badges.length}} / {{badges.length}} 种</text>
+    </view>
+    <view class="badge-grid">
+      <view class="badge-item" wx:for="{{badges}}" wx:key="id">
+        <view class="badge-icon tier-{{item.tier}} {{item.earned ? '' : 'locked'}}">
+          <text class="badge-emoji">{{item.earned ? '🏆' : '🔒'}}</text>
+        </view>
+        <text class="badge-name">{{item.name}}</text>
+        <text class="badge-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 签到日历 -->
+  <view class="card">
+    <view class="card-header">
+      <text class="h3">签到记录</text>
+      <text class="caption">本月签到 {{monthCheckInDays}} 天</text>
+    </view>
+    <text class="calendar-title">{{calendarTitle}}</text>
+    <view class="calendar-weekdays">
+      <text class="weekday">日</text>
+      <text class="weekday">一</text>
+      <text class="weekday">二</text>
+      <text class="weekday">三</text>
+      <text class="weekday">四</text>
+      <text class="weekday">五</text>
+      <text class="weekday">六</text>
+    </view>
+    <view class="calendar-grid">
+      <view
+        class="calendar-day {{item.empty ? 'empty' : ''}} {{item.isToday ? 'today' : ''}} {{item.isCheckedIn ? 'checked-in' : ''}}"
+        wx:for="{{calendarDays}}"
+        wx:key="index"
+      >
+        <text wx:if="{{!item.empty}}">{{item.day}}</text>
+        <text wx:if="{{item.isCheckedIn}}" class="check-mark">✓</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 邀请码 -->
+  <view class="card">
+    <view class="card-header">
+      <text class="h3">邀请好友</text>
+    </view>
+    <view class="invite-content">
+      <text class="invite-desc">分享邀请码，好友加入后双方获得 XP 奖励</text>
+      <view class="invite-code-box">
+        <text class="invite-code">{{inviteCode}}</text>
+        <button class="btn-primary btn-small" bindtap="handleCopyInvite">复制</button>
+      </view>
+    </view>
+    <button class="btn-outline share-btn" open-type="share">📤 分享邀请</button>
+  </view>
+
+  <!-- 管理员入口 -->
+  <view class="card admin-section" wx:if="{{isAdmin}}">
+    <view class="card-header">
+      <text class="h3">管理员入口</text>
+      <text class="caption admin-tag">达等级 {{level}}</text>
+    </view>
+    <view class="admin-actions">
+      <view class="admin-item" bindtap="handleAdmin">
+        <text class="admin-icon">⚙️</text>
+        <text class="admin-text">内容管理</text>
+      </view>
+      <view class="admin-item" bindtap="handleAdmin">
+        <text class="admin-icon">📊</text>
+        <text class="admin-text">数据统计</text>
+      </view>
+      <view class="admin-item" bindtap="handleAdmin">
+        <text class="admin-icon">📢</text>
+        <text class="admin-text">公告发布</text>
+      </view>
+    </view>
+  </view>
+</view>

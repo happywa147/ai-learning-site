@@ -1,0 +1,198 @@
+/* pages/index/index.wxss - 首页样式 */
+
+/* ========== 标题区 ========== */
+.hero-section {
+  text-align: center;
+  padding: 40rpx 24rpx 32rpx;
+}
+
+.hero-title {
+  display: block;
+  font-size: 52rpx;
+  font-weight: 800;
+  color: var(--jujube-dark);
+  letter-spacing: 2rpx;
+}
+
+.hero-subtitle {
+  display: block;
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: var(--muted);
+}
+
+/* ========== 签到卡片 ========== */
+.checkin-card {
+  text-align: center;
+}
+
+.checkin-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28rpx;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: var(--muted);
+  margin-bottom: 8rpx;
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--jujube);
+}
+
+.streak-value {
+  color: var(--warning);
+}
+
+.xp-value {
+  color: var(--gold);
+  text-shadow: 0 0 8rpx rgba(255, 215, 0, 0.3);
+}
+
+.stat-divider {
+  width: 2rpx;
+  height: 60rpx;
+  background: var(--line);
+  margin: 0 24rpx;
+}
+
+.checkin-btn {
+  width: 100%;
+  font-size: 36rpx;
+  font-weight: 700;
+  padding: 28rpx 0;
+  border-radius: 16rpx;
+  background: linear-gradient(135deg, var(--jujube), var(--jujube-dark));
+  box-shadow: 0 4rpx 16rpx rgba(114, 47, 55, 0.3);
+}
+
+.checkin-btn::after {
+  border: none;
+}
+
+.checkin-btn[disabled] {
+  background: var(--line);
+  color: var(--muted);
+  box-shadow: none;
+}
+
+.checkin-btn-done {
+  background: var(--line);
+  color: var(--muted);
+  box-shadow: none;
+}
+
+/* ========== 每日任务 ========== */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 24rpx;
+  background: var(--paper-light);
+  border-radius: 12rpx;
+  border: 1rpx solid var(--line);
+}
+
+.task-label {
+  font-size: 28rpx;
+  color: var(--ink);
+  flex: 1;
+}
+
+.task-done {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.task-right {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.task-xp {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.btn-task-done {
+  background: var(--line);
+  color: var(--muted);
+  border: none;
+}
+
+.btn-task-done::after {
+  border: none;
+}
+
+/* ========== 快捷导航 ========== */
+.nav-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16rpx;
+}
+
+.nav-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28rpx 12rpx;
+  background: var(--paper-light);
+  border-radius: 16rpx;
+  border: 1rpx solid var(--line);
+  transition: all 0.2s;
+}
+
+.nav-card:active {
+  transform: scale(0.96);
+  background: var(--paper);
+}
+
+.nav-icon {
+  font-size: 52rpx;
+  margin-bottom: 12rpx;
+}
+
+.nav-title {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: var(--jujube);
+  margin-bottom: 6rpx;
+}
+
+.nav-desc {
+  font-size: 22rpx;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ========== 分享按钮 ========== */
+.share-btn {
+  width: 100%;
+  margin-top: 8rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.share-btn::after {
+  border: none;
+}

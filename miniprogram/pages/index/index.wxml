@@ -1,0 +1,83 @@
+<!--pages/index/index.wxml - 首页-->
+<view class="page-container">
+  <!-- 标题区 -->
+  <view class="hero-section">
+    <text class="h1 hero-title">{{title}}</text>
+    <text class="caption hero-subtitle">{{subtitle}}</text>
+  </view>
+
+  <!-- 签到区 -->
+  <view class="card checkin-card">
+    <view class="checkin-stats" wx:if="{{hasCheckedIn}}">
+      <view class="stat-item">
+        <text class="stat-label">连续签到</text>
+        <text class="stat-value streak-value">{{streak}} 天 🔥</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item" wx:if="{{sessionXP > 0}}">
+        <text class="stat-label">今日获得</text>
+        <text class="stat-value xp-value">+{{sessionXP}} XP</text>
+      </view>
+      <view class="stat-item" wx:else>
+        <text class="stat-label">今日状态</text>
+        <text class="stat-value">已签到 ✓</text>
+      </view>
+    </view>
+    <button
+      class="btn-primary checkin-btn {{hasCheckedIn ? 'checkin-btn-done' : ''}}"
+      bindtap="handleCheckIn"
+      disabled="{{hasCheckedIn}}"
+    >
+      {{hasCheckedIn ? '✓ 今日已签到' : '📅 每日签到'}}
+    </button>
+  </view>
+
+  <!-- 每日任务 -->
+  <view class="card">
+    <view class="card-header">
+      <text class="h3">每日任务</text>
+      <text class="caption">完成任务获得 XP</text>
+    </view>
+    <view class="task-list">
+      <view class="task-item" wx:for="{{tasks}}" wx:key="id">
+        <text class="task-label {{item.done ? 'task-done' : ''}}">{{item.label}}</text>
+        <view class="task-right">
+          <text class="task-xp">+{{item.xp}}XP</text>
+          <button
+            class="btn-small {{item.done ? 'btn-task-done' : 'btn-primary'}}"
+            bindtap="handleCompleteTask"
+            data-id="{{item.id}}"
+            disabled="{{item.done}}"
+          >
+            {{item.done ? '✓' : '完成'}}
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷导航 -->
+  <view class="card">
+    <view class="card-header">
+      <text class="h3">快捷导航</text>
+    </view>
+    <view class="nav-grid">
+      <view
+        class="nav-card"
+        wx:for="{{navCards}}"
+        wx:key="id"
+        bindtap="handleNavigate"
+        data-page="{{item.id}}"
+      >
+        <text class="nav-icon">{{item.icon}}</text>
+        <text class="nav-title">{{item.title}}</text>
+        <text class="nav-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分享 -->
+  <button class="btn-outline share-btn" open-type="share">
+    📤 分享给朋友
+  </button>
+</view>

@@ -1,0 +1,118 @@
+<!-- pages/tracks/tracks.wxml -->
+<!-- 学习路线页面 -->
+<view class="page-container">
+
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="h1">学习路线</text>
+    <text class="caption mt-sm">选择适合你的路径，循序渐进掌握 AI 能力</text>
+  </view>
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="empty-state">
+    <view class="loading-spinner"></view>
+    <text class="empty-text mt-md">加载中...</text>
+  </view>
+
+  <!-- 路线列表 -->
+  <view wx:for="{{tracks}}" wx:key="id" class="track-card">
+    <!-- 路线卡片头部 -->
+    <view class="track-header" bindtap="toggleTrack" data-id="{{item.id}}">
+      <view class="track-info">
+        <view class="track-title-row">
+          <text class="track-name">{{item.name}}</text>
+          <text class="tag tag-{{item.difficulty === '初级' ? 'beginner' : item.difficulty === '中级' ? 'intermediate' : 'advanced'}}">{{item.difficulty}}</text>
+        </view>
+        <text class="track-desc text-ellipsis-2">{{item.description}}</text>
+        <view class="track-meta">
+          <text class="meta-item">{{item.totalModules}} 个模块</text>
+          <text class="meta-dot">·</text>
+          <text class="meta-item">已完成 {{item.completedCount}}/{{item.totalModules}}</text>
+        </view>
+        <!-- 进度条 -->
+        <view class="progress-bar mt-sm">
+          <view class="progress-fill" style="width: {{item.percent}}%"></view>
+        </view>
+      </view>
+      <view class="track-arrow {{expandedId === item.id ? 'expanded' : ''}}">
+        <text class="arrow-icon">›</text>
+      </view>
+    </view>
+
+    <!-- 展开内容 -->
+    <view wx:if="{{expandedId === item.id}}" class="track-expanded">
+      <view class="divider"></view>
+
+      <!-- 模块列表 -->
+      <view class="modules-list">
+        <view wx:for="{{item.modules}}" wx:for-item="mod" wx:key="id" class="module-item">
+          <view class="module-header">
+            <view class="module-check {{completedModules[mod.id] ? 'checked' : ''}}"
+                  bindtap="toggleModule" data-moduleid="{{mod.id}}" data-trackid="{{item.id}}">
+              <text wx:if="{{completedModules[mod.id]}}" class="check-icon">✓</text>
+            </view>
+            <view class="module-content" bindtap="toggleModule" data-moduleid="{{mod.id}}" data-trackid="{{item.id}}">
+              <view class="module-title-row">
+                <text class="module-title">{{mod.title}}</text>
+                <text class="tag tag-{{mod.difficulty === '初级' ? 'beginner' : mod.difficulty === '中级' ? 'intermediate' : 'advanced'}}">{{mod.difficulty}}</text>
+              </view>
+              <text class="module-summary">{{mod.summary}}</text>
+              <text class="module-duration">⏱ {{mod.duration}}</text>
+
+              <!-- 常见误区 -->
+              <view wx:if="{{mod.commonErrors && mod.commonErrors.length}}" class="common-errors">
+                <text class="errors-title">⚠ 常见误区</text>
+                <view wx:for="{{mod.commonErrors}}" wx:for-item="err" wx:key="*this" class="error-item">
+                  <text class="error-bullet">·</text>
+                  <text class="error-text">{{err}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 自测题区域 -->
+      <view class="quiz-section">
+        <view wx:if="{{!quizState[item.id].active && !quizResult[item.id].done}}" class="quiz-intro">
+          <text class="quiz-title">🎯 课后自测</text>
+          <text class="quiz-desc">完成 {{item.quiz.length}} 道题检验学习成果，每题 10 XP</text>
+          <button class="btn-primary btn-small" bindtap="startQuiz" data-trackid="{{item.id}}">开始自测</button>
+        </view>
+
+        <!-- 答题中 -->
+        <view wx:if="{{quizState[item.id].active}}" class="quiz-active">
+          <view class="quiz-progress">
+            <text class="quiz-q-num">第 {{quizState[item.id].current + 1}} / {{item.quiz.length}} 题</text>
+          </view>
+          <text class="quiz-question">{{item.quiz[quizState[item.id].current].question}}</text>
+          <view class="quiz-options">
+            <view wx:for="{{item.quiz[quizState[item.id].current].options}}" wx:for-item="opt" wx:for-index="oi" wx:key="*this"
+                  class="quiz-option" bindtap="selectAnswer" data-trackid="{{item.id}}" data-index="{{oi}}">
+              <text class="option-label">{{['A','B','C','D'][oi]}}</text>
+              <text class="option-text">{{opt}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 测验结果 -->
+        <view wx:if="{{quizResult[item.id].done}}" class="quiz-result">
+          <text class="result-icon">{{quizResult[item.id].correct >= quizResult[item.id].total / 2 ? '🎉' : '📚'}}</text>
+          <text class="result-score">{{quizResult[item.id].correct}} / {{quizResult[item.id].total}}</text>
+          <text class="result-msg">
+            <block wx:if="{{quizResult[item.id].correct === quizResult[item.id].total}}">全部正确！获得 {{quizResult[item.id].xp}} XP</block>
+            <block wx:elif="{{quizResult[item.id].correct >= quizResult[item.id].total / 2}}">不错！获得 {{quizResult[item.id].xp}} XP，继续加油</block>
+            <block wx:else>获得 {{quizResult[item.id].xp}} XP，建议复习后重试</block>
+          </text>
+          <button class="btn-outline btn-small" bindtap="closeQuiz" data-trackid="{{item.id}}">重新答题</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部提示 -->
+  <view wx:if="{{!loading && tracks.length}}" class="footer-tip">
+    <text class="caption">💡 点击模块圆圈标记完成，完成路线可获得额外 50 XP</text>
+  </view>
+
+</view>

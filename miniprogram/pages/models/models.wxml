@@ -1,0 +1,218 @@
+<!-- pages/models/models.wxml -->
+<!-- 模型对比页面 -->
+<view class="page-container">
+
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="h1">模型对比</text>
+    <text class="caption mt-sm">{{models.length}} 个主流 AI 模型，找到最适合你的</text>
+  </view>
+
+  <!-- 决策树入口 -->
+  <view class="tree-entry" bindtap="openTree">
+    <view class="tree-entry-icon">🧭</view>
+    <view class="tree-entry-text">
+      <text class="tree-entry-title">不知道选哪个？试试模型推荐器</text>
+      <text class="tree-entry-desc">回答几个问题，为你推荐最佳模型</text>
+    </view>
+    <text class="tree-entry-arrow">›</text>
+  </view>
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="empty-state">
+    <view class="loading-spinner"></view>
+    <text class="empty-text mt-md">加载中...</text>
+  </view>
+
+  <block wx:if="{{!loading}}">
+    <!-- 筛选栏 -->
+    <scroll-view class="filter-bar" scroll-x>
+      <view class="filter-item {{selectedProvider === item ? 'active' : ''}}"
+            wx:for="{{providers}}" wx:key="*this"
+            bindtap="filterByProvider" data-provider="{{item}}">
+        {{item}}
+      </view>
+    </scroll-view>
+
+    <!-- 排序栏 -->
+    <view class="sort-bar">
+      <text class="sort-label">排序：</text>
+      <view class="sort-item {{sortBy === 'benchmark' ? 'active' : ''}}" bindtap="changeSort" data-sort="benchmark">基准分数</view>
+      <view class="sort-item {{sortBy === 'date' ? 'active' : ''}}" bindtap="changeSort" data-sort="date">发布时间</view>
+      <view class="sort-item {{sortBy === 'name' ? 'active' : ''}}" bindtap="changeSort" data-sort="name">名称</view>
+    </view>
+
+    <!-- 模型列表 -->
+    <view class="model-list">
+      <view wx:for="{{filteredModels}}" wx:key="id" class="model-card" bindtap="showDetail" data-id="{{item.id}}">
+        <view class="model-card-top">
+          <view class="model-name-row">
+            <text class="model-name">{{item.name}}</text>
+            <text class="tag tag-category">{{item.provider}}</text>
+          </view>
+          <text class="model-desc text-ellipsis-2">{{item.description}}</text>
+        </view>
+        <view class="model-card-bottom">
+          <view class="model-stat">
+            <text class="stat-value">{{item.benchmark}}</text>
+            <text class="stat-label">基准分</text>
+          </view>
+          <view class="model-stat">
+            <text class="stat-value">{{item.releaseDate}}</text>
+            <text class="stat-label">发布日期</text>
+          </view>
+          <view class="model-stat">
+            <text class="stat-value">{{item.contextWindow >= 1000000 ? (item.contextWindow / 1000000) + 'M' : (item.contextWindow / 1000) + 'K'}}</text>
+            <text class="stat-label">上下文</text>
+          </view>
+        </view>
+        <view class="model-modalities">
+          <text wx:for="{{item.modalities}}" wx:for-item="mod" wx:key="*this" class="modality-tag">{{mod}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{filteredModels.length === 0}}" class="empty-state">
+      <text class="empty-icon">🔍</text>
+      <text class="empty-text">没有找到匹配的模型</text>
+    </view>
+  </block>
+
+</view>
+
+<!-- ========== 模型详情弹窗 ========== -->
+<view wx:if="{{detailModel}}" class="modal-mask" bindtap="closeDetail">
+  <view class="modal-content" catchtap="">
+    <view class="modal-header">
+      <view class="modal-title-row">
+        <text class="modal-title">{{detailModel.name}}</text>
+        <text class="tag tag-category">{{detailModel.provider}}</text>
+      </view>
+      <view class="modal-close" bindtap="closeDetail">
+        <text class="close-icon">✕</text>
+      </view>
+    </view>
+
+    <scroll-view class="modal-body" scroll-y>
+      <text class="modal-desc">{{detailModel.description}}</text>
+
+      <!-- 核心指标 -->
+      <view class="detail-stats">
+        <view class="detail-stat-item">
+          <text class="detail-stat-value">{{detailModel.benchmark}}</text>
+          <text class="detail-stat-label">基准分数</text>
+        </view>
+        <view class="detail-stat-item">
+          <text class="detail-stat-value">{{detailModel.releaseDate}}</text>
+          <text class="detail-stat-label">发布日期</text>
+        </view>
+        <view class="detail-stat-item">
+          <text class="detail-stat-value">{{detailModel.contextWindow >= 1000000 ? (detailModel.contextWindow / 1000000) + 'M' : (detailModel.contextWindow / 1000) + 'K'}}</text>
+          <text class="detail-stat-label">上下文窗口</text>
+        </view>
+        <view class="detail-stat-item">
+          <text class="detail-stat-value">{{detailModel.pricing}}</text>
+          <text class="detail-stat-label">价格</text>
+        </view>
+      </view>
+
+      <!-- 模态支持 -->
+      <view class="detail-section">
+        <text class="detail-section-title">支持模态</text>
+        <view class="modality-list">
+          <text wx:for="{{detailModel.modalities}}" wx:for-item="mod" wx:key="*this" class="modality-tag large">{{mod}}</text>
+        </view>
+      </view>
+
+      <!-- 优势 -->
+      <view class="detail-section">
+        <text class="detail-section-title">✅ 优势</text>
+        <view wx:for="{{detailModel.strengths}}" wx:for-item="s" wx:key="*this" class="detail-list-item">
+          <text class="list-bullet green">·</text>
+          <text class="detail-list-text">{{s}}</text>
+        </view>
+      </view>
+
+      <!-- 劣势 -->
+      <view class="detail-section">
+        <text class="detail-section-title">⚠️ 局限</text>
+        <view wx:for="{{detailModel.weaknesses}}" wx:for-item="w" wx:key="*this" class="detail-list-item">
+          <text class="list-bullet orange">·</text>
+          <text class="detail-list-text">{{w}}</text>
+        </view>
+      </view>
+
+      <!-- 适用场景 -->
+      <view class="detail-section">
+        <text class="detail-section-title">🎯 适用场景</text>
+        <view class="usecase-list">
+          <text wx:for="{{detailModel.useCases}}" wx:for-item="uc" wx:key="*this" class="usecase-tag">{{uc}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- ========== 决策树弹窗 ========== -->
+<view wx:if="{{treeActive}}" class="modal-mask" bindtap="closeTree">
+  <view class="tree-modal" catchtap="">
+
+    <!-- 未出结果：问答阶段 -->
+    <block wx:if="{{!treeResult}}">
+      <view class="tree-header">
+        <text class="tree-title">🧭 模型推荐器</text>
+        <view class="tree-close" bindtap="closeTree"><text class="close-icon">✕</text></view>
+      </view>
+
+      <view class="tree-progress-bar">
+        <text class="tree-step-num">第 {{treeHistory.length + 1}} 步</text>
+        <view wx:if="{{treeHistory.length > 0}}" class="tree-back" bindtap="treeBack">← 上一步</view>
+      </view>
+
+      <view class="tree-question-area">
+        <text class="tree-question">{{treeQuestion}}</text>
+      </view>
+
+      <view class="tree-options">
+        <view wx:for="{{treeOptions}}" wx:key="label" class="tree-option" bindtap="treeSelect" data-index="{{index}}">
+          <text class="tree-option-text">{{item.label}}</text>
+          <text class="tree-option-arrow">›</text>
+        </view>
+      </view>
+    </block>
+
+    <!-- 结果阶段 -->
+    <block wx:if="{{treeResult}}">
+      <view class="tree-header">
+        <text class="tree-title">🎯 推荐结果</text>
+        <view class="tree-close" bindtap="closeTree"><text class="close-icon">✕</text></view>
+      </view>
+
+      <view class="tree-result-area">
+        <text class="tree-result-icon">🎉</text>
+        <text class="tree-result-title">为你推荐以下模型</text>
+
+        <view class="tree-recommend-list">
+          <view wx:for="{{recommendedModels}}" wx:key="id" class="tree-recommend-card" bindtap="showDetail" data-id="{{item.id}}">
+            <view class="recommend-name-row">
+              <text class="recommend-name">{{item.name}}</text>
+              <text class="tag tag-category">{{item.provider}}</text>
+            </view>
+            <text class="recommend-desc text-ellipsis-2">{{item.description}}</text>
+            <view class="recommend-stats">
+              <text class="recommend-stat">基准分 {{item.benchmark}}</text>
+              <text class="recommend-stat">{{item.pricing}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="tree-result-actions">
+          <button class="btn-outline btn-small" bindtap="treeRestart">重新选择</button>
+          <button class="btn-primary btn-small" bindtap="closeTree">完成</button>
+        </view>
+      </view>
+    </block>
+
+  </view>
+</view>

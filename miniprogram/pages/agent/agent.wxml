@@ -1,0 +1,97 @@
+<!--pages/agent/agent.wxml-->
+<view class="page-container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索 Agent 角色..." bindinput="onSearchInput" value="{{searchQuery}}" />
+    <view class="search-clear" wx:if="{{searchQuery}}" bindtap="clearSearch">✕</view>
+  </view>
+
+  <!-- 分类筛选 -->
+  <scroll-view class="category-scroll" scroll-x>
+    <view class="category-list">
+      <view class="category-item {{activeCategory === '' ? 'active' : ''}}" bindtap="selectCategory" data-id="">
+        全部
+      </view>
+      <view class="category-item {{activeCategory === item.id ? 'active' : ''}}" 
+            wx:for="{{categories}}" wx:key="id"
+            bindtap="selectCategory" data-id="{{item.id}}">
+        {{item.name}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 今日挑战 -->
+  <view class="card challenge-card" bindtap="showDailyChallenge">
+    <view class="challenge-header">
+      <text class="challenge-icon">🎲</text>
+      <text class="challenge-title">今日 Agent 挑战</text>
+    </view>
+    <view class="challenge-content" wx:if="{{dailyChallenge}}">
+      <text class="challenge-name">{{dailyChallenge.name}}</text>
+      <text class="challenge-desc">{{dailyChallenge.description}}</text>
+    </view>
+    <view class="challenge-action">
+      <text>点击刷新</text>
+    </view>
+  </view>
+
+  <!-- Agent 角色卡列表 -->
+  <view class="agent-grid">
+    <view class="agent-card" wx:for="{{filteredAgents}}" wx:key="id" bindtap="showAgentDetail" data-id="{{item.id}}">
+      <view class="agent-avatar">{{item.emoji || '🤖'}}</view>
+      <view class="agent-info">
+        <text class="agent-name">{{item.name}}</text>
+        <view class="agent-tags">
+          <text class="tag tag-category">{{item.categoryName}}</text>
+          <text class="tag tag-difficulty" wx:if="{{item.difficulty}}">{{item.difficulty}}</text>
+        </view>
+        <text class="agent-desc text-ellipsis-2">{{item.description}}</text>
+      </view>
+      <view class="agent-copy" catchtap="copyPrompt" data-prompt="{{item.systemPrompt}}">
+        <text>复制 Prompt</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{filteredAgents.length === 0}}">
+    <text class="empty-icon">🔍</text>
+    <text class="empty-text">没有找到匹配的 Agent 角色</text>
+  </view>
+
+  <!-- Agent 详情弹窗 -->
+  <view class="modal-mask" wx:if="{{showDetail}}" bindtap="closeDetail">
+    <view class="modal-content" catchtap="">
+      <view class="modal-header">
+        <text class="modal-title">{{detailAgent.name}}</text>
+        <view class="modal-close" bindtap="closeDetail">✕</view>
+      </view>
+      <scroll-view class="modal-body" scroll-y>
+        <text class="agent-emoji-large">{{detailAgent.emoji || '🤖'}}</text>
+        <text class="agent-description-full">{{detailAgent.description}}</text>
+        
+        <view class="detail-section" wx:if="{{detailAgent.useCases}}">
+          <text class="detail-label">使用场景</text>
+          <view class="use-cases">
+            <text class="use-case-item" wx:for="{{detailAgent.useCases}}" wx:key="*this">• {{item}}</text>
+          </view>
+        </view>
+
+        <view class="detail-section" wx:if="{{detailAgent.systemPrompt}}">
+          <text class="detail-label">系统 Prompt</text>
+          <view class="prompt-block">
+            <text class="prompt-text">{{detailAgent.systemPrompt}}</text>
+          </view>
+          <view class="btn-primary btn-small" bindtap="copyPrompt" data-prompt="{{detailAgent.systemPrompt}}">
+            复制 Prompt
+          </view>
+        </view>
+
+        <view class="detail-section" wx:if="{{detailAgent.example}}">
+          <text class="detail-label">使用示例</text>
+          <text class="example-text">{{detailAgent.example}}</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

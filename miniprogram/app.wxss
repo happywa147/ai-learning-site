@@ -1,0 +1,322 @@
+/* app.wxss - 全局样式（酒红色主题） */
+/* ========== 设计令牌 ========== */
+page {
+  --jujube: #722F37;
+  --jujube-dark: #5C1A1B;
+  --brown: #8B4513;
+  --camel: #C19A6B;
+  --paper: #F5F0E8;
+  --paper-light: #FAF6EF;
+  --ink: #3D2817;
+  --muted: #8B7355;
+  --line: #E8DFD0;
+  --success: #2E7D32;
+  --warning: #F57F17;
+  --gold: #FFD700;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-size: 28rpx;
+  line-height: 1.7;
+}
+
+/* ==========  reset ========== */
+view, text, image, scroll-view, swiper {
+  box-sizing: border-box;
+}
+
+/* ========== 排版 ========== */
+.h1 {
+  font-size: 48rpx;
+  font-weight: 800;
+  color: var(--jujube-dark);
+  line-height: 1.3;
+}
+
+.h2 {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--jujube);
+}
+
+.h3 {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: var(--brown);
+}
+
+.body {
+  font-size: 28rpx;
+  color: var(--ink);
+}
+
+.caption {
+  font-size: 24rpx;
+  color: var(--muted);
+}
+
+/* ========== 卡片 ========== */
+.card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(114, 47, 55, 0.08);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+/* ========== 按钮 ========== */
+.btn-primary {
+  background: var(--jujube);
+  color: #fff;
+  border: none;
+  border-radius: 12rpx;
+  padding: 20rpx 40rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  text-align: center;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--jujube);
+  border: 2rpx solid var(--jujube);
+  border-radius: 12rpx;
+  padding: 18rpx 38rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  text-align: center;
+}
+
+.btn-outline::after {
+  border: none;
+}
+
+.btn-small {
+  padding: 12rpx 24rpx;
+  font-size: 24rpx;
+  border-radius: 8rpx;
+}
+
+/* ========== 标签 ========== */
+.tag {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 6rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+.tag-beginner {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.tag-intermediate {
+  background: #FFF3E0;
+  color: #E65100;
+}
+
+.tag-advanced {
+  background: #FCE4EC;
+  color: #C62828;
+}
+
+.tag-category {
+  background: var(--paper);
+  color: var(--brown);
+  border: 1rpx solid var(--line);
+}
+
+/* ========== 徽章 ========== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40rpx;
+  height: 40rpx;
+  padding: 0 12rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.badge-xp {
+  background: linear-gradient(135deg, #FFD700, #FFA000);
+  color: #5C1A1B;
+}
+
+.badge-new {
+  background: #C62828;
+  color: #fff;
+}
+
+/* ========== 进度条 ========== */
+.progress-bar {
+  height: 12rpx;
+  background: var(--line);
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--jujube), var(--brown));
+  border-radius: 6rpx;
+  transition: width 0.3s ease;
+}
+
+/* ========== 分割线 ========== */
+.divider {
+  height: 1rpx;
+  background: var(--line);
+  margin: 24rpx 0;
+}
+
+/* ========== 空状态 ========== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 40rpx;
+  color: var(--muted);
+}
+
+.empty-state .empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-state .empty-text {
+  font-size: 28rpx;
+  text-align: center;
+}
+
+/* ========== 加载动画 ========== */
+.loading-spinner {
+  width: 48rpx;
+  height: 48rpx;
+  border: 4rpx solid var(--line);
+  border-top-color: var(--jujube);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ========== Toast ========== */
+.toast-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.toast-content {
+  background: rgba(61, 40, 23, 0.9);
+  color: #fff;
+  padding: 20rpx 40rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  max-width: 70%;
+  text-align: center;
+}
+
+/* ========== 页面容器 ========== */
+.page-container {
+  padding: 24rpx;
+  padding-bottom: 120rpx;
+}
+
+/* ========== 网格布局 ========== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16rpx;
+}
+
+/* ========== Flex 布局 ========== */
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.gap-sm { gap: 12rpx; }
+.gap-md { gap: 20rpx; }
+.gap-lg { gap: 32rpx; }
+
+/* ========== 间距 ========== */
+.mt-sm { margin-top: 12rpx; }
+.mt-md { margin-top: 24rpx; }
+.mt-lg { margin-top: 40rpx; }
+.mb-sm { margin-bottom: 12rpx; }
+.mb-md { margin-bottom: 24rpx; }
+.mb-lg { margin-bottom: 40rpx; }
+
+/* ========== 文字截断 ========== */
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-ellipsis-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* ========== 安全区域 ========== */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}

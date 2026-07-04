@@ -1,0 +1,5 @@
+# ESLint 忽略规则
+miniprogram/
+dist/
+*.min.js
+*.min.css

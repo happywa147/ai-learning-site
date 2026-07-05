@@ -50,11 +50,13 @@ function renderResourceRadar() {
     .filter(({ item }) => {
       const actionMatched = state.resourceAction === "all" || item.action === state.resourceAction;
       const licenseMatched = state.resourceLicense === "all" || item.licenseSpdx === state.resourceLicense;
-      const text = `${item.name} ${item.type} ${item.licenseSpdx} ${item.action} ${item.useFor} ${item.adapt}`.toLowerCase();
+      const text =
+        `${item.name} ${item.type} ${item.licenseSpdx} ${item.action} ${item.useFor} ${item.adapt}`.toLowerCase();
       return actionMatched && licenseMatched && (!query || text.includes(query));
     });
 
-  document.querySelector("#resourceCount").textContent = `当前显示 ${visibleResources.length} / ${resourceRadarItems.length} 个资源`;
+  document.querySelector("#resourceCount").textContent =
+    `当前显示 ${visibleResources.length} / ${resourceRadarItems.length} 个资源`;
 
   if (!visibleResources.length) {
     document.querySelector("#resourceRadarGrid").innerHTML =
@@ -137,7 +139,7 @@ async function copyResourceCard(index, button) {
   const ok = await copyTextWithFallback(buildResourceRadarText(item), {
     button,
     successText: `已复制「${item.name}」资源卡。`,
-    failureText: "复制失败，请手动复制页面内容。"
+    failureText: "复制失败，请手动复制页面内容。",
   });
   if (!ok) return;
 }
@@ -147,7 +149,7 @@ async function copyResourceContribution(index, button) {
   const ok = await copyTextWithFallback(buildResourceContributionText(item), {
     button,
     successText: "已复制资源贡献模板。",
-    failureText: "复制失败，请手动复制页面内容。"
+    failureText: "复制失败，请手动复制页面内容。",
   });
   if (!ok) return;
 }
@@ -156,30 +158,42 @@ function renderTrack() {
   const track = tracks[state.track];
   const detail = document.querySelector("#trackDetail");
   const codeExamples = track.codeExamples || {};
-  const prereqHTML = track.prereq ? `
+  const prereqHTML = track.prereq
+    ? `
     <div class="prereq-check">
       <h4>开始前的自检</h4>
       <p class="muted" style="margin-bottom:10px;">勾选你已具备的条件，确认你准备好开始这条路线。</p>
-      ${track.prereq.map((q, i) => `
+      ${track.prereq
+        .map(
+          (q, i) => `
         <label class="prereq-question">
           <input type="checkbox" />
           <span>${safeText(q)}</span>
         </label>
-      `).join("")}
+      `
+        )
+        .join("")}
     </div>
-  ` : "";
-  const selfCheckHTML = track.selfCheck ? `
+  `
+    : "";
+  const selfCheckHTML = track.selfCheck
+    ? `
     <div class="self-check">
       <h4>学完后的自我检查</h4>
       <p class="muted" style="margin-bottom:10px;">确认你能做到以下事项，再进入下一条路线。</p>
-      ${track.selfCheck.map((item, i) => `
+      ${track.selfCheck
+        .map(
+          (item, i) => `
         <label class="self-check-item">
           <input type="checkbox" />
           <span>${safeText(item)}</span>
         </label>
-      `).join("")}
+      `
+        )
+        .join("")}
     </div>
-  ` : "";
+  `
+    : "";
   detail.innerHTML = `
     <article class="track-card">
       <h3>${safeText(track.title)}</h3>
@@ -194,33 +208,46 @@ function renderTrack() {
           const name = mod.title || mod[0] || "";
           const text = mod.desc || mod[1] || "";
           const example = codeExamples[name] || "";
-          const practiceHTML = mod.practice ? `
+          const practiceHTML = mod.practice
+            ? `
             <details class="module-practice" style="margin-top:12px;">
               <summary style="cursor:pointer;font-weight:600;color:var(--earth);font-size:0.9rem;">🎯 5分钟实操（${mod.practice.length}步）${mod.difficulty ? `<span style="font-size:0.72rem;color:var(--muted);margin-left:6px;">${difficultyLabel(mod.difficulty)}</span>` : ""}</summary>
               <ol style="margin-top:10px;padding-left:20px;font-size:0.88rem;line-height:1.8;">
-                ${mod.practice.map((p, pi) => `
+                ${mod.practice
+                  .map(
+                    (p, pi) => `
                   <li style="margin-bottom:8px;">
-                    <strong>第${pi+1}步：</strong>${safeText(p.step)}<br>
+                    <strong>第${pi + 1}步：</strong>${safeText(p.step)}<br>
                     <span style="color:var(--muted);font-size:0.82rem;">→ ${safeText(p.expect || "")}</span>
                   </li>
-                `).join("")}
+                `
+                  )
+                  .join("")}
               </ol>
             </details>
-          ` : "";
+          `
+            : "";
           /* R3: Common errors */
-          const errorsHTML = mod.commonErrors && mod.commonErrors.length ? `
+          const errorsHTML =
+            mod.commonErrors && mod.commonErrors.length
+              ? `
             <details class="module-errors" style="margin-top:8px;">
               <summary style="cursor:pointer;font-weight:600;color:#b8821e;font-size:0.85rem;">⚠️ 常见错误（${mod.commonErrors.length}条）</summary>
               <div style="margin-top:8px;font-size:0.82rem;line-height:1.7;">
-                ${mod.commonErrors.map(ce => `
+                ${mod.commonErrors
+                  .map(
+                    (ce) => `
                   <div style="margin-bottom:6px;padding:6px 10px;background:rgba(184,130,30,0.06);border-radius:6px;border-left:3px solid #b8821e;">
                     <strong>❌ ${safeText(ce.error)}</strong><br>
                     <span style="color:var(--earth);">✅ ${safeText(ce.fix)}</span>
                   </div>
-                `).join("")}
+                `
+                  )
+                  .join("")}
               </div>
             </details>
-          ` : "";
+          `
+              : "";
           return `<article class="module">
               ${mod.difficulty ? `<span class="module-difficulty module-diff-${mod.difficulty}">${difficultyLabel(mod.difficulty)}</span>` : ""}
               <span>${safeText(name)}</span>
@@ -256,10 +283,7 @@ function renderWeeks() {
 
 function renderMonthOptions() {
   const select = document.querySelector("#monthSelect");
-  select.innerHTML = (monthlyUpdates.length
-    ? monthlyUpdates
-    : [{ id: "2026-07", label: "2026 年 7 月" }]
-  )
+  select.innerHTML = (monthlyUpdates.length ? monthlyUpdates : [{ id: "2026-07", label: "2026 年 7 月" }])
     .map((month) => `<option value="${safeText(month.id)}">${safeText(month.label || month.id)}</option>`)
     .join("");
   select.value = state.month;
@@ -273,7 +297,7 @@ function renderMonthlyUpdate() {
   const evidenceItems = [
     update.lastVerified ? `复核日期：${update.lastVerified}` : "",
     update.confidence ? `可信度：${update.confidence}` : "",
-    update.testedTasks?.length ? `测试任务：${update.testedTasks.join(" / ")}` : ""
+    update.testedTasks?.length ? `测试任务：${update.testedTasks.join(" / ")}` : "",
   ].filter(Boolean);
   const sourceLinks = (update.sources || [])
     .filter((source) => source && source.label && source.url)
@@ -287,10 +311,18 @@ function renderMonthlyUpdate() {
   document.querySelector("#monthTitle").textContent = safeText(update.title || "");
   document.querySelector("#monthSummary").textContent = safeText(update.summary || "");
   document.querySelector("#monthFocusCount").textContent = String(update.cards?.length || 0);
-  document.querySelector("#monthUpdated").textContent = update.updatedAt ? `更新日期：${safeText(update.updatedAt)}` : "";
-  document.querySelector("#monthEvidence").innerHTML = [...evidenceItems.map((item) => `<span>${safeText(item)}</span>`), ...sourceLinks].join("");
+  document.querySelector("#monthUpdated").textContent = update.updatedAt
+    ? `更新日期：${safeText(update.updatedAt)}`
+    : "";
+  document.querySelector("#monthEvidence").innerHTML = [
+    ...evidenceItems.map((item) => `<span>${safeText(item)}</span>`),
+    ...sourceLinks,
+  ].join("");
   document.querySelector("#monthlyGrid").innerHTML = update.cards
-    .map((card) => `<article class="monthly-card"><h3>${safeText(card.title)}</h3><ul>${safeList(card.items)}</ul></article>`)
+    .map(
+      (card) =>
+        `<article class="monthly-card"><h3>${safeText(card.title)}</h3><ul>${safeList(card.items)}</ul></article>`
+    )
     .join("");
 }
 
@@ -298,7 +330,8 @@ function renderModels(keyword = "") {
   const grid = document.querySelector("#modelGrid");
   const query = keyword.trim().toLowerCase();
   const filtered = models.filter((model) => {
-    const text = `${model.name} ${model.desc} ${(model.tags || []).join(" ")} ${(model.scenario || "")} ${(model.pricing || "")}`.toLowerCase();
+    const text =
+      `${model.name} ${model.desc} ${(model.tags || []).join(" ")} ${model.scenario || ""} ${model.pricing || ""}`.toLowerCase();
     return text.includes(query);
   });
   if (!filtered.length) {
@@ -308,47 +341,51 @@ function renderModels(keyword = "") {
   }
   const now = new Date();
   grid.innerHTML = filtered
-    .map(
-      (model) => {
-        let expiryHTML = "";
-        if (model.lastVerified) {
-          const verified = new Date(model.lastVerified);
-          const daysSince = Math.floor((now - verified) / 86400000);
-          if (daysSince > 60) {
-            expiryHTML = `<span class="expiry-warning expired">数据已过期 ${daysSince} 天，请核实</span>`;
-          } else if (daysSince > 30) {
-            expiryHTML = `<span class="expiry-warning stale">数据 ${daysSince} 天前验证，建议复核</span>`;
-          }
+    .map((model) => {
+      let expiryHTML = "";
+      if (model.lastVerified) {
+        const verified = new Date(model.lastVerified);
+        const daysSince = Math.floor((now - verified) / 86400000);
+        if (daysSince > 60) {
+          expiryHTML = `<span class="expiry-warning expired">数据已过期 ${daysSince} 天，请核实</span>`;
+        } else if (daysSince > 30) {
+          expiryHTML = `<span class="expiry-warning stale">数据 ${daysSince} 天前验证，建议复核</span>`;
         }
-        return `
+      }
+      return `
       <article class="model-card">
         <h3>${safeText(model.name)}${expiryHTML}</h3>
         <p>${safeText(model.desc)}</p>
         <p class="muted">${safeText(model.scenario || "")}</p>
-        ${model.contextWindow || model.inputPrice || model.outputPrice ? `
+        ${
+          model.contextWindow || model.inputPrice || model.outputPrice
+            ? `
         <div class="model-specs" style="display:flex;gap:12px;flex-wrap:wrap;margin:8px 0;font-size:13px;">
           ${model.contextWindow ? `<span><strong>上下文：</strong>${safeText(model.contextWindow)}</span>` : ""}
           ${model.inputPrice ? `<span><strong>输入：</strong>${safeText(model.inputPrice)}</span>` : ""}
           ${model.outputPrice ? `<span><strong>输出：</strong>${safeText(model.outputPrice)}</span>` : ""}
           ${model.vendor ? `<span><strong>厂商：</strong>${safeText(model.vendor)}</span>` : ""}
-        </div>` : ""}
+        </div>`
+            : ""
+        }
         <p class="muted"><strong>定价：</strong>${safeText(model.pricing || "")}</p>
         <p><strong>优势：</strong>${safeText(Array.isArray(model.strengths) ? model.strengths.join("；") : "")}</p>
         <p><strong>适用边界：</strong>${safeText(Array.isArray(model.limits) ? model.limits.join("；") : "")}</p>
         ${model.lastVerified ? `<p class="muted" style="font-size:11px;">数据验证：${safeText(model.lastVerified)}</p>` : ""}
-        ${model.benchmark ? `<div class="model-specs" style="display:flex;gap:12px;flex-wrap:wrap;margin:8px 0;font-size:13px;">
+        ${
+          model.benchmark
+            ? `<div class="model-specs" style="display:flex;gap:12px;flex-wrap:wrap;margin:8px 0;font-size:13px;">
           ${model.benchmark.humanEval && model.benchmark.humanEval !== "—" ? `<span><strong>HumanEval：</strong>${safeText(model.benchmark.humanEval)}</span>` : ""}
           ${model.benchmark.cEval && model.benchmark.cEval !== "—" ? `<span><strong>C-Eval：</strong>${safeText(model.benchmark.cEval)}</span>` : ""}
           ${model.benchmark.mbpp && model.benchmark.mbpp !== "—" ? `<span><strong>MBPP：</strong>${safeText(model.benchmark.mbpp)}</span>` : ""}
-        </div>` : ""}
-        <footer>${(model.tags || [])
-          .map((tag) => `<span class="tag">${safeText(tag)}</span>`)
-          .join("")}</footer>
+        </div>`
+            : ""
+        }
+        <footer>${(model.tags || []).map((tag) => `<span class="tag">${safeText(tag)}</span>`).join("")}</footer>
         <button type="button" class="ai-tutor-btn" onclick="openAiTutor({title: '模型对比 - ${safeText(model.name)}', desc: '${safeText(model.desc)}'})">问 AI</button>
       </article>
     `;
-      }
-    )
+    })
     .join("");
 }
 
@@ -358,11 +395,13 @@ function renderProjects() {
     .map((project, index) => ({ project, index }))
     .filter(({ project }) => {
       const levelMatched = state.projectLevel === "all" || project.level === state.projectLevel;
-      const text = `${project.title} ${project.level} ${project.time} ${project.desc} ${(project.tools || []).join(" ")} ${(project.tasks || []).join(" ")} ${(project.deliverables || []).join(" ")} ${project.check || ""}`.toLowerCase();
+      const text =
+        `${project.title} ${project.level} ${project.time} ${project.desc} ${(project.tools || []).join(" ")} ${(project.tasks || []).join(" ")} ${(project.deliverables || []).join(" ")} ${project.check || ""}`.toLowerCase();
       return levelMatched && (!query || text.includes(query));
     });
 
-  document.querySelector("#projectCount").textContent = `当前显示 ${visibleProjects.length} / ${projects.length} 个挑战`;
+  document.querySelector("#projectCount").textContent =
+    `当前显示 ${visibleProjects.length} / ${projects.length} 个挑战`;
 
   if (!visibleProjects.length) {
     document.querySelector("#projectGrid").innerHTML =
@@ -429,7 +468,7 @@ async function copyProjectChallenge(index, button) {
   await copyTextWithFallback(buildProjectChallengeText(project), {
     button,
     successText: `已复制「${project.title}」挑战模板。`,
-    failureText: "复制失败，请手动复制页面内容。"
+    failureText: "复制失败，请手动复制页面内容。",
   });
 }
 
@@ -473,7 +512,7 @@ async function copyAgentRoleByName(name, button) {
   await copyTextWithFallback(buildAgentRolePrompt(role), {
     button,
     successText: `已复制「${role.name}」角色卡。`,
-    failureText: "复制失败，请手动复制页面内容。"
+    failureText: "复制失败，请手动复制页面内容。",
   });
 }
 
@@ -494,11 +533,8 @@ const AGENT_PAGE_SIZE = 12;
 
 function renderAgentRoles() {
   const visibleRoles =
-    state.agentCategory === "all"
-      ? agentRoles
-      : agentRoles.filter((role) => role.category === state.agentCategory);
-  const categoryName =
-    agentRoleCategories.find(([key]) => key === state.agentCategory)?.[1] || "全部";
+    state.agentCategory === "all" ? agentRoles : agentRoles.filter((role) => role.category === state.agentCategory);
+  const categoryName = agentRoleCategories.find(([key]) => key === state.agentCategory)?.[1] || "全部";
 
   document.querySelector("#agentRoleTabs").innerHTML = agentRoleCategories
     .map(([key, label]) => {
@@ -507,7 +543,8 @@ function renderAgentRoles() {
     })
     .join("");
 
-  document.querySelector("#agentRoleCount").textContent = `${categoryName} · ${visibleRoles.length} / ${agentRoles.length} 个角色`;
+  document.querySelector("#agentRoleCount").textContent =
+    `${categoryName} · ${visibleRoles.length} / ${agentRoles.length} 个角色`;
 
   if (state.agentCategory !== (state._lastAgentCategory || "all")) {
     state.agentPage = 0;
@@ -520,11 +557,10 @@ function renderAgentRoles() {
   const pageRoles = visibleRoles.slice(pageStart, pageStart + AGENT_PAGE_SIZE);
 
   document.querySelector("#agentRoleGrid").innerHTML = pageRoles
-    .map(
-      (role) => {
-        const quality = getAgentQualityTier(role);
-        const scenario = role.useFor || role.output || "";
-        return `
+    .map((role) => {
+      const quality = getAgentQualityTier(role);
+      const scenario = role.useFor || role.output || "";
+      return `
       <article class="agent-role-card">
         <div class="agent-role-top">
           <span class="badge">${safeText(role.level)}</span>
@@ -545,8 +581,7 @@ function renderAgentRoles() {
         <button class="ghost-btn small copy-agent-role" type="button" data-agent-name="${safeText(role.name)}" aria-label="复制角色卡：${safeText(role.name)}">复制角色卡</button>
       </article>
     `;
-      }
-    )
+    })
     .join("");
 
   const paginationContainer = document.querySelector("#agentPagination");
@@ -593,10 +628,12 @@ function renderContact() {
       `;
     })
     .join("");
-  document.querySelector("#contactList").insertAdjacentHTML(
-    "afterbegin",
-    `<div class="qr-card"><img src="${safeText(ownerContact.qrImage)}" alt="微信二维码" loading="lazy" decoding="async" /><span>微信二维码</span></div>`
-  );
+  document
+    .querySelector("#contactList")
+    .insertAdjacentHTML(
+      "afterbegin",
+      `<div class="qr-card"><img src="${safeText(ownerContact.qrImage)}" alt="微信二维码" /><span>微信二维码</span><span class="qr-hint">长按二维码可直接识别添加</span></div>`
+    );
   document.querySelector("#leadCount").textContent = state.leads.length;
 }
 
@@ -629,7 +666,7 @@ function generateProgressReport() {
     `连续学习记录：${state.streak} 天`,
     `已记录周任务：${state.doneWeeks.size} / ${weeks.length}`,
     `已点亮作品：${state.doneProjects.size} / ${projects.length}`,
-    ""
+    "",
   ];
   if (doneWeekList.length) {
     lines.push("## 周任务进度", ...doneWeekList);
@@ -659,7 +696,7 @@ function downloadProgressReport() {
   downloadTextFile(report, {
     fileName: `ai-learning-report-${today}.md`,
     type: "text/markdown;charset=utf-8",
-    toastMessage: "学习周报已导出。"
+    toastMessage: "学习周报已导出。",
   });
 }
 
@@ -673,9 +710,9 @@ let activeProofCleanup = null;
 
 function getModalFocusables(modal) {
   if (!modal) return [];
-  return Array.from(
-    modal.querySelectorAll("button, [href], input, select, textarea")
-  ).filter((el) => !el.disabled && el.tabIndex !== -1);
+  return Array.from(modal.querySelectorAll("button, [href], input, select, textarea")).filter(
+    (el) => !el.disabled && el.tabIndex !== -1
+  );
 }
 
 function trapModalFocus(event) {
@@ -742,6 +779,14 @@ function closeModalWithResult(result = null) {
 
 function openSponsorModal() {
   openModal(document.querySelector("#sponsorModal"));
+  /* Force re-register QR image for WeChat long-press recognition.
+     WeChat X5/WKWebView doesn't register images inside display:none containers.
+     Cloning the node forces the browser to treat it as a newly loaded image. */
+  const qrImg = document.querySelector("#sponsorModal .sponsor-action img");
+  if (qrImg) {
+    const clone = qrImg.cloneNode(true);
+    qrImg.parentNode.replaceChild(clone, qrImg);
+  }
 }
 
 function closeSponsorModal() {
@@ -837,7 +882,11 @@ function downloadFeedbackCsv() {
   const headers = ["提交时间", "主题", "建议"];
   const rows = state.feedback.map((item) => [item.createdAt, item.topic, item.message]);
   const csv = [headers, ...rows].map((row) => row.map(escapeCsvCell).join(",")).join("\n");
-  downloadTextFile(csv, { fileName: `ai-learning-feedback-${getTodayKey()}.csv`, type: "text/csv;charset=utf-8", toastMessage: "反馈 CSV 已导出。" });
+  downloadTextFile(csv, {
+    fileName: `ai-learning-feedback-${getTodayKey()}.csv`,
+    type: "text/csv;charset=utf-8",
+    toastMessage: "反馈 CSV 已导出。",
+  });
 }
 
 function downloadLeadsCsv() {
@@ -852,10 +901,14 @@ function downloadLeadsCsv() {
     lead.contact,
     lead.profile,
     lead.interest,
-    lead.message
+    lead.message,
   ]);
   const csv = [headers, ...rows].map((row) => row.map(escapeCsvCell).join(",")).join("\n");
-  downloadTextFile(csv, { fileName: `ai-learning-leads-${getTodayKey()}.csv`, type: "text/csv;charset=utf-8", toastMessage: "报名 CSV 已导出。" });
+  downloadTextFile(csv, {
+    fileName: `ai-learning-leads-${getTodayKey()}.csv`,
+    type: "text/csv;charset=utf-8",
+    toastMessage: "报名 CSV 已导出。",
+  });
 }
 
 function hasAnyLocalData() {
@@ -887,7 +940,7 @@ function exportAllLocalData() {
       feedback: state.feedback.length,
       doneWeeks: state.doneWeeks.size,
       worldview30Done: state.worldview30Done.size,
-      doneProjects: state.doneProjects.size
+      doneProjects: state.doneProjects.size,
     },
     leads: state.leads,
     feedback: state.feedback,
@@ -901,13 +954,13 @@ function exportAllLocalData() {
       bonusXp: state.bonusXp,
       streak: state.streak,
       lastCheckIn: state.lastCheckIn,
-      dailyDone: state.dailyDone
-    }
+      dailyDone: state.dailyDone,
+    },
   };
   downloadTextFile(JSON.stringify(payload, null, 2), {
     fileName: `ai-learning-local-data-${getTodayKey()}.json`,
     type: "application/json;charset=utf-8",
-    toastMessage: "全部本机数据已导出。"
+    toastMessage: "全部本机数据已导出。",
   });
 }
 
@@ -980,7 +1033,16 @@ function clearGameProgressData({ confirmFirst = false, showMessage = true } = {}
   state.streak = 0;
   state.lastCheckIn = "";
   state.dailyDone = "";
-  if (!removeStoredValue(storageKeys.weeks) || !removeStoredValue(storageKeys.projects) || !removeStoredValue(storageKeys.weekProofs) || !removeStoredValue(storageKeys.projectProofs) || !removeStoredValue(storageKeys.bonusXp) || !removeStoredValue(storageKeys.streak) || !removeStoredValue(storageKeys.lastCheckIn) || !removeStoredValue(storageKeys.dailyDone)) {
+  if (
+    !removeStoredValue(storageKeys.weeks) ||
+    !removeStoredValue(storageKeys.projects) ||
+    !removeStoredValue(storageKeys.weekProofs) ||
+    !removeStoredValue(storageKeys.projectProofs) ||
+    !removeStoredValue(storageKeys.bonusXp) ||
+    !removeStoredValue(storageKeys.streak) ||
+    !removeStoredValue(storageKeys.lastCheckIn) ||
+    !removeStoredValue(storageKeys.dailyDone)
+  ) {
     showStorageUnavailableNotice();
   }
   if (!removeStoredValue(storageKeys.worldview30Weeks)) {
@@ -999,7 +1061,7 @@ function clearAllLocalData() {
     showToast("当前没有本机数据可清空。", 1400);
     return;
   }
-    const needBackup = window.confirm("清空前建议先备份，是否先导出全部本机数据？");
+  const needBackup = window.confirm("清空前建议先备份，是否先导出全部本机数据？");
   if (needBackup) {
     exportAllLocalData();
   }
@@ -1038,8 +1100,8 @@ function getFeedbackDraft(form = document.querySelector("#feedbackForm")) {
       "## 来源",
       "",
       "- 来自 AI 原生能力自学站页面反馈表单",
-      `- 生成时间：${new Date().toLocaleString("zh-CN", { hour12: false })}`
-    ].join("\n")
+      `- 生成时间：${new Date().toLocaleString("zh-CN", { hour12: false })}`,
+    ].join("\n"),
   };
 }
 
@@ -1052,7 +1114,7 @@ async function copyFeedbackIssueDraft() {
   const text = `${draft.title}\n\n${draft.body}`;
   await copyTextWithFallback(text, {
     successText: "反馈 Issue 草稿已复制，可粘贴到 GitHub。",
-    failureText: "复制失败，请手动复制反馈内容。"
+    failureText: "复制失败，请手动复制反馈内容。",
   });
 }
 
@@ -1074,7 +1136,7 @@ function getLeadDraft(form = document.querySelector("#registerForm")) {
     profile: data.get("profile") || fallbackLead.profile || "",
     interest: data.get("interest") || fallbackLead.interest || "",
     message: toTrimmed(data.get("message")) || fallbackLead.message || "",
-    createdAt: fallbackLead.createdAt || new Date().toLocaleString("zh-CN", { hour12: false })
+    createdAt: fallbackLead.createdAt || new Date().toLocaleString("zh-CN", { hour12: false }),
   };
   if (!lead.name || !lead.contact || !lead.profile || !lead.interest) return null;
   return lead;
@@ -1090,7 +1152,7 @@ function buildLeadContactText(lead) {
     `最想学习：${lead.interest}`,
     lead.message ? `留言：${lead.message}` : "留言：",
     "",
-    "说明：这段内容由网页本地生成，请通过邮箱或微信发送给主理人。"
+    "说明：这段内容由网页本地生成，请通过邮箱或微信发送给主理人。",
   ].join("\n");
 }
 
@@ -1102,7 +1164,7 @@ async function copyLeadContactDraft() {
   }
   await copyTextWithFallback(buildLeadContactText(lead), {
     successText: "联系草稿已复制，请通过邮箱或微信发给我。",
-    failureText: "复制失败，请手动整理联系内容。"
+    failureText: "复制失败，请手动整理联系内容。",
   });
 }
 
@@ -1150,7 +1212,9 @@ function updateGameHud() {
   document.querySelector("#rankTitle").textContent = rank.name;
   document.querySelector("#xpBar").style.width = `${percent}%`;
   document.querySelector("#nextRankText").textContent =
-    nextRank.min === rank.min ? "已到达当前版本最高等级，继续打磨作品集。" : `距离「${nextRank.name}」还差 ${nextRank.min - xp} XP。`;
+    nextRank.min === rank.min
+      ? "已到达当前版本最高等级，继续打磨作品集。"
+      : `距离「${nextRank.name}」还差 ${nextRank.min - xp} XP。`;
 
   const streakBanner = document.querySelector("#streakBanner");
   if (streakBanner) {
@@ -1179,7 +1243,8 @@ function renderDailyChallenge() {
   document.querySelector("#dailyDesc").textContent = desc;
   document.querySelector("#dailyButton").textContent = done ? "今日练习已记录" : "记录今日练习 +35 XP";
   document.querySelector("#dailyButton").disabled = done;
-  document.querySelector("#checkInButton").textContent = state.lastCheckIn === todayKey ? "今日已记录" : "记录今日进度 +20 XP";
+  document.querySelector("#checkInButton").textContent =
+    state.lastCheckIn === todayKey ? "今日已记录" : "记录今日进度 +20 XP";
   document.querySelector("#checkInButton").disabled = state.lastCheckIn === todayKey;
 }
 
@@ -1276,7 +1341,7 @@ function completeTask(taskId) {
   if (todayTasks.completed.includes(taskId)) return;
   todayTasks.completed.push(taskId);
   setStoredValue(DAILY_TASKS_KEY, todayTasks);
-  const task = todayTasks.tasks.find(t => t.id === taskId);
+  const task = todayTasks.tasks.find((t) => t.id === taskId);
   if (task) {
     state.bonusXp += task.xp;
     persistGameState();
@@ -1291,28 +1356,29 @@ function renderDailyTasks() {
   const todayTasks = getTodayTasks();
   const totalXp = todayTasks.tasks.reduce((sum, t) => sum + t.xp, 0);
   const earnedXp = todayTasks.tasks
-    .filter(t => todayTasks.completed.includes(t.id))
+    .filter((t) => todayTasks.completed.includes(t.id))
     .reduce((sum, t) => sum + t.xp, 0);
-  const allDone = todayTasks.tasks.every(t => todayTasks.completed.includes(t.id));
+  const allDone = todayTasks.tasks.every((t) => todayTasks.completed.includes(t.id));
 
   container.innerHTML = `
     <div style="margin-top:20px;padding:16px;background:rgba(143,47,42,0.04);border-radius:12px;border:1px solid rgba(143,47,42,0.1);">
       <h4 style="font-size:0.95rem;margin-bottom:8px;">📋 今日任务 <span style="font-size:0.78rem;color:var(--muted);">可获得 ${totalXp} XP · 已获得 ${earnedXp} XP</span></h4>
-      ${todayTasks.tasks.map(task => {
-        const isDone = todayTasks.completed.includes(task.id);
-        return `
-          <div style="display:flex;align-items:center;gap:10px;padding:10px;margin-bottom:8px;border-radius:8px;background:${isDone ? 'rgba(95,127,82,0.08)' : 'var(--surface)'};border:1px solid ${isDone ? 'rgba(95,127,82,0.3)' : 'var(--line)'};transition:all 0.2s;">
-            <span style="font-size:1.2rem;">${isDone ? '✅' : '⬜'}</span>
+      ${todayTasks.tasks
+        .map((task) => {
+          const isDone = todayTasks.completed.includes(task.id);
+          return `
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;margin-bottom:8px;border-radius:8px;background:${isDone ? "rgba(95,127,82,0.08)" : "var(--surface)"};border:1px solid ${isDone ? "rgba(95,127,82,0.3)" : "var(--line)"};transition:all 0.2s;">
+            <span style="font-size:1.2rem;">${isDone ? "✅" : "⬜"}</span>
             <div style="flex:1;">
-              <strong style="font-size:0.85rem;color:${isDone ? 'var(--plant)' : 'var(--ink)'};">${safeText(task.title)} <span style="font-size:0.72rem;color:var(--jujube);">+${task.xp} XP</span></strong>
+              <strong style="font-size:0.85rem;color:${isDone ? "var(--plant)" : "var(--ink)"};">${safeText(task.title)} <span style="font-size:0.72rem;color:var(--jujube);">+${task.xp} XP</span></strong>
               <div style="font-size:0.78rem;color:var(--muted);">${safeText(task.desc)}</div>
             </div>
-            ${!isDone ? `<button onclick="completeTask('${task.id}')" style="padding:4px 12px;font-size:0.78rem;background:var(--earth);color:#fff;border:none;border-radius:6px;cursor:pointer;min-height:32px;">完成</button>` : ''}
+            ${!isDone ? `<button onclick="completeTask('${task.id}')" style="padding:4px 12px;font-size:0.78rem;background:var(--earth);color:#fff;border:none;border-radius:6px;cursor:pointer;min-height:32px;">完成</button>` : ""}
           </div>
         `;
-      }).join("")}
-      ${allDone ? '<div style="text-align:center;padding:8px;font-size:0.85rem;color:var(--plant);">🎉 今日任务全部完成！</div>' : ''}
+        })
+        .join("")}
+      ${allDone ? '<div style="text-align:center;padding:8px;font-size:0.85rem;color:var(--plant);">🎉 今日任务全部完成！</div>' : ""}
     </div>
   `;
 }
-

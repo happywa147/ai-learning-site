@@ -13,7 +13,6 @@
     "no-console": "off"
   },
   "globals": {
-    "generateShareImage": "readonly",
     "gtag": "readonly",
     "dataLayer": "readonly"
   },

@@ -1,5 +1,6 @@
 # ESLint 忽略规则
 miniprogram/
 dist/
+src/modules/
 *.min.js
 *.min.css

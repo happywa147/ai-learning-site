@@ -2125,6 +2125,22 @@ select:focus {
   border-radius: var(--control-radius);
 }
 
+/* QR code long-press support — ensure mobile browsers (WeChat, Safari, etc.) can recognize QR on long press */
+.qr-card img,
+.sponsor-action img {
+  -webkit-touch-callout: default;
+  -webkit-user-select: auto;
+  user-select: auto;
+  pointer-events: auto;
+}
+
+.qr-hint {
+  font-size: var(--text-sm);
+  color: var(--muted);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
 .sponsor-action p {
   margin: 0;
   line-height: 1.7;

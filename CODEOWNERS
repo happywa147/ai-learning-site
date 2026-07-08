@@ -1,0 +1,12 @@
+# CODEOWNERS - PR review rules for happywa147 repos
+# All changes require review by the owner
+
+# Default - all files require owner review
+* @happywa147
+
+# Critical paths - stricter review
+.github/workflows/ @happywa147
+docker-compose*.yml @happywa147
+Dockerfile @happywa147
+requirements.txt @happywa147
+.env* @happywa147
